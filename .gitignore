@@ -1,0 +1,15 @@
+ECHO is on.
+# Node modules and frontend build files
+/frontend/client/node_modules/
+/frontend/client/build/
+
+# Maven target folder
+/Backend/RideSafeBackend/target/
+
+
+# System files
+.DS_Store
+
+# Environment files
+.env
+/.metadata/
