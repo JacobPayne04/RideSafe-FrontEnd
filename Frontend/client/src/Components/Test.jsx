@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
-import '.Styling/Test.css'
+import '../Styling/Test.css'
+
 
 const Test = () => {
     const [formData, setFormData] = useState({
