@@ -46,6 +46,36 @@ const Test = () => {
           />
         </div>
         <div className="form-group">
+          <label className="label">Driver Email:</label>
+          <input
+            type="text"
+            name="Email"
+            value={formData.Email}
+            onChange={handleChange}
+            className="input"
+          />
+        </div>
+        <div className="form-group">
+          <label className="label">Driver Password:</label>
+          <input
+            type="text"
+            name="lastName"
+            value={formData.password}
+            onChange={handleChange}
+            className="input"
+          />
+        </div>
+        <div className="form-group">
+          <label className="label">Driver Confirm Password:</label>
+          <input
+            type="text"
+            name="lastName"
+            value={formData.passwordconfirm}
+            onChange={handleChange}
+            className="input"
+          />
+        </div>
+        <div className="form-group">
           <label className="label">License Plate:</label>
           <input
             type="text"
