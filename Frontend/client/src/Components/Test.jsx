@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import '../Styling/Test.css'
-
+import axios from 'axios'
 
 
 
@@ -26,7 +26,7 @@ const Test = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://loclahost:8080/api/drivers/new',formData)
+    axios.post('http://localhost:8080/new',formData)
     //axios call
     .then((response)=>{
       console.log('Response from server:', response.data)
