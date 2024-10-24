@@ -11,7 +11,7 @@ const Test = () => {
     lastName: '',
     Email: '',
     password: '',
-    passwordconfirm: '',
+    confirmPassword: '',
     licensePlate: ''
   });
 
@@ -24,15 +24,9 @@ const Test = () => {
     });
   };
 
-  const handleSubmit = (e) => {//nothing to backend yet simply showing the data in console
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
-  };
-
-  //temp handle submit TODO make the axios call via backend
-  const HandleSubmite = (e) => {
-    e.preventDefault();
-    axios.post('http://loclahost:8080/api/drivers',formData)
+    axios.post('http://loclahost:8080/api/drivers/new',formData)
     //axios call
     .then((response)=>{
       console.log('Response from server:', response.data)
@@ -43,6 +37,8 @@ const Test = () => {
       //handle error
     });
   };
+
+  //temp handle submit TODO make the axios call via backend
 
 
 
@@ -92,8 +88,8 @@ const Test = () => {
         <label className="label">Driver Confirm Password:</label>
         <input
           type="text"
-          name="confrimPassword"
-          value={formData.passwordconfirm}
+          name="confirmPassword"
+          value={formData.confirmPassword}
           onChange={handleChange}
           className="input"
         />
