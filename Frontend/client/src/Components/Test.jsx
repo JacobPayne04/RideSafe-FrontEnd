@@ -2,10 +2,14 @@ import React from 'react'
 import { useState } from 'react'
 import '../Styling/Test.css'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+
+
 
 
 
 const Test = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({//form object "information we are recieving from the user"
     firstName: '',
     lastName: '',
@@ -31,6 +35,8 @@ const Test = () => {
     .then((response)=>{
       console.log('Response from server:', response.data)
       //handle scucess
+      navigate("/driver")
+
     })
     .catch((error)=>{
       console.log('There was a error!',error);
