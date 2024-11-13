@@ -5,16 +5,17 @@ import axios from 'axios'
 
 
 const Driver = () => {
-  const [drivers,setDrivers] = useState([])
+
+  const [driver,setDriver] = useState([])
 
   useEffect(()=>{
-    axios.get('http://localhost:8080/drivers')
+    axios.get(`http://localhost:8080/driver/${driver._id}`)
     .then(response =>{
-      setDrivers(response.data);
+      setDriver(response.data);
       console.log('Response from server:', response.data)
     })
     .catch(error => {
-      console.log("There was an error!",error);
+      console.log("There was an error fetching the driver!",error);
     });
   },[]);
 
@@ -24,7 +25,6 @@ const Driver = () => {
     <div>
       <h1>All Drivers</h1>
       <ul className="driver-list">
-        {drivers.map(driver => (
           <li key={driver._id} className="driver-details">
             <span className="driver-name">
               {driver.firstName} {driver.lastName}
@@ -32,7 +32,6 @@ const Driver = () => {
             <span className="driver-email">{driver.email}</span>
             <span className="driver-license">{driver.licensePlate}</span>
           </li>
-        ))}
       </ul>
     </div>
   )
