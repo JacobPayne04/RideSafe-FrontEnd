@@ -13,7 +13,7 @@ const Test = () => {
   const [formData, setFormData] = useState({//form object "information we are recieving from the user"
     firstName: '',
     lastName: '',
-    Email: '',
+    email: '',
     password: '',
     confirmPassword: '',
     licensePlate: ''
@@ -76,8 +76,8 @@ const Test = () => {
         <label className="label">Driver Email:</label>
         <input
           type="text"
-          name="Email"
-          value={formData.Email}
+          name="email"
+          value={formData.email}
           onChange={handleChange}
           className="input"
         />
