@@ -27,7 +27,7 @@ const Test = () => {
       [name]: value
     });
   };
-
+//
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post('http://localhost:8080/new',formData)
