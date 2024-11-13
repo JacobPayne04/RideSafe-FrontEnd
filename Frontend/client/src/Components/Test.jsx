@@ -35,7 +35,9 @@ const Test = () => {
     .then((response)=>{
       console.log('Response from server:', response.data)
       //handle scucess
-      navigate("/driver")
+      const driverId = response.data.id;
+
+      navigate(`/one/driver/${driverId}`)
 
     })
     .catch((error)=>{
