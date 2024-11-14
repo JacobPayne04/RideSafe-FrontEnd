@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../Styling/RegisterDriver.css'; // Import the external CSS file
+import '../Styling/RegisterDriverLandingPage.css'; // Import the external CSS file
 
 const RegisterDriverLandingPage = () => {
     const navigate = useNavigate();
