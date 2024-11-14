@@ -5,6 +5,7 @@ import './App.css';
 import Test from './Components/Test';
 import Driver from './Components/Driver';
 import OneDriver from './Components/OneDriver';
+import Login from './Components/Login';
 
 function App() {
   return (
@@ -12,6 +13,8 @@ function App() {
         <Route path="/test" element={<Test />} />
         <Route path="/driver" element={<Driver />} />
         <Route path="/one/driver/:id" element={<OneDriver />} />
+        <Route path="/login" element={<Login />} />
+        <Route  path="*" element={<Driver />}/>
       </Routes>
   );
 }
