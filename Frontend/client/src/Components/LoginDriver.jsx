@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import '../Styling/Login.css';
+import '../Styling/LoginDriver.css';
 
-const Login = () => {
+const LoginDriver = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -67,4 +67,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginDriver;

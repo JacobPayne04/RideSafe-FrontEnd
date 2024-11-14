@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const OneDriver = () => {
+const DriverShow1 = () => {
   const { id } = useParams(); // Extract the driver ID from the route parameters
   const [driver, setDriver] = useState(null); // State to store driver details
   const [error, setError] = useState(null); // State to handle errors
@@ -51,4 +51,4 @@ const OneDriver = () => {
   );
 };
 
-export default OneDriver;
+export default DriverShow1;

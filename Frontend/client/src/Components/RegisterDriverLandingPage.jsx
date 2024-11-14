@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../Styling/Register.css'; // Import the external CSS file
+import '../Styling/RegisterDriver.css'; // Import the external CSS file
 
-const Register = () => {
+const RegisterDriverLandingPage = () => {
     const navigate = useNavigate();
 
     const handleDriverRegister = () => {
@@ -26,4 +26,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default RegisterDriverLandingPage;
