@@ -22,6 +22,10 @@ const RegisterDriver = () => {
         });
     };
 
+    const handleLogin = () => {
+        navigate('/login/driver');
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.post('http://localhost:8080/new', formData)
@@ -64,6 +68,9 @@ const RegisterDriver = () => {
                     <input type="text" name="licensePlate" value={formData.licensePlate} onChange={handleChange} />
                 </div>
                 <button type="submit" className="submit-button">Register</button>
+                <button onClick={handleLogin} className='submit-button'>Already have an account?
+                    Login here!
+                </button>
             </form>
         </div>
     );
