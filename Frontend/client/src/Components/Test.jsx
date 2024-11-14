@@ -20,7 +20,7 @@ const Test = () => {
   });
 
 
-  const handleChange = (e) => {//from e target destricture the name and value then set all of the form dta to its value from its name
+  const handleChange = (e) => {//from e target destricture the name and value then set all of the form data to its value from its name
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -46,7 +46,6 @@ const Test = () => {
     });
   };
 
-  //temp handle submit TODO make the axios call via backend
 
 
 
