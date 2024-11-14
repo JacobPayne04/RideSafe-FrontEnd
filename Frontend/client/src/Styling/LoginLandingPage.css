@@ -1,0 +1,41 @@
+/* Register.css */
+
+/* Main container */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f2f5;
+}
+
+/* Header styling */
+.login-header {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #333;
+}
+
+/* Card styling for login options */
+.login-card {
+    cursor: pointer;
+    padding: 20px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    margin: 10px 0;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 1.2rem;
+    color: #007bff;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Hover effect for the cards */
+.login-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}

@@ -5,19 +5,19 @@ import '../Styling/LoginDriver.css';
 
 const LoginDriver = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
+  const [Email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
   const login = async (e) => {
     e.preventDefault();
 
-    if (!email || !password) {
+    if (!Email || !password) {
       setErrorMsg('Please enter both email and password.');
       return;
     }
 
-    const loginPayload = { email, password };
+    const loginPayload = { Email, password };
 
     try {
       const res = await axios.post('http://localhost:8080/login', loginPayload, {
@@ -26,7 +26,7 @@ const LoginDriver = () => {
       });
 
       if (res.data.message === 'Login successful') {
-        navigate('/drivers');
+        navigate('/driver/all');
       } else {
         setErrorMsg(res.data.message || 'Login failed. Please try again.');
       }
@@ -44,7 +44,7 @@ const LoginDriver = () => {
       <form onSubmit={login} className="login-form">
         <input
           type="email"
-          value={email}
+          value={Email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
           required
