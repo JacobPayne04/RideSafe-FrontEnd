@@ -8,6 +8,8 @@ import LoginDriver from './Components/LoginDriver';
 import RegisterDriverLandingPage from './Components/RegisterDriverLandingPage';
 import LoginLandingPage from './Components/LoginLandingPage';
 import RegisterDriver from './Components/RegisterDriver';
+import RegisterPassenger from './Components/RegisterPassenger';
+import LoginPassenger from './Components/LoginPassenger';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="*" element={<AllDrivers />}/>
         <Route path="/" element={<RegisterDriverLandingPage />} />
         <Route path="/register/driver" element={<RegisterDriver />} />
+        <Route path="/register/passenger" element={<RegisterPassenger />} />
+        <Route path="/login/passenger" element={<LoginPassenger />} />
       </Routes>
   );
 }
