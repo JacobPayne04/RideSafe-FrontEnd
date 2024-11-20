@@ -28,7 +28,7 @@ const LoginDriver = () => {
 
     onSubmit: async (values, { setSubmitting, setFieldError }) => {
       try {
-        const res = await axios.post('http://localhost:8080/login/driver', values, {
+        const res = await axios.post('http://localhost:8080/login', values, {
           withCredentials: true,
           headers: { 'Content-Type': 'application/json' },
         });
