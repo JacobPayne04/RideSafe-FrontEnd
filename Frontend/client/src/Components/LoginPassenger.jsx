@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import '../Styling/LoginPassenger.css';
 
-const LoginDriver = () => {
+const LoginPassenger = () => {
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -34,7 +34,7 @@ const LoginDriver = () => {
         });
 
         if (res.data.message === 'Login successful') {
-          navigate('/driver/all');
+          navigate('/passenger/all');
         } else {
           setFieldError('general', res.data.message || 'Login failed. Please try again.');
         }
@@ -92,4 +92,4 @@ const LoginDriver = () => {
   );
 };
 
-export default LoginDriver;
+export default LoginPassenger;

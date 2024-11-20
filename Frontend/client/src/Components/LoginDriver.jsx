@@ -34,7 +34,8 @@ const LoginDriver = () => {
         });
 
         if (res.data.message === 'Login successful') {
-          navigate('/driver/all');
+          const driverId = res.data.id;
+          navigate(`/one/driver/${driverId}`);
         } else {
           setFieldError('general', res.data.message || 'Login failed. Please try again.');
         }

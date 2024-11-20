@@ -37,10 +37,10 @@ const RegisterPassenger = () => {
 
         onSubmit: (values) => {
             axios
-                .post('http://localhost:8080/new', values)
+                .post('http://localhost:8080/new/passenger', values)
                 .then((response) => {
-                    const driverId = response.data.id;
-                    navigate(`/one/driver/${driverId}`);
+                    const passengerId = response.data.id;
+                    navigate(`/one/passenger/${passengerId}`);
                 })
                 .catch((error) => {
                     console.error('There was an error!', error);
@@ -49,7 +49,7 @@ const RegisterPassenger = () => {
     });
 
     const handleLogin = () => {
-        navigate('/login/driver');
+        navigate('/login/passenger');
     };
   return (
     <div className="form-container">
