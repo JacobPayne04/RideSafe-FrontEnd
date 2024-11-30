@@ -13,17 +13,24 @@ import LoginPassenger from './Components/LoginPassenger';
 
 function App() {
   return (
-      <Routes>
-        <Route path="/driver/all" element={<AllDrivers />} />
-        <Route path="/one/driver/:id" element={<DriverShow1 />} />
-        <Route path="/login" element={<LoginLandingPage />} />
-        <Route path="/login/driver" element={<LoginDriver />} />
-        <Route path="*" element={<AllDrivers />}/>
-        <Route path="/" element={<RegisterDriverLandingPage />} />
-        <Route path="/register/driver" element={<RegisterDriver />} />
-        <Route path="/register/passenger" element={<RegisterPassenger />} />
-        <Route path="/login/passenger" element={<LoginPassenger />} />
-      </Routes>
+    <Routes>
+      <Route path="/driver/all" element={<AllDrivers />} />
+      <Route path="/one/driver/:id" element={<DriverShow1 />} />
+      <Route path="/login" element={<LoginLandingPage />} />
+      <Route path="/login/driver" element={<LoginDriver />} />
+      <Route path="*" element={<AllDrivers />} />
+      <Route path="/" element={<RegisterDriverLandingPage />} />
+      <Route path="/register/driver" element={<RegisterDriver />} />
+      <Route path="/register/passenger" element={<RegisterPassenger />} />
+      <Route path="/login/passenger" element={<LoginPassenger />} />
+
+      {/* Add a new route here for passenger homepage */}
+      {/* Add a new route here for driver homepage */}
+      {/* add route here for pasenger/driver settings*/}
+      {/* add route here for pasenger/driver profile page*/}
+      {/* add a route here for Driver drives history  */}
+      {/* add a route here for passenger rides history  */}
+    </Routes>
   );
 }
 
