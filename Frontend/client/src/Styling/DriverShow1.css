@@ -1,0 +1,70 @@
+/* Styling for the container */
+.driver-container {
+    padding: 20px;
+    max-width: 300px;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .Driver-Details{
+    padding-bottom: 20px;
+    text-decoration: underline;
+  }
+  
+  /* Driver details text */
+  .driver-info p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  /* Status text styling */
+  .status-text {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  /* Toggle button container */
+  .toggle-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 25px;
+    border-radius: 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    background-color: #ccc;
+    position: relative;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Online and offline colors */
+  .toggle-button.online {
+    background-color: #4caf50;
+  }
+  
+  .toggle-button.offline {
+    background-color: #f44336;
+  }
+  
+  /* The circular toggle thumb */
+  .toggle-thumb {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #fff;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 3px;
+    transition: left 0.3s ease;
+  }
+  
+  .toggle-button.online .toggle-thumb {
+    left: 25px; /* Move thumb to the right when online */
+  }
+  
