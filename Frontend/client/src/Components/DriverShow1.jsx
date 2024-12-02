@@ -8,11 +8,11 @@ const DriverShow1 = () => {
   const [driver, setDriver] = useState(null); // State to store driver details
   const [error, setError] = useState(null); // State to handle errors
   const [isOnline, setIsOnline] = useState(false);
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let isMounted = true; // Flag to track component mount status
-    
+
 
     const fetchDriver = async () => {
       try {
@@ -42,28 +42,35 @@ const DriverShow1 = () => {
   }
 
   const toggleStatus = async () => {
-    if(loading) return;
-
+    if (loading) return;
+  
     const newStatus = !isOnline;
-    setIsOnline(newStatus);
+    setIsOnline(newStatus); // Optimistic update
     setLoading(true);
-
-
-    // Send the updated status to the backend
+  
+    let putSuccess = false; // Track PUT success
+  
     try {
-      await axios.put(`http://localhost:8080/${id}/status`, null,{ params : { isOnline: newStatus }
-
-    });
-
+      await axios.put(`http://localhost:8080/${id}/status`, null, {
+        params: { isOnline: newStatus },
+      });
+      putSuccess = true;
     } catch (error) {
       console.error("Error updating status:", error);
-      setIsOnline(!newStatus)
+      setIsOnline(!newStatus); // Revert state on failure
     } finally {
       setLoading(false);
+  
+      if (putSuccess) {
+        try {
+          const response = await axios.get(`http://localhost:8080/driver/${id}`);
+          setIsOnline(response.data.isOnline); // Reset state with backend value
+        } catch (fetchError) {
+          console.error("Error fetching latest driver status:", fetchError);
+        }
+      }
     }
   };
-
-
 
 
 
