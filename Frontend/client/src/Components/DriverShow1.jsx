@@ -4,6 +4,15 @@ import '../Styling/DriverShow1.css';
 import axios from 'axios';
 
 const DriverShow1 = () => {
+<<<<<<< HEAD
+  const { id } = useParams(); 
+  const [driver, setDriver] = useState(null); 
+  const [error, setError] = useState(null); 
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true; 
+=======
   const { id } = useParams(); // Extract the driver ID from the route parameters
   const [driver, setDriver] = useState(null); // State to store driver details
   const [error, setError] = useState(null); // State to handle errors
@@ -14,11 +23,12 @@ const DriverShow1 = () => {
     let isMounted = true; // Flag to track component mount status
 
 
+>>>>>>> 51bc4fd32629b88c280716342086a25f0ea6388d
     const fetchDriver = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/driver/${id}`);
         if (isMounted) {
-          setDriver(response.data); // Update state with the fetched driver data
+          setDriver(response.data); 
         }
       } catch (err) {
         if (isMounted) {
@@ -26,23 +36,31 @@ const DriverShow1 = () => {
         }
       }
     };
-
     fetchDriver();
-
     return () => {
-      isMounted = false; // Set flag to false if the component unmounts
+      isMounted = false;
     };
   }, [id]);
 
-  if (error) {
-    return <div style={{ color: 'red' }}>Error: {error}</div>;
-  }
-  if (!driver) {
-    return <div>Loading...</div>;
-  }
-
   const toggleStatus = async () => {
     if (loading) return;
+<<<<<<< HEAD
+    const newStatus = !driver.online; // Use the correct property name
+    setLoading(true);
+
+    try {
+      await axios.put(
+        `http://localhost:8080/${id}/status`,
+        null,
+        { params: { isOnline: newStatus } } // Assuming the backend expects 'isOnline'
+      );
+      setDriver((prevDriver) => ({
+        ...prevDriver,
+        online: newStatus, // Update the correct property in state
+      }));
+    } catch (error) {
+      console.error("Error updating status:", error);
+=======
   
     const newStatus = !isOnline;
     setIsOnline(newStatus); // Optimistic update
@@ -58,6 +76,7 @@ const DriverShow1 = () => {
     } catch (error) {
       console.error("Error updating status:", error);
       setIsOnline(!newStatus); // Revert state on failure
+>>>>>>> 51bc4fd32629b88c280716342086a25f0ea6388d
     } finally {
       setLoading(false);
   
@@ -72,11 +91,20 @@ const DriverShow1 = () => {
     }
   };
 
+  if (error) {
+    return <div style={{ color: 'red' }}>Error: {error}</div>;
+  }
+
+<<<<<<< HEAD
+  if (!driver) {
+    return <div>Loading...</div>;
+  }
+=======
 
 
 
 
-
+>>>>>>> 51bc4fd32629b88c280716342086a25f0ea6388d
 
   return (
     <div className="driver-container">
@@ -84,11 +112,11 @@ const DriverShow1 = () => {
       <div className="driver-info">
         <p><strong>Name:</strong> {driver.firstName}</p>
         <p><strong>Lastname:</strong> {driver.lastName}</p>
-        <p className="status-text">{`Driver is ${isOnline ? "online" : "offline"}`}</p>
+        <p className="status-text">{`Driver is ${driver.online ? "online" : "offline"}`}</p>
       </div>
       <div
         onClick={toggleStatus}
-        className={`toggle-button ${isOnline ? "online" : "offline"}`}
+        className={`toggle-button ${driver.online ? "online" : "offline"}`}
       >
         <div className="toggle-thumb"></div>
       </div>
