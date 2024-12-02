@@ -8,9 +8,11 @@ const DriverShow1 = () => {
   const [driver, setDriver] = useState(null); // State to store driver details
   const [error, setError] = useState(null); // State to handle errors
   const [isOnline, setIsOnline] = useState(false);
+  const [loading,setLoading] = useState(false);
 
   useEffect(() => {
     let isMounted = true; // Flag to track component mount status
+    
 
     const fetchDriver = async () => {
       try {
@@ -40,17 +42,24 @@ const DriverShow1 = () => {
   }
 
   const toggleStatus = async () => {
-    setIsOnline((prevStatus) => !prevStatus);
+    if(loading) return;
+
+    const newStatus = !isOnline;
+    setIsOnline(newStatus);
+    setLoading(true);
+
 
     // Send the updated status to the backend
     try {
-      await fetch(`http://localhost:8080/${id}/status`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ online: !isOnline }),
-      });
+      await axios.put(`http://localhost:8080/${id}/status`, null,{ params : { isOnline: newStatus }
+
+    });
+
     } catch (error) {
       console.error("Error updating status:", error);
+      setIsOnline(!newStatus)
+    } finally {
+      setLoading(false);
     }
   };
 
