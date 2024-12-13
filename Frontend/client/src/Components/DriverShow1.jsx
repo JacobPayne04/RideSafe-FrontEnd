@@ -14,6 +14,7 @@ const DriverShow1 = () => {
     const fetchDriver = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/driver/${id}`);
+        console.log(response.data);
         if (isMounted) {
           setDriver(response.data); 
         }
@@ -75,6 +76,7 @@ const DriverShow1 = () => {
       </div>
     </div>
   );
+
 };
 
 export default DriverShow1;
