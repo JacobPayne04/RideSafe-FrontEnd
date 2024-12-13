@@ -60,8 +60,6 @@ const DriverShow1 = () => {
     return <div>Loading...</div>;
   }
 
-  
-
   return (
     <div className="driver-container">
       <h1 className='Driver-Details'>Driver Details</h1>
