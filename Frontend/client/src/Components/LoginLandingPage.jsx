@@ -24,6 +24,7 @@ const LoginLandingPage = () => {
             <div onClick={handlePassengerLogin} className="login-card">
                 🧳 Login as a Passenger
             </div>
+            
         </div>
     )
 }
