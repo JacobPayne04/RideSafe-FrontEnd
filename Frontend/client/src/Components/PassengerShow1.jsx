@@ -1,49 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-
+import React, { useEffect } from 'react'
+import axios from 'axios'
+import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import  '../Styling/PassengerShow1.css'
+import { useState } from 'react'
 const PassengerShow1 = () => {
-    const { id } = useParams(); // Extract the passenger ID from the route parameters
-    const [passenger, setPassenger] = useState(null); // State to store passenger details
-    const [error, setError] = useState(null); // State to handle errors
 
-    useEffect(() => {
-        let isMounted = true; // Flag to track component mount status
-    
-        const fetchPassenger = async () => {
-          try {
-            const response = await axios.get(`http://localhost:8080/passenger/${id}`);
-            if (isMounted) {
-              setPassenger(response.data); // Update state with the fetched passenger data
-            }
-          } catch (err) {
-            if (isMounted) {
-              setError(err.response?.data?.message || err.message || "Error fetching passenger data");
-            }
-          }
-        };
-    
-        fetchPassenger();
-    
-        return () => {
-          isMounted = false; // Set flag to false if the component unmounts
-        };
-      }, [id]);
-    
-      if (error) {
-        return <div style={{ color: 'red' }}>Error: {error}</div>;
+
+
+
+const [onlineDrivers, setOnlineDrivers] = useState([]);
+
+useEffect(()=> {
+  const fetchOnlineDrivers = async () => {
+      try {
+        const res = await axios.get('http://localhost:8080/online/drivers');
+        setOnlineDrivers(res.data);
+      } catch(error) {
+        console.error('❌ Error in fetching online drivers:', error);
       }
-      if (!passenger) {
-        return <div>Loading...</div>;
-      }
-    
+
+
+  }
+  fetchOnlineDrivers();
+},[]);
+
+
   return (
-    <div>
-        <h1>Passenger Details</h1>
-        <p><strong>Name:</strong> {passenger.firstName}</p>
-        <p><strong>Lastname:</strong> {passenger.lastName}</p>
-        {/* Display additional passenger details here as needed */}
-    </div>
+    <div className="profile-container">
+    {onlineDrivers.map((driver) => (
+      <div className="profile-card" key={driver.id}>
+        <div className="profile-pic-placeholder">Profile Pic</div>
+        <div className="profile-info">
+          <p>{driver.firstName} {driver.lastName}</p>
+          <p className="invisible-id">{driver.id}</p>
+        </div>
+      </div>
+    ))}
+  </div>
   )
 }
 
