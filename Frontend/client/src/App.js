@@ -10,7 +10,11 @@ import LoginLandingPage from './Components/LoginLandingPage';
 import RegisterDriver from './Components/RegisterDriver';
 import RegisterPassenger from './Components/RegisterPassenger';
 import LoginPassenger from './Components/LoginPassenger';
+<<<<<<< HEAD
+import RideForm from './Components/RideForm';
+=======
 import PassengerShow1 from './Components/PassengerShow1';
+>>>>>>> 4ec5e6daa00d29e50f40fb84a3cdff219b4c139d
 
 function App() {
   return (
@@ -24,7 +28,11 @@ function App() {
       <Route path="/register/driver" element={<RegisterDriver />} />
       <Route path="/register/passenger" element={<RegisterPassenger />} />
       <Route path="/login/passenger" element={<LoginPassenger />} />
+<<<<<<< HEAD
+      <Route path="/passenger/:passenderid/book/ride/driver/:driverid" element={<RideForm/>} />
+=======
       <Route path ="/Passenger/home" element={<PassengerShow1 />} />
+>>>>>>> 4ec5e6daa00d29e50f40fb84a3cdff219b4c139d
 
       {/* Add a new route here for passenger homepage */}
       {/* Add a new route here for driver homepage */}
