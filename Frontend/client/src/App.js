@@ -11,7 +11,6 @@ import RegisterDriver from './Components/RegisterDriver';
 import RegisterPassenger from './Components/RegisterPassenger';
 import LoginPassenger from './Components/LoginPassenger';
 import RideForm from './Components/RideForm';
-import RideForm from './Components/RideForm'
 import PassengerShow1 from './Components/PassengerShow1';
 
 
@@ -27,9 +26,7 @@ function App() {
       <Route path="/register/driver" element={<RegisterDriver />} />
       <Route path="/register/passenger" element={<RegisterPassenger />} />
       <Route path="/login/passenger" element={<LoginPassenger />} />
-      <Route path="/passenger/:passenderid/book/ride/driver/:driverid" element={<RideForm/>}/>
-      <Route path ="/Passenger/home" element={<PassengerShow1 />} />
-      <Route path="/passenger/:passenderid/book/ride/driver/:driverid" element={<RideForm/>} />==
+      <Route path="/passenger/:passengerId/book/ride/driver/:driverId" element={<RideForm/>}/>
       <Route path ="/Passenger/home" element={<PassengerShow1 />} />
 
       {/* Add a new route here for passenger homepage */}
