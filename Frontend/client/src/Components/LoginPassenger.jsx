@@ -34,6 +34,8 @@ const LoginPassenger = () => {
         });
 
         if (res.data.message === 'Login successful') {
+          const passengerId = res.data.id; 
+          localStorage.setItem('passengerId', passengerId); 
           navigate('/passenger/all');
         } else {
           setFieldError('general', res.data.message || 'Login failed. Please try again.');
