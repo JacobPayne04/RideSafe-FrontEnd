@@ -39,7 +39,8 @@ const RegisterPassenger = () => {
             axios
                 .post('http://localhost:8080/new/passenger', values)
                 .then((response) => {
-                    const passengerId = response.data.id;
+                    const passengerId = response.data.id; 
+                    localStorage.setItem('passengerId', passengerId); 
                     navigate(`/one/passenger/${passengerId}`);
                 })
                 .catch((error) => {
