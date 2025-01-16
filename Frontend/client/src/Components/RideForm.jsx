@@ -13,15 +13,15 @@ const RideForm = () => {
     const formik = useFormik({
         initialValues: {
             passengerId: passengerId || '',
-            DriverId: driverId || '',
+            driverId: driverId || '',
             fromLocation: '',
             toLocation: '',
-            status: '',
+            status: 'PENDING',
         },
 
         validationSchema: Yup.object({
             passengerId: Yup.string().required('Passenger ID is required'),
-            DriverId: Yup.string().required('Driver ID is required'),
+            driverId: Yup.string().required('Driver ID is required'),
             fromLocation: Yup.string().required('From Location is required'),
             toLocation: Yup.string().required('Destination Location is required'),
             status: Yup.string().required('Ride status is required')
@@ -29,13 +29,15 @@ const RideForm = () => {
 
         onSubmit: (values) => {
             axios
-                .post('http://localhost:8080/new/ride', values)
+                .post('http://localhost:8080/rides/save', values)
                 .then((response) => {
                     const passengerId = response.data.id;
+                    console.log("✅✅✅" , response.data)
                     navigate(`/Passenger/home`);
                 })
                 .catch((error) => {
                     console.error('There was an error!', error);
+                    alert('Failed to schedule the ride. Please try again.');
                 });
         },
     });
@@ -43,7 +45,7 @@ const RideForm = () => {
     return (
         <div className="form-container">
             <form onSubmit={formik.handleSubmit} className="form-content">
-                <h2 className="form-title">Book a Ride</h2>
+                <h2 className="form-title">Where are we going today?</h2>
                 <input
                     className="form-input"
                     name="passengerId"
@@ -52,7 +54,7 @@ const RideForm = () => {
                     value={formik.values.passengerId}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    readOnly={!!passengerId} // Read-only if pre-filled from params
+                    readOnly={!!passengerId} 
                 />
                 {formik.touched.passengerId && formik.errors.passengerId && (
                     <div className="error-message">{formik.errors.passengerId}</div>
