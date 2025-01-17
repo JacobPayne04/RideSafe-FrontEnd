@@ -21,29 +21,21 @@ const RideForm = () => {
 
         validationSchema: Yup.object({
             passengerId: Yup.string().required('Passenger ID is required'),
-            driverId: Yup.string().required('Driver ID is required'),
+            DriverId: Yup.string().required('Driver ID is required'),
             fromLocation: Yup.string().required('From Location is required'),
             toLocation: Yup.string().required('Destination Location is required'),
             status: Yup.string().required('Ride status is required')
         }),
 
         onSubmit: (values) => {
-            axios
-                .post('http://localhost:8080/rides/save', values)
+            console.log("form submitted", values);
+            axios.post('http://localhost:8080/rides/save', values)
                 .then((response) => {
-                    console.log("✅✅✅", response.data)
-                    const match = response.data.match(/ID: (\w+)/); // Regex to extract ID
-                    const rideId = match ? match[1] : null;
-                    if (!rideId) {
-                        console.error("Ride ID is missing from the response.");
-                        throw new Error("Ride ID is missing from the response.");
-                    }
-                    console.log(`Navigating to /ride/${rideId}`);
-                    navigate(`/ride/${rideId}`);
+                    const passengerId = response.data.id;
+                    navigate(`/Passenger/home`);
                 })
                 .catch((error) => {
                     console.error('There was an error!', error);
-                    alert('Failed to schedule the ride. Please try again.');
                 });
         },
     });
@@ -55,12 +47,12 @@ const RideForm = () => {
                 <input
                     className="form-input"
                     name="passengerId"
-                    type="text"
+                    type="hidden"
                     placeholder="Passenger ID"
                     value={formik.values.passengerId}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    readOnly={!!passengerId}
+                    readOnly={!!passengerId} // Read-only if pre-filled from params
                 />
                 {formik.touched.passengerId && formik.errors.passengerId && (
                     <div className="error-message">{formik.errors.passengerId}</div>
@@ -69,7 +61,7 @@ const RideForm = () => {
                 <input
                     className="form-input"
                     name="driverId"
-                    type="text"
+                    type="hidden"
                     placeholder="Driver ID"
                     value={formik.values.driverId}
                     onChange={formik.handleChange}
@@ -79,7 +71,7 @@ const RideForm = () => {
                 {formik.touched.driverId && formik.errors.driverId && (
                     <div className="error-message">{formik.errors.driverId}</div>
                 )}
-
+                    <p>Pickup Location</p>
                 <input
                     className="form-input"
                     name="fromLocation"
@@ -92,7 +84,7 @@ const RideForm = () => {
                 {formik.touched.fromLocation && formik.errors.fromLocation && (
                     <div className="error-message">{formik.errors.fromLocation}</div>
                 )}
-
+                <p>Dropoff Location</p>
                 <input
                     className="form-input"
                     name="toLocation"
@@ -109,7 +101,7 @@ const RideForm = () => {
                 <input
                     className="form-input"
                     name="status"
-                    type="text"
+                    type="hidden"
                     placeholder="ride status"
                     value={formik.values.status}
                     onChange={formik.handleChange}
@@ -119,7 +111,7 @@ const RideForm = () => {
                     <div className="error-message">{formik.errors.status}</div>
                 )}
 
-                <button type="submit" className="form-button">
+                <button type="submit"  className="form-button">
                     Book Ride
                 </button>
             </form>

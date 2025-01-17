@@ -8,21 +8,20 @@ const DriverHomePage = ({ driverId }) => {
         const navigate = useNavigate();
     
         useEffect(() => {
-            // Initialize WebSocket client
             const client = new Client({
                 webSocketFactory: () => new SockJS("http://localhost:8080/ws"),
                 debug: (str) => console.log(str),
             });
-    
+        
             client.onConnect = () => {
-                // Subscribe to the driver's notification topic
+                // Subscribe to the driver's topic for ride requests
                 client.subscribe(`/topic/driver/${driverId}`, (message) => {
-                    const data = JSON.parse(message.body);
-                    setNotifications((prev) => [...prev, data]); // Store new notifications
-                    alert(`New Ride Request! From: ${data.fromLocation}, To: ${data.toLocation}`);
+                    const notification = message.body; // Simple string message
+                    alert(notification); // Display the notification as a pop-up
+                    setNotifications((prev) => [...prev, notification]);
                 });
-    
-                // Subscribe to ride updates (e.g., acceptance redirection)
+        
+                // Subscribe to ride updates for redirection
                 client.subscribe(`/topic/ride/${driverId}`, (message) => {
                     const data = JSON.parse(message.body);
                     if (data.redirect) {
@@ -30,7 +29,7 @@ const DriverHomePage = ({ driverId }) => {
                     }
                 });
             };
-    
+        
             client.activate();
     
             // Clean up the WebSocket connection on unmount
