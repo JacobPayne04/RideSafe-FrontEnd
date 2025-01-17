@@ -12,6 +12,7 @@ import RegisterPassenger from './Components/RegisterPassenger';
 import LoginPassenger from './Components/LoginPassenger';
 import RideForm from './Components/RideForm';
 import PassengerShow1 from './Components/PassengerShow1';
+import ViewRideById from './Components/ViewRideById';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
       <Route path="/login/passenger" element={<LoginPassenger />} />
       <Route path="/passenger/:passengerId/book/ride/driver/:driverId" element={<RideForm/>}/>
       <Route path ="/Passenger/home" element={<PassengerShow1 />} />
+      <Route path="/ride/:rideId" element={<ViewRideById />}/>
 
       {/* Add a new route here for passenger homepage */}
       {/* Add a new route here for driver homepage */}
