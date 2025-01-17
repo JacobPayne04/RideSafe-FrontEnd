@@ -1,12 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 
-const DriverHomePage = ({ driverId }) => {
+const DriverHomePage = () => {
     const [notifications, setNotifications] = useState([]);
     const navigate = useNavigate();
     const clientRef = useRef(null);
+    const driverId = typeof window !== 'undefined' ? localStorage.getItem("driverId") : null;
 
     useEffect(() => {
         const client = new Client({
@@ -15,23 +18,12 @@ const DriverHomePage = ({ driverId }) => {
 
         client.onConnect = () => {
             console.log('Connected to WebSocket');
-            // Subscribe to ride updates for redirection
-            const subscription = client.subscribe(`/topic/ride/${driverId}`, (message) => {
-                console.log('Received message:', message);
-                const data = JSON.parse(message.body); // Assuming message.body is JSON
-                if (data.redirect) {
-                    console.log('Redirecting to ride:', data.rideId);
-                    navigate(`/ride/${data.rideId}`); // Redirect to ride details page
-                } else {
-                    console.log('Received notification:', data.notification);
-                    setNotifications((prevNotifications) => [
-                        ...prevNotifications,
-                        data.notification,
-                    ]);
-                }
+            client.subscribe(`/topic/driver/${driverId}`, (message) => {
+                const notification = JSON.parse(message.body);
+                console.log("Notification received:", notification);
+                toast(notification.message); // Show the message as a toast
+                setNotifications((prev) => [...prev, notification]);
             });
-
-            console.log('Subscribed to topic:', `/topic/ride/${driverId}`);
         };
 
         client.onStompError = (frame) => {
@@ -45,9 +37,11 @@ const DriverHomePage = ({ driverId }) => {
         // Clean up WebSocket connection on component unmount
         return () => {
             console.log('Disconnecting from WebSocket');
-            client.deactivate();
+            if (clientRef.current) {
+                clientRef.current.deactivate();
+            }
         };
-    }, [driverId, navigate]);
+    }, [driverId]);
 
     // Accept a ride by publishing a message to the backend
     const acceptRide = (rideId) => {
@@ -55,6 +49,7 @@ const DriverHomePage = ({ driverId }) => {
             console.log('Accepting ride:', rideId);
             clientRef.current.publish({
                 destination: `/app/ride/accept/${rideId}`,
+                body: JSON.stringify({ rideId }),
             });
         } else {
             console.error('WebSocket client is not connected');
@@ -67,13 +62,16 @@ const DriverHomePage = ({ driverId }) => {
             <ul>
                 {notifications.map((notification, index) => (
                     <li key={index}>
-                        <p>{notification}</p>
-                        <button onClick={() => acceptRide(notification.rideId)}>
-                            Accept Ride
-                        </button>
+                        <p>{notification.message}</p>
+                        {notification.rideId && (
+                            <button onClick={() => acceptRide(notification.rideId)}>
+                                Accept Ride
+                            </button>
+                        )}
                     </li>
                 ))}
             </ul>
+            <ToastContainer />
         </div>
     );
 };

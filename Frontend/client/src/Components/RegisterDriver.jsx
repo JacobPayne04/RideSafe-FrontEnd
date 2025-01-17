@@ -41,6 +41,7 @@ const RegisterDriver = () => {
                 .post('http://localhost:8080/new', values)
                 .then((response) => {
                     const driverId = response.data.id;
+                    localStorage.setItem('driverId', driverId);
                     navigate(`/one/driver/${driverId}`);
                 })
                 .catch((error) => {

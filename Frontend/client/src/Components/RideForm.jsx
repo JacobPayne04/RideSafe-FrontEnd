@@ -21,7 +21,7 @@ const RideForm = () => {
 
         validationSchema: Yup.object({
             passengerId: Yup.string().required('Passenger ID is required'),
-            DriverId: Yup.string().required('Driver ID is required'),
+            driverId: Yup.string().required('Driver ID is required'),
             fromLocation: Yup.string().required('From Location is required'),
             toLocation: Yup.string().required('Destination Location is required'),
             status: Yup.string().required('Ride status is required')
