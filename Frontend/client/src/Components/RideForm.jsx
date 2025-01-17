@@ -31,9 +31,15 @@ const RideForm = () => {
             axios
                 .post('http://localhost:8080/rides/save', values)
                 .then((response) => {
-                    const passengerId = response.data.id;
-                    console.log("✅✅✅" , response.data)
-                    navigate(`/Passenger/home`);
+                    console.log("✅✅✅", response.data)
+                    const match = response.data.match(/ID: (\w+)/); // Regex to extract ID
+                    const rideId = match ? match[1] : null;
+                    if (!rideId) {
+                        console.error("Ride ID is missing from the response.");
+                        throw new Error("Ride ID is missing from the response.");
+                    }
+                    console.log(`Navigating to /ride/${rideId}`);
+                    navigate(`/ride/${rideId}`);
                 })
                 .catch((error) => {
                     console.error('There was an error!', error);
@@ -54,7 +60,7 @@ const RideForm = () => {
                     value={formik.values.passengerId}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    readOnly={!!passengerId} 
+                    readOnly={!!passengerId}
                 />
                 {formik.touched.passengerId && formik.errors.passengerId && (
                     <div className="error-message">{formik.errors.passengerId}</div>
