@@ -1,64 +1,64 @@
-import React, { useEffect, useState } from "react";
-import { Client } from "@stomp/stompjs";
-import SockJS from "sockjs-client";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Client } from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
 
-const DriverHomePage = () => {
-    const [notifications, setNotifications] = useState([]); // State to store notifications
+const DriverHomePage = ({ driverId }) => {
+    const [notifications, setNotifications] = useState([]);
     const navigate = useNavigate();
-    const driverId = localStorage.getItem("driverId"); // Retrieve driver ID from localStorage
+    const clientRef = useRef(null);
 
     useEffect(() => {
-        if (!driverId) {
-            console.error("Driver ID is not available in localStorage.");
-            return;
-        }
-
-        // Initialize WebSocket client
         const client = new Client({
             webSocketFactory: () => new SockJS("http://localhost:8080/ws"),
-            debug: (str) => console.log(str),
         });
 
         client.onConnect = () => {
-            console.log("WebSocket connected for driver:", driverId);
-
-            // Subscribe to the driver's topic for ride requests
-            client.subscribe(`/topic/driver/${driverId}`, (message) => {
-                console.log("Received message:", message.body);
-                const notification = message.body; // Assuming message.body is a string
-                alert(notification); // Display the notification
-                setNotifications((prev) => [...prev, notification]); // Add notification to state
-            });
-
+            console.log('Connected to WebSocket');
             // Subscribe to ride updates for redirection
-            client.subscribe(`/topic/ride/${driverId}`, (message) => {
+            const subscription = client.subscribe(`/topic/ride/${driverId}`, (message) => {
+                console.log('Received message:', message);
                 const data = JSON.parse(message.body); // Assuming message.body is JSON
                 if (data.redirect) {
+                    console.log('Redirecting to ride:', data.rideId);
                     navigate(`/ride/${data.rideId}`); // Redirect to ride details page
+                } else {
+                    console.log('Received notification:', data.notification);
+                    setNotifications((prevNotifications) => [
+                        ...prevNotifications,
+                        data.notification,
+                    ]);
                 }
             });
+
+            console.log('Subscribed to topic:', `/topic/ride/${driverId}`);
+        };
+
+        client.onStompError = (frame) => {
+            console.error('Broker reported error:', frame.headers['message']);
+            console.error('Additional details:', frame.body);
         };
 
         client.activate(); // Activate the WebSocket connection
+        clientRef.current = client;
 
         // Clean up WebSocket connection on component unmount
-        return () => client.deactivate();
+        return () => {
+            console.log('Disconnecting from WebSocket');
+            client.deactivate();
+        };
     }, [driverId, navigate]);
 
     // Accept a ride by publishing a message to the backend
     const acceptRide = (rideId) => {
-        const client = new Client({
-            webSocketFactory: () => new SockJS("http://localhost:8080/ws"),
-        });
-
-        client.onConnect = () => {
-            client.publish({
+        if (clientRef.current && clientRef.current.connected) {
+            console.log('Accepting ride:', rideId);
+            clientRef.current.publish({
                 destination: `/app/ride/accept/${rideId}`,
             });
-        };
-
-        client.activate();
+        } else {
+            console.error('WebSocket client is not connected');
+        }
     };
 
     return (
