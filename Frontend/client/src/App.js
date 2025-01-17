@@ -30,6 +30,7 @@ function App() {
       <Route path="/passenger/:passengerId/book/ride/driver/:driverId" element={<RideForm/>}/>
       <Route path ="/Passenger/home" element={<PassengerShow1 />} />
       <Route path="/ride/:rideId" element={<ViewRideById />}/>
+      <Route path="/driver/home" element={<DriverHomePage />} />
 
       {/* Add a new route here for passenger homepage */}
       {/* Add a new route here for driver homepage */}
