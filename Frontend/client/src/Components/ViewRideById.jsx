@@ -26,6 +26,15 @@ const ViewRideById = () => {
     }
   }, [rideId]);
 
+  const acceptRide = async () => {
+    try{
+      const response = await axios.put(`http://localhost:8080/${rideId}/accept`);
+      setRide(response.data);
+    } catch {
+      setError("Failed to update ride")
+    }
+  }
+
   if (loading) return <div className="loading">Loading...</div>;
   if (error) return <div className="error">{error}</div>;
 
@@ -38,7 +47,16 @@ const ViewRideById = () => {
           <p><strong>Driver ID:</strong> {ride.driverId}</p>
           <p><strong>From Location:</strong> {ride.fromLocation}</p>
           <p><strong>To Location:</strong> {ride.toLocation}</p>
-          <p><strong>Status:</strong> {ride.status}</p>
+          <div>
+            <p><strong>Status:</strong> {ride.status}</p>
+            <button 
+              onClick={acceptRide} 
+              disabled={ride.status !== 'PENDING'} // Disable if status is not PENDING
+              className="accept-ride-btn"
+            >
+              Accept Ride
+            </button>
+          </div>
           <p><strong>Created At:</strong> {new Date(ride.createdAt).toLocaleString()}</p>
         </div>
       ) : (
