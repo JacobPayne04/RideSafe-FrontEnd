@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
+import axios from 'axios';
 
 const DriverHomePage = () => {
     const [notifications, setNotifications] = useState([]);
@@ -44,15 +45,13 @@ const DriverHomePage = () => {
     }, [driverId]);
 
     // Accept a ride by publishing a message to the backend
-    const acceptRide = (rideId) => {
-        if (clientRef.current && clientRef.current.connected) {
-            console.log('Accepting ride:', rideId);
-            clientRef.current.publish({
-                destination: `/app/ride/accept/${rideId}`,
-                body: JSON.stringify({ rideId }),
-            });
-        } else {
-            console.error('WebSocket client is not connected');
+    const acceptRide = async (rideId) => {
+        try {
+            const response = await axios.put(`http://localhost:8080/ride/${rideId}/accept`);
+            toast.success("Ride accepted successfully!");
+        } catch (error) {
+            toast.error("Failed to update ride");
+            console.error("Error accepting ride:", error);
         }
     };
 
@@ -64,8 +63,12 @@ const DriverHomePage = () => {
                     <li key={index}>
                         <p>{notification.message}</p>
                         {notification.rideId && (
-                            <button onClick={() => acceptRide(notification.rideId)}>
-                                Accept Ride
+                            <button
+                                onClick={() => acceptRide(notification.rideId)} // Pass rideId dynamically
+                                disabled={notification.status !== 'PENDING'}
+                                className="accept-ride-btn"
+                            >
+                                {notification.status === 'PENDING' ? "Accept Ride" : "Ride is Accepted"}
                             </button>
                         )}
                     </li>

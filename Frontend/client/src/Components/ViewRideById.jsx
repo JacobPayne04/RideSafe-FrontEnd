@@ -47,16 +47,7 @@ const ViewRideById = () => {
           <p><strong>Driver ID:</strong> {ride.driverId}</p>
           <p><strong>From Location:</strong> {ride.fromLocation}</p>
           <p><strong>To Location:</strong> {ride.toLocation}</p>
-          <div>
             <p><strong>Status:</strong> {ride.status}</p>
-            <button 
-              onClick={acceptRide} 
-              disabled={ride.status !== 'PENDING'} // Disable if status is not PENDING
-              className="accept-ride-btn"
-            >
-              Accept Ride
-            </button>
-          </div>
           <p><strong>Created At:</strong> {new Date(ride.createdAt).toLocaleString()}</p>
         </div>
       ) : (
