@@ -22,8 +22,13 @@ const DriverHomePage = () => {
             client.subscribe(`/topic/driver/${driverId}`, (message) => {
                 const notification = JSON.parse(message.body);
                 console.log("Notification received:", notification);
-                toast(notification.message); // Show the message as a toast
-                setNotifications((prev) => [...prev, notification]);
+                toast(notification.message);
+
+                // Ensure every new ride starts as "PENDING"
+                setNotifications((prev) => [
+                    ...prev,
+                    { ...notification, status: notification.status || "PENDING" }
+                ]);
             });
         };
 
@@ -32,10 +37,9 @@ const DriverHomePage = () => {
             console.error('Additional details:', frame.body);
         };
 
-        client.activate(); // Activate the WebSocket connection
+        client.activate();
         clientRef.current = client;
 
-        // Clean up WebSocket connection on component unmount
         return () => {
             console.log('Disconnecting from WebSocket');
             if (clientRef.current) {
@@ -44,11 +48,17 @@ const DriverHomePage = () => {
         };
     }, [driverId]);
 
-    // Accept a ride by publishing a message to the backend
     const acceptRide = async (rideId) => {
         try {
-            const response = await axios.put(`http://localhost:8080/ride/${rideId}/accept`);
+            await axios.put(`http://localhost:8080/ride/${rideId}/accept`);
             toast.success("Ride accepted successfully!");
+
+            // Update ride status to "ONGOING"
+            setNotifications((prevNotifications) =>
+                prevNotifications.map((notification) =>
+                    notification.rideId === rideId ? { ...notification, status: "ONGOING" } : notification
+                )
+            );
         } catch (error) {
             toast.error("Failed to update ride");
             console.error("Error accepting ride:", error);
@@ -64,7 +74,7 @@ const DriverHomePage = () => {
                         <p>{notification.message}</p>
                         {notification.rideId && (
                             <button
-                                onClick={() => acceptRide(notification.rideId)} // Pass rideId dynamically
+                                onClick={() => acceptRide(notification.rideId)}
                                 disabled={notification.status !== 'PENDING'}
                                 className="accept-ride-btn"
                             >
