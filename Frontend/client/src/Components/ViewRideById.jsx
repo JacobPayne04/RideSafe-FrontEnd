@@ -9,6 +9,16 @@ const ViewRideById = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  
+  const acceptRide = async () => {
+    try{
+      const response = await axios.put(`http://localhost:8080/${rideId}/accept`);
+      setRide(response.data);
+    } catch {
+      setError("Failed to update ride")
+    }
+  }
+
   useEffect(() => {
     const fetchRide = async () => {
       try {
@@ -26,15 +36,6 @@ const ViewRideById = () => {
     }
   }, [rideId]);
 
-  const acceptRide = async () => {
-    try{
-      const response = await axios.put(`http://localhost:8080/${rideId}/accept`);
-      setRide(response.data);
-    } catch {
-      setError("Failed to update ride")
-    }
-  }
-
   if (loading) return <div className="loading">Loading...</div>;
   if (error) return <div className="error">{error}</div>;
 
@@ -48,6 +49,14 @@ const ViewRideById = () => {
           <p><strong>From Location:</strong> {ride.fromLocation}</p>
           <p><strong>To Location:</strong> {ride.toLocation}</p>
             <p><strong>Status:</strong> {ride.status}</p>
+            <button 
+              onClick={acceptRide} 
+              disabled={ride.status !== 'PENDING'} // Disable if status is not PENDING
+              className="accept-ride-btn"
+            >
+              {ride.status === 'PENDING' ? "Accept Ride" : "Ride is Accepted"}
+            </button>
+          </div>
           <p><strong>Created At:</strong> {new Date(ride.createdAt).toLocaleString()}</p>
         </div>
       ) : (
