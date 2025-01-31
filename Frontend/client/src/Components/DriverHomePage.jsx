@@ -54,7 +54,7 @@ const DriverHomePage = () => {
           .get(`http://localhost:8080/driver/${driverId}/rides/ongoing`)
           .then((response) => {
             setOngoingRides(response.data);
-            console.log('Response from server:', response.data);
+            console.log('Ongoing Ride: ', response.data);
           })
           .catch((error) => {
             console.log('There was an error fetching the ongoing rides!', error);
@@ -97,6 +97,17 @@ const DriverHomePage = () => {
                     </li>
                 ))}
             </ul>
+
+            <div>
+                <p>ONGOING RIDES</p>
+                {onGoingRides.map((ride, index) => (
+                    <div key={index}>
+                        <p>Start Location: {ride.fromLocation}</p>
+                        <p>Destination Location: {ride.toLocation}</p>
+                        <p>Passenger Id: {ride.passengerId}</p>
+                    </div>
+                ))}
+            </div>
             <ToastContainer />
 
         </div>
