@@ -8,6 +8,7 @@ import axios from 'axios';
 
 const DriverHomePage = () => {
     const [notifications, setNotifications] = useState([]);
+    const [onGoingRides, setOngoingRides] = useState([]);
     const navigate = useNavigate();
     const clientRef = useRef(null);
     const driverId = typeof window !== 'undefined' ? localStorage.getItem("driverId") : null;
@@ -48,9 +49,21 @@ const DriverHomePage = () => {
         };
     }, [driverId]);
 
+    useEffect(() => {
+        axios
+          .get(`http://localhost:8080/driver/${driverId}/rides/ongoing`)
+          .then((response) => {
+            setOngoingRides(response.data);
+            console.log('Response from server:', response.data);
+          })
+          .catch((error) => {
+            console.log('There was an error fetching the ongoing rides!', error);
+          });
+      }, []);
+
     const acceptRide = async (rideId) => {
         try {
-            await axios.put(`http://localhost:8080/ride/${rideId}/accept`);
+            await axios.put(`http://localhost:8080/${rideId}/accept`);
             toast.success("Ride accepted successfully!");
 
             // Update ride status to "ONGOING"
@@ -85,6 +98,7 @@ const DriverHomePage = () => {
                 ))}
             </ul>
             <ToastContainer />
+
         </div>
     );
 };
