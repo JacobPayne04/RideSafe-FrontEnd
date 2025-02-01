@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import '../Styling/RideForm.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
+// Ensure to load the Google Maps API script for Autocomplete
 const RideForm = () => {
-
+    const [google, setGoogle] = useState(null); // State to store Google Maps API
     const navigate = useNavigate();
     const { passengerId, driverId } = useParams();
+
+    // Initialize Google Maps API
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
+        script.async = true;
+        script.onload = () => setGoogle(window.google); // Load the Google API
+        document.head.appendChild(script);
+
+        return () => {
+            document.head.removeChild(script);
+        };
+    }, []);
 
     const formik = useFormik({
         initialValues: {
@@ -16,6 +30,10 @@ const RideForm = () => {
             driverId: driverId || '',
             fromLocation: '',
             toLocation: '',
+            fromLatitude: '',
+            fromLongitude: '',
+            toLatitude: '',
+            toLongitude: '',
             status: 'PENDING',
         },
 
@@ -39,6 +57,46 @@ const RideForm = () => {
                 });
         },
     });
+
+    // Function to initialize Autocomplete on the location fields
+    const initAutocomplete = () => {
+        if (google) {
+            const options = {
+                types: ['geocode'], // Restrict search to geocoding (addresses)
+            };
+
+            // Autocomplete for 'From Location'
+            const fromInput = document.getElementById('fromLocation');
+            const fromAutocomplete = new google.maps.places.Autocomplete(fromInput, options);
+            fromAutocomplete.addListener('place_changed', () => {
+                const place = fromAutocomplete.getPlace();
+                if (place.geometry) {
+                    formik.setFieldValue('fromLatitude', place.geometry.location.lat());
+                    formik.setFieldValue('fromLongitude', place.geometry.location.lng());
+                    formik.setFieldValue('fromLocation', place.formatted_address);
+                }
+            });
+
+            // Autocomplete for 'To Location'
+            const toInput = document.getElementById('toLocation');
+            const toAutocomplete = new google.maps.places.Autocomplete(toInput, options);
+            toAutocomplete.addListener('place_changed', () => {
+                const place = toAutocomplete.getPlace();
+                if (place.geometry) {
+                    formik.setFieldValue('toLatitude', place.geometry.location.lat());
+                    formik.setFieldValue('toLongitude', place.geometry.location.lng());
+                    formik.setFieldValue('toLocation', place.formatted_address);
+                }
+            });
+        }
+    };
+
+    // Initialize Google Autocomplete after API has loaded
+    useEffect(() => {
+        if (google) {
+            initAutocomplete();
+        }
+    }, [google]);
 
     return (
         <div className="form-container">
@@ -71,12 +129,14 @@ const RideForm = () => {
                 {formik.touched.driverId && formik.errors.driverId && (
                     <div className="error-message">{formik.errors.driverId}</div>
                 )}
-                    <p>Pickup Location</p>
+
+                <p>Pickup Location</p>
                 <input
+                    id="fromLocation"
                     className="form-input"
                     name="fromLocation"
                     type="text"
-                    placeholder="FromLocation"
+                    placeholder="From Location"
                     value={formik.values.fromLocation}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -84,12 +144,14 @@ const RideForm = () => {
                 {formik.touched.fromLocation && formik.errors.fromLocation && (
                     <div className="error-message">{formik.errors.fromLocation}</div>
                 )}
+
                 <p>Dropoff Location</p>
                 <input
+                    id="toLocation"
                     className="form-input"
                     name="toLocation"
                     type="text"
-                    placeholder="ToLocation"
+                    placeholder="To Location"
                     value={formik.values.toLocation}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -111,12 +173,12 @@ const RideForm = () => {
                     <div className="error-message">{formik.errors.status}</div>
                 )}
 
-                <button type="submit"  className="form-button">
+                <button type="submit" className="form-button">
                     Book Ride
                 </button>
             </form>
         </div>
-    )
-}
+    );
+};
 
-export default RideForm
+export default RideForm;
