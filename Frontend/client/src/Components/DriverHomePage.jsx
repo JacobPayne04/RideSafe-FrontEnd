@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import axios from 'axios';
@@ -51,15 +51,15 @@ const DriverHomePage = () => {
 
     useEffect(() => {
         axios
-          .get(`http://localhost:8080/driver/${driverId}/rides/ongoing`)
-          .then((response) => {
-            setOngoingRides(response.data);
-            console.log('Ongoing Ride: ', response.data);
-          })
-          .catch((error) => {
-            console.log('There was an error fetching the ongoing rides!', error);
-          });
-      }, []);
+            .get(`http://localhost:8080/driver/${driverId}/rides/ongoing`)
+            .then((response) => {
+                setOngoingRides(response.data);
+                console.log('Ongoing Ride: ', response.data);
+            })
+            .catch((error) => {
+                console.log('There was an error fetching the ongoing rides!', error);
+            });
+    }, []);
 
     const acceptRide = async (rideId) => {
         try {
@@ -101,11 +101,13 @@ const DriverHomePage = () => {
             <div>
                 <p>ONGOING RIDES</p>
                 {onGoingRides.map((ride, index) => (
-                    <div key={index}>
-                        <p>Start Location: {ride.fromLocation}</p>
-                        <p>Destination Location: {ride.toLocation}</p>
-                        <p>Passenger Id: {ride.passengerId}</p>
-                    </div>
+                    <Link to={`/view/ongoing/ride/${ride.id}`}>
+                        <div key={index}>
+                            <p>Start Location: {ride.fromLocation}</p>
+                            <p>Destination Location: {ride.toLocation}</p>
+                            <p>Passenger Id: {ride.passengerId}</p>
+                        </div>
+                    </Link>
                 ))}
             </div>
             <ToastContainer />
