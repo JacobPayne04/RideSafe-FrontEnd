@@ -14,6 +14,7 @@ import RideForm from './Components/RideForm';
 import PassengerShow1 from './Components/PassengerShow1';
 import ViewRideById from './Components/ViewRideById';
 import DriverHomePage from './Components/DriverHomePage';
+import ViewOneRideById from './Components/ViewOneRideById';
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
       <Route path ="/Passenger/home" element={<PassengerShow1 />} />
       <Route path="/ride/:rideId" element={<ViewRideById />}/>
       <Route path="/driver/home/:driverId" element={<DriverHomePage />} />
+      <Route path="/view/ongoing/ride/:rideId" element={<ViewOneRideById />} />
 
       {/* Add a new route here for passenger homepage */}
       {/* Add a new route here for driver homepage */}
