@@ -74,10 +74,10 @@ const DriverHomePage = () => {
             await axios.put(`http://localhost:8080/${rideId}/accept`);
             toast.success("Ride accepted successfully!");
             //in same call we are fetching google maps url
-            const response = await axios.get(`http://localhost:8080/${rideId}/mapRoute`);
+            const response = await axios.get(`http://localhost:8080/${rideId}/MapRoute`);
             const googleMapsUrl = response.data.googleMapsUrl;
 
-            //redering the google maps url.
+            //redering the google maps url
             if (googleMapsUrl) {
                 navigate(`/view/ride/googlemaps?url=${encodeURIComponent(googleMapsUrl)}`);
             } else {

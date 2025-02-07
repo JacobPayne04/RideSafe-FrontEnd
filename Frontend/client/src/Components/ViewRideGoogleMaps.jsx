@@ -2,7 +2,7 @@ import React from 'react'
 
 const ViewRideGoogleMaps = () => {
   return (
-    <div>ViewRideGoogleMaps</div>
+    <div>Return teh googel maps api here</div>
   )
 }
 
