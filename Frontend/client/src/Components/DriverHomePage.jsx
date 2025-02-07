@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, redirect } from 'react-router-dom';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import axios from 'axios';
@@ -70,11 +70,19 @@ const DriverHomePage = () => {
 
     const acceptRide = async (rideId) => {
         try {
+            //axios call to show ongoing rides
             await axios.put(`http://localhost:8080/${rideId}/accept`);
             toast.success("Ride accepted successfully!");
-            //in here we are going to piggy back off of this api call and aas soon as ur ccept 
-                //axios call here for the {rideid}/mapRoute
-                   // return string and reload unsure of method to load on this jsx or a new one 
+            //in same call we are fetching google maps url
+            const response = await axios.get(`http://localhost:8080/${rideId}/mapRoute`);
+            const googleMapsUrl = response.data.googleMapsUrl;
+
+            //redering the google maps url.
+            if (googleMapsUrl) {
+                navigate(`/view/ride/googlemaps?url=${encodeURIComponent(googleMapsUrl)}`);
+            } else {
+                toast.error("Failed to fetch Google Maps URL");
+            }
 
             // Update ride status in notifications
             setNotifications((prevNotifications) =>
