@@ -15,6 +15,7 @@ import PassengerShow1 from './Components/PassengerShow1';
 import ViewRideById from './Components/ViewRideById';
 import DriverHomePage from './Components/DriverHomePage';
 import ViewOneRideById from './Components/ViewOneRideById';
+import ViewRideGoogleMaps from './Components/ViewRideGoogleMaps';
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
       <Route path="/ride/:rideId" element={<ViewRideById />}/>
       <Route path="/driver/home/:driverId" element={<DriverHomePage />} />
       <Route path="/view/ongoing/ride/:rideId" element={<ViewOneRideById />} />
+      <Route path="/view/ride/googlemaps" element={<ViewRideGoogleMaps />} />
 
       {/* Add a new route here for passenger homepage */}
       {/* Add a new route here for driver homepage */}
