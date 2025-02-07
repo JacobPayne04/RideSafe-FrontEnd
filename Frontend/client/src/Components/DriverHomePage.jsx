@@ -77,7 +77,7 @@ const DriverHomePage = () => {
             const response = await axios.get(`http://localhost:8080/${rideId}/MapRoute`);
             const googleMapsUrl = response.data.googleMapsUrl;
 
-            //redering the google maps url.
+            //redering the google maps url
             if (googleMapsUrl) {
                 navigate(`/view/ride/googlemaps?fromLat=${fromLatitude}&fromLng=${fromLongitude}&toLat=${toLatitude}&toLng=${toLongitude}`);
             } else {
