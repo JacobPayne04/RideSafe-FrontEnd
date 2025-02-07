@@ -68,7 +68,7 @@ const DriverHomePage = () => {
         fetchOngoingRides(); // Fetch rides initially
     }, [driverId]);
 
-    const acceptRide = async (rideId) => {
+    const acceptRide = async (rideId, fromLatitude, fromLongitude, toLatitude, toLongitude) => {
         try {
             //axios call to show ongoing rides
             await axios.put(`http://localhost:8080/${rideId}/accept`);
@@ -79,7 +79,7 @@ const DriverHomePage = () => {
 
             //redering the google maps url
             if (googleMapsUrl) {
-                navigate(`/view/ride/googlemaps?url=${encodeURIComponent(googleMapsUrl)}`);
+                navigate(`/view/ride/googlemaps?fromLat=${fromLatitude}&fromLng=${fromLongitude}&toLat=${toLatitude}&toLng=${toLongitude}`);
             } else {
                 toast.error("Failed to fetch Google Maps URL");
             }
@@ -108,7 +108,7 @@ const DriverHomePage = () => {
                         <p>{notification.message}</p>
                         {notification.rideId && (
                             <button
-                                onClick={() => acceptRide(notification.rideId)}
+                                onClick={() => acceptRide(notification.rideId, notification.fromLatitude, notification.fromLongitude, notification.toLatitude,  notification.toLongitude)}
                                 disabled={notification.status !== 'PENDING'}
                                 className="accept-ride-btn"
                             >
