@@ -13,7 +13,23 @@ const DriverHomePage = () => {
     const clientRef = useRef(null);
     const driverId = typeof window !== 'undefined' ? localStorage.getItem("driverId") : null;
 
+    // Function to fetch ongoing rides
+    const fetchOngoingRides = () => {
+        if (!driverId) return;
+        axios
+            .get(`http://localhost:8080/driver/${driverId}/rides/ongoing`)
+            .then((response) => {
+                setOngoingRides(response.data);
+                console.log('Updated Ongoing Rides:', response.data);
+            })
+            .catch((error) => {
+                console.log('Error fetching ongoing rides:', error);
+            });
+    };
+
     useEffect(() => {
+        if (!driverId) return;
+
         const client = new Client({
             webSocketFactory: () => new SockJS("http://localhost:8080/ws"),
         });
@@ -25,7 +41,6 @@ const DriverHomePage = () => {
                 console.log("Notification received:", notification);
                 toast(notification.message);
 
-                // Ensure every new ride starts as "PENDING"
                 setNotifications((prev) => [
                     ...prev,
                     { ...notification, status: notification.status || "PENDING" }
@@ -50,28 +65,26 @@ const DriverHomePage = () => {
     }, [driverId]);
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:8080/driver/${driverId}/rides/ongoing`)
-            .then((response) => {
-                setOngoingRides(response.data);
-                console.log('Ongoing Ride: ', response.data);
-            })
-            .catch((error) => {
-                console.log('There was an error fetching the ongoing rides!', error);
-            });
-    }, []);
+        fetchOngoingRides(); // Fetch rides initially
+    }, [driverId]);
 
     const acceptRide = async (rideId) => {
         try {
             await axios.put(`http://localhost:8080/${rideId}/accept`);
             toast.success("Ride accepted successfully!");
+            //in here we are going to piggy back off of this api call and aas soon as ur ccept 
+                //axios call here for the {rideid}/mapRoute
+                   // return string and reload unsure of method to load on this jsx or a new one 
 
-            // Update ride status to "ONGOING"
+            // Update ride status in notifications
             setNotifications((prevNotifications) =>
                 prevNotifications.map((notification) =>
                     notification.rideId === rideId ? { ...notification, status: "ONGOING" } : notification
                 )
             );
+
+            // Fetch the latest ongoing rides after accepting a ride
+            fetchOngoingRides();
         } catch (error) {
             toast.error("Failed to update ride");
             console.error("Error accepting ride:", error);
@@ -100,18 +113,21 @@ const DriverHomePage = () => {
 
             <div>
                 <p>ONGOING RIDES</p>
-                {onGoingRides.map((ride, index) => (
-                    <Link to={`/view/ongoing/ride/${ride.id}`}>
-                        <div key={index}>
-                            <p>Start Location: {ride.fromLocation}</p>
-                            <p>Destination Location: {ride.toLocation}</p>
-                            <p>Passenger Id: {ride.passengerId}</p>
-                        </div>
-                    </Link>
-                ))}
+                {onGoingRides.length !== 0 ? (
+                    onGoingRides.map((ride, index) => (
+                        <Link key={index} to={`/view/ongoing/ride/${ride.id}`}>
+                            <div>
+                                <p>Start Location: {ride.fromLocation}</p>
+                                <p>Destination Location: {ride.toLocation}</p>
+                                <p>Passenger Id: {ride.passengerId}</p>
+                            </div>
+                        </Link>
+                    ))
+                ) : (
+                    "There are no ongoing rides"
+                )}
             </div>
             <ToastContainer />
-
         </div>
     );
 };
