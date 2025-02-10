@@ -37,7 +37,7 @@ const LoginDriver = () => {
         if (res.data.message === 'Login successful') {
           const driverId = res.data.id;
           localStorage.setItem('driverId', driverId);
-          navigate(`/one/driver/${driverId}`);
+          navigate(`/driver/home/${driverId}`);
         } else {
           setFieldError('general', res.data.message || 'Login failed. Please try again.');
         }

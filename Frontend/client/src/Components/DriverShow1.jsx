@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import '../Styling/DriverShow1.css';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const DriverShow1 = () => {
   const { id } = useParams(); 
@@ -63,6 +64,7 @@ const DriverShow1 = () => {
   return (
     <div className="driver-container">
       <h1 className='Driver-Details'>Driver Details</h1>
+
       <div className="driver-info">
         <p><strong>Name:</strong> {driver.firstName}</p>
         <p><strong>Lastname:</strong> {driver.lastName}</p>

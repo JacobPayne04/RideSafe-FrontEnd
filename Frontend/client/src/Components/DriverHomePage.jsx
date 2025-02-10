@@ -102,6 +102,9 @@ const DriverHomePage = () => {
     return (
         <div>
             <h2>Driver Dashboard</h2>
+            <button>
+                <Link to={`/one/driver/${driverId}`}></Link>
+            </button>
             <ul>
                 {notifications.map((notification, index) => (
                     <li key={index}>
