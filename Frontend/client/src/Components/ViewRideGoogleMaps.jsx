@@ -74,7 +74,7 @@ const ViewRideGoogleMaps = () => {
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={{ lat: fromLat || 37.7749, lng: fromLng || -122.4194 }}
-        zoom={12}
+        zoom={15}
       >
         {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
       </GoogleMap>

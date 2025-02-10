@@ -41,7 +41,7 @@ const RegisterPassenger = () => {
                 .then((response) => {
                     const passengerId = response.data.id; 
                     localStorage.setItem('passengerId', passengerId); 
-                    navigate(`/one/passenger/${passengerId}`);
+                    navigate(`/Passenger/home`);
                 })
                 .catch((error) => {
                     console.error('There was an error!', error);
