@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { GoogleMap, DirectionsRenderer, useJsApiLoader } from "@react-google-maps/api";
 
 const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
@@ -19,12 +19,12 @@ const ViewRideGoogleMaps = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const rideId = params.get("rideId");
-
+  const driverId = typeof window !== 'undefined' ? localStorage.getItem("driverId") : null;
   const fromLat = parseFloat(params.get("fromLat"));
   const fromLng = parseFloat(params.get("fromLng"));
   const toLat = parseFloat(params.get("toLat"));
   const toLng = parseFloat(params.get("toLng"));
-
+  const navigate = useNavigate();
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [travelInfo, setTravelInfo] = useState({ distance: "", duration: "" });
 
