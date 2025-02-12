@@ -117,7 +117,7 @@ const DriverHomePage = () => {
         <div>
             <h2>Driver Dashboard</h2>
             <button>
-                <Link to={`/one/driver/${driverId}`}></Link>
+                <Link to={`/one/driver/${driverId}`}>Driver Online Page</Link>
             </button>
             <ul>
                 {notifications.map((notification, index) => (
