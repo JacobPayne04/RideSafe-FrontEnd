@@ -76,6 +76,8 @@ const DriverShow1 = () => {
       >
         <div className="toggle-thumb"></div>
       </div>
+
+      <Link to={`/driver/home/${driver.id}`}>View Rides</Link>
     </div>
   );
 
