@@ -18,6 +18,7 @@ const libraries = ["places"];
 const ViewRideGoogleMaps = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
+  const rideId = params.get("rideId");
 
   const fromLat = parseFloat(params.get("fromLat"));
   const fromLng = parseFloat(params.get("fromLng"));
@@ -63,7 +64,7 @@ const ViewRideGoogleMaps = () => {
     }
   }, [isLoaded, fromLat, fromLng, toLat, toLng]);
 
-  const endRide = async (rideId) => {
+  const endRide = async () => {
     try {
         const response = await axios.put(`http://localhost:8080/${rideId}/accept/complete`);
         console.log("Ride ended successfully!", response.data);
