@@ -71,11 +71,25 @@ const DriverHomePage = () => {
     const acceptRide = async (rideId, fromLatitude, fromLongitude, toLatitude, toLongitude) => {
         try {
             //axios call to show ongoing rides
-            await axios.put(`http://localhost:8080/${rideId}/accept`);
+            await axios.put(`http://localhost:8080/${rideId}/accept/onGoing`);
             toast.success("Ride accepted successfully!");
             //in same call we are fetching google maps url
             const response = await axios.get(`http://localhost:8080/${rideId}/MapRoute`);
             const googleMapsUrl = response.data.googleMapsUrl;
+
+         //**
+         // Axios call to tell passenger that thier ride is accepted and driver is on the way
+         //     axios.put(`http://localhost:8080/${rideID}/${passengeID}/accept/onGoing/confimation`);
+         //     
+         // // Axios call to tell passenger that their ride is accepted and they are in teh queue
+         //     axios.put(`http://localhost:8080/${rideID}/${passengeID}/accept/in_queue/confirmation`);
+         // 
+         // ***** IF DRIVER HAS CURRENT RIDE *****
+         //         ONGOING RIDE
+         //     else - in queue
+         // 
+         // 
+         //  */
 
             //redering the google maps url
             if (googleMapsUrl) {
