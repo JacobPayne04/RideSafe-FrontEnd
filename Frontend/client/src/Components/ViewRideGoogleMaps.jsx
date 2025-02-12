@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { GoogleMap, DirectionsRenderer, useJsApiLoader } from "@react-google-maps/api";
 
 const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
 const containerStyle = {
-    width: "90%",
-    height: "700px",
-    marginLeft: "5%"
-  };
-  
+  width: "90%",
+  height: "700px",
+  marginLeft: "5%"
+};
 
-const libraries = ["places"]; 
+
+const libraries = ["places"];
 
 const ViewRideGoogleMaps = () => {
   const location = useLocation();
@@ -29,6 +31,9 @@ const ViewRideGoogleMaps = () => {
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
     libraries,
   });
+
+
+  
 
   useEffect(() => {
     if (isLoaded && fromLat && fromLng && toLat && toLng) {
@@ -58,12 +63,24 @@ const ViewRideGoogleMaps = () => {
     }
   }, [isLoaded, fromLat, fromLng, toLat, toLng]);
 
+  const endRide = async (rideId) => {
+    try {
+        const response = await axios.put(`http://localhost:8080/${rideId}/accept/complete`);
+        console.log("Ride ended successfully!", response.data);
+    } catch (error) {
+        console.error("Failed to update ride:", error);
+    }
+};
+
+
+  
   if (!isLoaded) {
     return <div>Loading...</div>;
   }
 
   return (
     <div>
+      <button onClick={() => endRide()}>END RIDE</button>
       <div style={{ textAlign: "center", marginBottom: "10px" }}>
         {travelInfo.distance && travelInfo.duration && (
           <p>
