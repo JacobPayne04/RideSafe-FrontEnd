@@ -77,19 +77,19 @@ const DriverHomePage = () => {
             const response = await axios.get(`http://localhost:8080/${rideId}/MapRoute`);
             const googleMapsUrl = response.data.googleMapsUrl;
 
-         //**
-         // Axios call to tell passenger that thier ride is accepted and driver is on the way
-         //     axios.put(`http://localhost:8080/${rideID}/${passengeID}/accept/onGoing/confimation`);
-         //     
-         // // Axios call to tell passenger that their ride is accepted and they are in teh queue
-         //     axios.put(`http://localhost:8080/${rideID}/${passengeID}/accept/in_queue/confirmation`);
-         // 
-         // ***** IF DRIVER HAS CURRENT RIDE *****
-         //         ONGOING RIDE
-         //     else - in queue
-         // 
-         // 
-         //  */
+            //**
+            // Axios call to tell passenger that thier ride is accepted and driver is on the way
+            //     axios.put(`http://localhost:8080/${rideID}/${passengeID}/accept/onGoing/confimation`);
+            //     
+            // // Axios call to tell passenger that their ride is accepted and they are in teh queue
+            //     axios.put(`http://localhost:8080/${rideID}/${passengeID}/accept/in_queue/confirmation`);
+            // 
+            // ***** IF DRIVER HAS CURRENT RIDE *****
+            //         ONGOING RIDE
+            //     else - in queue
+            // 
+            // 
+            //  */
 
             //redering the google maps url
             if (googleMapsUrl) {
@@ -125,7 +125,7 @@ const DriverHomePage = () => {
                         <p>{notification.message}</p>
                         {notification.rideId && (
                             <button
-                                onClick={() => acceptRide(notification.rideId, notification.fromLatitude, notification.fromLongitude, notification.toLatitude,  notification.toLongitude)}
+                                onClick={() => acceptRide(notification.rideId, notification.fromLatitude, notification.fromLongitude, notification.toLatitude, notification.toLongitude)}
                                 disabled={notification.status !== 'PENDING'}
                                 className="accept-ride-btn"
                             >
@@ -140,13 +140,20 @@ const DriverHomePage = () => {
                 <p>ONGOING RIDES</p>
                 {onGoingRides.length !== 0 ? (
                     onGoingRides.map((ride, index) => (
-                        <Link key={index} to={`/view/ongoing/ride/${ride.id}`}>
-                            <div>
-                                <p>Start Location: {ride.fromLocation}</p>
-                                <p>Destination Location: {ride.toLocation}</p>
-                                <p>Passenger Id: {ride.passengerId}</p>
-                            </div>
-                        </Link>
+                        <div>
+                            <p>Start Location: {ride.fromLocation}</p>
+                            <p>Destination Location: {ride.toLocation}</p>
+                            <p>Passenger Id: {ride.passengerId}</p>
+                            <button
+                                onClick={() =>
+                                    navigate(
+                                        `/view/ride/googlemaps?rideId=${ride.id}&fromLat=${ride.fromLatitude}&fromLng=${ride.fromLongitude}&toLat=${ride.toLatitude}&toLng=${ride.toLongitude}`
+                                    )
+                                }
+                            >
+                                View in Google Maps
+                            </button>
+                        </div>
                     ))
                 ) : (
                     "There are no ongoing rides"
