@@ -93,7 +93,7 @@ const DriverHomePage = () => {
 
             //redering the google maps url
             if (googleMapsUrl) {
-                navigate(`/view/ride/googlemaps?fromLat=${fromLatitude}&fromLng=${fromLongitude}&toLat=${toLatitude}&toLng=${toLongitude}`);
+                navigate(`/view/ride/googlemaps?rideId=${rideId}&fromLat=${fromLatitude}&fromLng=${fromLongitude}&toLat=${toLatitude}&toLng=${toLongitude}`);
             } else {
                 toast.error("Failed to fetch Google Maps URL");
             }
