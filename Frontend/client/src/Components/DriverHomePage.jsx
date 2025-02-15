@@ -5,6 +5,7 @@ import { useNavigate, Link, redirect } from 'react-router-dom';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import axios from 'axios';
+import { acceptRide } from '../RideServices/RideProccessing.js';
 
 const DriverHomePage = () => {
     const [notifications, setNotifications] = useState([]);
