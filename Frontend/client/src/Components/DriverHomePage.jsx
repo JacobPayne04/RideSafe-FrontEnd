@@ -71,7 +71,7 @@ const DriverHomePage = () => {
     const acceptRide = async (rideId, fromLatitude, fromLongitude, toLatitude, toLongitude) => {
         try {
             //axios call to show ongoing rides
-            await axios.put(`http://localhost:8080/${rideId}/accept/onGoing`);
+            await axios.put(`http://localhost:8080/${rideId}/accept`);
             toast.success("Ride accepted successfully!");
             //in same call we are fetching google maps url
             const response = await axios.get(`http://localhost:8080/${rideId}/MapRoute`);
