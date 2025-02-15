@@ -39,33 +39,65 @@ const ViewRideGoogleMaps = () => {
 
   useEffect(() => {
     if (!driverId) return;
-
+  
     const client = new Client({
       webSocketFactory: () => new SockJS("http://localhost:8080/ws"),
     });
-
+  
     client.onConnect = () => {
       console.log('Connected to WebSocket');
       client.subscribe(`/topic/driver/${driverId}`, (message) => {
         const notification = JSON.parse(message.body);
         console.log("Notification received:", notification);
-        toast.info(`Passenger ${notification.passengerId} booked a ride.`);
-
+  
+        // Custom Toast Content
+        const CustomToast = () => (
+          <div>
+            <p>Passenger {notification.passengerId} booked a ride.</p>
+            <button
+              onClick={() => acceptRide(
+                notification.rideId, 
+                notification.fromLatitude, 
+                notification.fromLongitude, 
+                notification.toLatitude, 
+                notification.toLongitude
+              )}
+              style={{
+                backgroundColor: '#28a745',
+                color: 'white',
+                border: 'none',
+                padding: '5px 10px',
+                cursor: 'pointer',
+                borderRadius: '4px',
+                marginTop: '5px'
+              }}
+            >
+              Accept Ride
+            </button>
+          </div>
+        );
+  
+        // Triggering Toast with Custom Content
+        toast.info(<CustomToast />, {
+          autoClose: false,
+          closeOnClick: false
+        });
+  
         setNotifications((prev) => [
           ...prev,
           { ...notification, status: notification.status || "PENDING" }
         ]);
       });
     };
-
+  
     client.onStompError = (frame) => {
       console.error('Broker reported error:', frame.headers['message']);
       console.error('Additional details:', frame.body);
     };
-
+  
     client.activate();
     clientRef.current = client;
-
+  
     return () => {
       console.log('Disconnecting from WebSocket');
       if (clientRef.current) {
@@ -73,7 +105,7 @@ const ViewRideGoogleMaps = () => {
       }
     };
   }, [driverId]);
-
+  
   const acceptRide = async (rideId, fromLatitude, fromLongitude, toLatitude, toLongitude) => {
     try {
       await axios.put(`http://localhost:8080/${rideId}/accept`);
