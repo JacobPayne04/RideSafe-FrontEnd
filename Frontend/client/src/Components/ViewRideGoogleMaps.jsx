@@ -6,7 +6,7 @@ import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {completeRide} from '../RideServices/RideProccessing.js';
+import { acceptRide, completeRide } from '../RideServices/RideProccessing.js';
 
 const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
@@ -40,65 +40,56 @@ const ViewRideGoogleMaps = () => {
 
   useEffect(() => {
     if (!driverId) return;
-  
+
     const client = new Client({
       webSocketFactory: () => new SockJS("http://localhost:8080/ws"),
     });
-  
+
     client.onConnect = () => {
       console.log('Connected to WebSocket');
       client.subscribe(`/topic/driver/${driverId}`, (message) => {
         const notification = JSON.parse(message.body);
         console.log("Notification received:", notification);
-  
+
         // Custom Toast Content
         const CustomToast = () => (
           <div>
             <p>Passenger {notification.passengerId} booked a ride.</p>
             <button
               onClick={() => acceptRide(
-                notification.rideId, 
-                notification.fromLatitude, 
-                notification.fromLongitude, 
-                notification.toLatitude, 
+                notification.rideId,
+                notification.fromLatitude,
+                notification.fromLongitude,
+                notification.toLatitude,
                 notification.toLongitude
-              )}
-              style={{
-                backgroundColor: '#28a745',
-                color: 'white',
-                border: 'none',
-                padding: '5px 10px',
-                cursor: 'pointer',
-                borderRadius: '4px',
-                marginTop: '5px'
-              }}
+              )} style={{ backgroundColor: '#28a745',color: 'white',border: 'none',padding: '5px 10px',cursor: 'pointer',borderRadius: '4px',marginTop: '5px'}}
             >
               Accept Ride
             </button>
           </div>
         );
-  
+
         // Triggering Toast with Custom Content
         toast.info(<CustomToast />, {
           autoClose: false,
           closeOnClick: false
         });
-  
+
         setNotifications((prev) => [
           ...prev,
           { ...notification, status: notification.status || "PENDING" }
         ]);
       });
     };
-  
+
     client.onStompError = (frame) => {
       console.error('Broker reported error:', frame.headers['message']);
       console.error('Additional details:', frame.body);
     };
-  
+
     client.activate();
     clientRef.current = client;
-  
+
     return () => {
       console.log('Disconnecting from WebSocket');
       if (clientRef.current) {
@@ -106,22 +97,19 @@ const ViewRideGoogleMaps = () => {
       }
     };
   }, [driverId]);
-  
-  const acceptRide = async (rideId, fromLatitude, fromLongitude, toLatitude, toLongitude) => {
-    try {
-      await axios.put(`http://localhost:8080/${rideId}/accept`);
-      toast.success("Ride accepted successfully!");
 
-      setNotifications((prevNotifications) =>
-        prevNotifications.map((notification) =>
-          notification.rideId === rideId ? { ...notification, status: "ONGOING" } : notification
-        )
-      );
-    } catch (error) {
-      toast.error("Failed to update ride");
-      console.error("Error accepting ride:", error);
-    }
+
+  const handleAcceptRide = async (rideId) => {
+    const driverId = localStorage.getItem("driverId");
+    acceptRide(rideId, driverId);
   };
+
+  const handleEndRide = async (rideId) => {
+    const driverId = localStorage.getItem("driverId");
+    completeRide(rideId, driverId);
+    navigate(`/driver/home/${driverId}`);
+  };
+
 
   useEffect(() => {
     if (isLoaded && fromLat && fromLng && toLat && toLng) {
@@ -150,22 +138,10 @@ const ViewRideGoogleMaps = () => {
     }
   }, [isLoaded, fromLat, fromLng, toLat, toLng]);
 
-  const endRide = async () => {
-    try {
-      const response = await axios.put(`http://localhost:8080/${rideId}/accept/complete`);
-      console.log("Ride ended successfully!", response.data);
-    } catch (error) {
-      console.error("Failed to update ride:", error);
-    }
-  };
-
-  if (!isLoaded) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div>
-      <button onClick={() => endRide()}>END RIDE</button>
+      <button onClick={() => handleEndRide(rideId)}>END RIDE</button>
       <div style={{ textAlign: "center", marginBottom: "10px" }}>
         {travelInfo.distance && travelInfo.duration && (
           <p>
@@ -194,7 +170,7 @@ const ViewRideGoogleMaps = () => {
             <p>This passenger {notification.passengerName} booked a ride.</p>
             {notification.rideId && (
               <button
-                onClick={() => acceptRide(notification.rideId, notification.fromLatitude, notification.fromLongitude, notification.toLatitude, notification.toLongitude)}
+                onClick={() => handleAcceptRide(notification.rideId, notification.fromLatitude, notification.fromLongitude, notification.toLatitude, notification.toLongitude)}
                 disabled={notification.status !== 'PENDING'}
                 style={{
                   backgroundColor: notification.status === 'PENDING' ? '#28a745' : '#6c757d',

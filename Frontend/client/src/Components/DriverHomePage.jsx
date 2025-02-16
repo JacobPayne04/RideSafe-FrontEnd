@@ -6,6 +6,7 @@ import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import axios from 'axios';
 import { acceptRide } from '../RideServices/RideProccessing.js';
+import { useJsApiLoader } from "@react-google-maps/api";
 
 const DriverHomePage = () => {
     const [notifications, setNotifications] = useState([]);
@@ -14,6 +15,14 @@ const DriverHomePage = () => {
     const clientRef = useRef(null);
     const driverId = typeof window !== 'undefined' ? localStorage.getItem("driverId") : null;
 
+    const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+    const libraries = ["places"];
+
+    const { isLoaded } = useJsApiLoader({
+        googleMapsApiKey: GOOGLE_MAPS_API_KEY,
+        libraries,
+      });
+    
     // Function to fetch ongoing rides
     const fetchOngoingRides = () => {
         if (!driverId) return;
@@ -69,100 +78,101 @@ const DriverHomePage = () => {
         fetchOngoingRides(); // Fetch rides initially
     }, [driverId]);
 
-    const acceptRide = async (rideId, fromLatitude, fromLongitude, toLatitude, toLongitude) => {
+    const handleAcceptRide = async (rideId, fromLatitude, fromLongitude, toLatitude, toLongitude) => {
         try {
-            //axios call to show ongoing rides
-            await axios.put(`http://localhost:8080/${rideId}/accept`);
-            toast.success("Ride accepted successfully!");
-            //in same call we are fetching google maps url
+            // Ensure Google Maps API is loaded before proceeding
+            if (!isLoaded) {
+                toast.error("Google Maps is still loading...");
+                return;
+            }
+
+            const driverId = localStorage.getItem("driverId");
+            if (!driverId) {
+                toast.error("Driver ID not found.");
+                return;
+            }
+
+            // ✅ Ensure ride is accepted before moving forward
+            await acceptRide(rideId, driverId);
+
+            // ✅ Fetch Google Maps URL after ride is accepted
             const response = await axios.get(`http://localhost:8080/${rideId}/MapRoute`);
             const googleMapsUrl = response.data.googleMapsUrl;
 
-            //**
-            // Axios call to tell passenger that thier ride is accepted and driver is on the way
-            //     axios.put(`http://localhost:8080/${rideID}/${passengeID}/accept/onGoing/confimation`);
-            //     
-            // // Axios call to tell passenger that their ride is accepted and they are in teh queue
-            //     axios.put(`http://localhost:8080/${rideID}/${passengeID}/accept/in_queue/confirmation`);
-            // 
-            // ***** IF DRIVER HAS CURRENT RIDE *****
-            //         ONGOING RIDE
-            //     else - in queue
-            // 
-            // 
-            //  */
-
-            //redering the google maps url
             if (googleMapsUrl) {
-                navigate(`/view/ride/googlemaps?rideId=${rideId}&fromLat=${fromLatitude}&fromLng=${fromLongitude}&toLat=${toLatitude}&toLng=${toLongitude}`);
+                // ✅ Navigate to Google Maps View
+                navigate(
+                    `/view/ride/googlemaps?rideId=${rideId}&fromLat=${fromLatitude}&fromLng=${fromLongitude}&toLat=${toLatitude}&toLng=${toLongitude}`
+                );
             } else {
                 toast.error("Failed to fetch Google Maps URL");
             }
 
-            // Update ride status in notifications
+            // ✅ Update ride status in notifications
             setNotifications((prevNotifications) =>
                 prevNotifications.map((notification) =>
                     notification.rideId === rideId ? { ...notification, status: "ONGOING" } : notification
                 )
             );
 
-            // Fetch the latest ongoing rides after accepting a ride
-            fetchOngoingRides();
+            fetchOngoingRides(); // ✅ Refresh ongoing rides list
         } catch (error) {
             toast.error("Failed to update ride");
             console.error("Error accepting ride:", error);
         }
     };
 
-    return (
-        <div>
-            <h2>Driver Dashboard</h2>
-            <button>
-                <Link to={`/one/driver/${driverId}`}>Driver Online Page</Link>
-            </button>
-            <ul>
-                {notifications.map((notification, index) => (
-                    <li key={index}>
-                        <p>{notification.message}</p>
-                        {notification.rideId && (
-                            <button
-                                onClick={() => acceptRide(notification.rideId, notification.fromLatitude, notification.fromLongitude, notification.toLatitude, notification.toLongitude)}
-                                disabled={notification.status !== 'PENDING'}
-                                className="accept-ride-btn"
-                            >
-                                {notification.status === 'PENDING' ? "Accept Ride" : "Ride is Accepted"}
-                            </button>
-                        )}
-                    </li>
-                ))}
-            </ul>
 
-            <div>
-                <p>ONGOING RIDES</p>
-                {onGoingRides.length !== 0 ? (
-                    onGoingRides.map((ride, index) => (
-                        <div>
-                            <p>Start Location: {ride.fromLocation}</p>
-                            <p>Destination Location: {ride.toLocation}</p>
-                            <p>Passenger Id: {ride.passengerId}</p>
-                            <button
-                                onClick={() =>
-                                    navigate(
-                                        `/view/ride/googlemaps?rideId=${ride.id}&fromLat=${ride.fromLatitude}&fromLng=${ride.fromLongitude}&toLat=${ride.toLatitude}&toLng=${ride.toLongitude}`
-                                    )
-                                }
-                            >
-                                View in Google Maps
-                            </button>
-                        </div>
-                    ))
-                ) : (
-                    "There are no ongoing rides"
-                )}
-            </div>
-            <ToastContainer />
+
+return (
+    <div>
+        <h2>Driver Dashboard</h2>
+        <button>
+            <Link to={`/one/driver/${driverId}`}>Driver Online Page</Link>
+        </button>
+        <ul>
+            {notifications.map((notification, index) => (
+                <li key={index}>
+                    <p>{notification.message}</p>
+                    {notification.rideId && (
+                        <button
+                            onClick={() => handleAcceptRide(notification.rideId, notification.fromLatitude, notification.fromLongitude, notification.toLatitude, notification.toLongitude)}
+                            disabled={notification.status !== 'PENDING'}
+                            className="accept-ride-btn"
+                        >
+                            {notification.status === 'PENDING' ? "Accept Ride" : "Ride is Accepted"}
+                        </button>
+                    )}
+                </li>
+            ))}
+        </ul>
+
+        <div>
+            <p>ONGOING RIDES</p>
+            {onGoingRides.length !== 0 ? (
+                onGoingRides.map((ride, index) => (
+                    <div>
+                        <p>Start Location: {ride.fromLocation}</p>
+                        <p>Destination Location: {ride.toLocation}</p>
+                        <p>Passenger Id: {ride.passengerId}</p>
+                        <button
+                            onClick={() =>
+                                navigate(
+                                    `/view/ride/googlemaps?rideId=${ride.id}&fromLat=${ride.fromLatitude}&fromLng=${ride.fromLongitude}&toLat=${ride.toLatitude}&toLng=${ride.toLongitude}`
+                                )
+                            }
+                        >
+                            View in Google Maps
+                        </button>
+                    </div>
+                ))
+            ) : (
+                "There are no ongoing rides"
+            )}
         </div>
-    );
+        <ToastContainer />
+    </div>
+);
 };
 
 export default DriverHomePage;

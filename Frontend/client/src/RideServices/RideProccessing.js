@@ -20,11 +20,13 @@ export const acceptRide = async (rideId, driverId) => {
 
 export const completeRide = async (rideId,driverId) => {
     try {
-        const repoonse = await axios.put(`${API_BASE_URL}/${rideId}/complete`,null , {
+        const reponse = await axios.put(`${API_BASE_URL}/${rideId}/complete`,null , {
             params: { driverId}
         });
         toast.success("🏁 Ride completed successfully!");
+        console.log(reponse.data)
     } catch {
+       
         toast.error("❌ Failed to complete ride.");
         console.log("Error completing ride:");
     }
