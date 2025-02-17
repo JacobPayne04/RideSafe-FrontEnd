@@ -26,8 +26,9 @@ const GoogleRegisterDriver = () => {
             const data = {...values, email, googleId};
 
             axios.post("http://localhost:8080/register/driver/google"),data
-                .then((reponse)=> {
+                .then(()=> {
                 navigate(`/driver/home/${driverId}`);
+                
                 })
                 .catch((error)=> console.error('There was an error!', error))
 

@@ -16,6 +16,7 @@ import ViewRideById from './Components/ViewRideById';
 import DriverHomePage from './Components/DriverHomePage';
 import ViewOneRideById from './Components/ViewOneRideById';
 import ViewRideGoogleMaps from './Components/ViewRideGoogleMaps';
+import GoogleRegisterPassenger from './Components/GoogleRegisterPassenger';
 
 
 function App() {
@@ -36,7 +37,9 @@ function App() {
       <Route path="/driver/home/:driverId" element={<DriverHomePage />} />
       <Route path="/view/ongoing/ride/:rideId" element={<ViewOneRideById />} />
       <Route path="/view/ride/googlemaps" element={<ViewRideGoogleMaps />} />
-
+      <Route path="register/passenger/google" element={<GoogleRegisterPassenger />} />
+      <Route path="register/Driver/google" element={<GoogleRegisterDriver />} />
+      
       {/* Add a new route here for passenger homepage */}
       {/* Add a new route here for driver homepage */}
       {/* add route here for pasenger/driver settings*/}

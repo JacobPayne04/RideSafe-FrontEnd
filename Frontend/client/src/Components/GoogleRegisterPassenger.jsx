@@ -23,7 +23,7 @@ const GoogleRegisterPassenger = () => {
             const data = {...values, email, googleId};
 
             axios.post("http://localhost:8080/register/passenger/google"),data
-                .then((reponse)=> {
+                .then(()=> {
                 navigate(`/passenger/home/${passengerId}`);
                 })
                 .catch((error)=> console.error('There was an error!', error))
