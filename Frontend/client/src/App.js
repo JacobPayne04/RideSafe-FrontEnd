@@ -17,7 +17,7 @@ import DriverHomePage from './Components/DriverHomePage';
 import ViewOneRideById from './Components/ViewOneRideById';
 import ViewRideGoogleMaps from './Components/ViewRideGoogleMaps';
 import GoogleRegisterPassenger from './Components/GoogleRegisterPassenger';
-
+import GoogleRegisterDriver from './Components/GoogleRegisterDriver';
 
 function App() {
   return (
