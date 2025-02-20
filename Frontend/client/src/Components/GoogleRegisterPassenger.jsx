@@ -17,6 +17,8 @@ const GoogleRegisterPassenger = () => {
             lastName : '',
             email : email,
             googleId : googleId,
+            Password : null,
+            confirmPassword : null,
         },
         validationSchema: Yup.object({
             firstName: Yup.string().required('First Name is required'),
@@ -39,6 +41,14 @@ const GoogleRegisterPassenger = () => {
     return (
         <form onSubmit={formik.handleSubmit}>
           <h2>Complete Google Sign-Up</h2>
+
+          <input name="firstName" placeholder="First Name" value={formik.values.firstName}
+            onChange={formik.handleChange} onBlur={formik.handleBlur} />
+          {formik.touched.firstName && formik.errors.firstName && <div>{formik.errors.firstName}</div>}
+          
+          <input name="lastName" placeholder="Last Name" value={formik.values.lastName}
+            onChange={formik.handleChange} onBlur={formik.handleBlur} />
+          {formik.touched.lastName && formik.errors.lastName && <div>{formik.errors.lastName}</div>}
         
           <p>Email: <strong>{email}</strong></p>
           <input name="email" placeholder="email" value={formik.values.email}
@@ -49,13 +59,7 @@ const GoogleRegisterPassenger = () => {
             onChange={formik.handleChange} onBlur={formik.handleBlur} />
           {formik.touched.googleId && formik.errors.googleId && <div>{formik.errors.googleId}</div>}
           
-          <input name="firstName" placeholder="First Name" value={formik.values.firstName}
-            onChange={formik.handleChange} onBlur={formik.handleBlur} />
-          {formik.touched.firstName && formik.errors.firstName && <div>{formik.errors.firstName}</div>}
           
-          <input name="lastName" placeholder="Last Name" value={formik.values.lastName}
-            onChange={formik.handleChange} onBlur={formik.handleBlur} />
-          {formik.touched.lastName && formik.errors.lastName && <div>{formik.errors.lastName}</div>}
           
           <button type="submit">Complete Sign-Up</button>
         </form>
