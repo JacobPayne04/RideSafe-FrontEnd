@@ -20,7 +20,6 @@ import ViewRideGoogleMaps from './Components/ViewRideGoogleMaps';
 import GoogleRegisterPassenger from './Components/GoogleRegisterPassenger';
 import GoogleRegisterDriver from './Components/GoogleRegisterDriver';
 import GoogleSignIn from './Components/GoogleSignIn';
-import GoogleSignUp from './Components/GoogleSignUp';
 
 
 
@@ -48,7 +47,6 @@ function App() {
         <Route path="register/passenger/google" element={<GoogleRegisterPassenger />} />
         <Route path="register/Driver/google" element={<GoogleRegisterDriver />} />
         <Route path="/google/signin/:role" element={<GoogleSignIn />} />
-        <Route path="/google/signup/:role" element={<GoogleSignUp />} />
 
         {/* Add a new route here for passenger homepage */}
         {/* Add a new route here for driver homepage */}

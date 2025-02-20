@@ -12,16 +12,24 @@ const GoogleSignIn = () => {
     const { role } = useParams()
 
     const onSuccess = (response) => {
-
-        const { email, googleId } = response.profileObj;
-        const data = { email, googleId }
-
-        axios.post(`/http://localhost:8080/signin/${role}/google`, data)
-            .then(() => {
-                console.log("Google Sign In Successful: ", data)
-            })
-            .catch((error) => console.error("There was an error: ", error))
-    }
+        // Log the full response to check its structure
+        console.log("Google response:", response);
+    
+        if (response && response.profileObj) {
+            const { email, googleId } = response.profileObj;
+            const data = { email, googleId };
+    
+            axios.post(`http://localhost:8080/signin/${role}/google`, data)
+                .then(() => {
+                    console.log("Google Sign In Successful: ", data);
+                    navigate(`register/${role}/google`)
+                    // Proceed to your next actions (e.g., navigate, set state)
+                })
+                .catch((error) => console.error("There was an error: ", error));
+        } else {
+            console.error("Profile object is missing in the response.");
+        }
+    };
 
     const onFailure = (response) => {
         console.error("Google Sign-In Failed: ", response)
