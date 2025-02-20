@@ -23,7 +23,7 @@ const GoogleSignUp = () => {
         onSubmit: (values) => {
             const data = { ...values, email, googleId };
 
-            axios.put(`/http:localhost:8080/register/${role}/google`, data)
+            axios.put(`http://localhost:8080/register/${role}/google`, data)
                 .then(() => {
                     console.log("Google Sign Up Successful: ", data)
                 })

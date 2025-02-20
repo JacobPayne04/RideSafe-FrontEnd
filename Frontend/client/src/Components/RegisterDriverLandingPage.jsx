@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import '../Styling/RegisterDriverLandingPage.css'; // Import the external CSS file
 
 const RegisterDriverLandingPage = () => {
     const navigate = useNavigate();
+    const [showSignInPopup, setShowSignInPopup] = useState(false);
+    const [showSignUpPopup, setShowSignUpPopup] = useState(false);
 
     const handleDriverRegister = () => {
         navigate('/register/driver');
@@ -13,6 +15,22 @@ const RegisterDriverLandingPage = () => {
     const handlePassengerRegister = () => {
         navigate('/register/passenger');
     };
+
+    const handleGoogleSignInPopUp = (role) => {
+        setShowSignUpPopup(true)
+    }
+
+    const handleGoogleSignUpPopUp = (role) => {
+        setShowSignInPopup(true)
+    }
+
+    const handleGoogleSignInNav = (role) => {
+        navigate(`/google/signin/${role}`)
+    }
+
+    const handleGoogleSignUpNav = (role) => {
+        navigate(`/google/signup/${role}`)
+    }
 
     return (
         <div className="register-container">
@@ -27,6 +45,35 @@ const RegisterDriverLandingPage = () => {
                 <p>Already a Driver? <button className="register-card"><Link to="/login/driver">Login Driver</Link></button></p>
                 <p>Already a passenger? <button className="register-card"><Link to="/login/passenger">Login Passenger</Link></button></p>
             </div>
+            <div>
+                <p>Sign Up With <button onClick={handleGoogleSignUpPopUp}>Google</button></p>
+                <p>Sign In With <button onClick={handleGoogleSignInPopUp}>Google</button></p>
+
+            </div>
+
+            {showSignInPopup && (
+                <div className='popup-overlay'>
+                    <div className='popup'>
+                        <p>Google Sign In As A: </p>
+                        <div className='popup-buttons'>
+                            <button className='popup-driver' onClick={() => handleGoogleSignInNav('driver')}>Driver</button>
+                            <button className='popup-passenger' onClick={() => handleGoogleSignInNav('passenger')}>Passenger</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {showSignUpPopup && (
+                <div className='popup-overlay'>
+                    <div className='popup'>
+                        <p>Google Sign Up As A: </p>
+                        <div className='popup-buttons'>
+                            <button className='popup-driver' onClick={() => handleGoogleSignUpNav('driver')}>Driver</button>
+                            <button className='popup-passenger' onClick={() => handleGoogleSignUpNav('passenger')}>Passenger</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
