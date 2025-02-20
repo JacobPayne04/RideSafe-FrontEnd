@@ -21,6 +21,13 @@ const GoogleSignIn = () => {
 
             // Now you can extract the user's email and ID from the decoded token
             const { email, sub: googleId } = decodedToken;
+
+        if (response.credential) {
+            const decodedToken = jwtDecode(response.credential);
+            console.log("Decoded Token:", decodedToken);
+
+            // Now you can extract the user's email and ID from the decoded token
+            const { email, sub: googleId } = decodedToken;
             const data = { email, googleId };
 
             // Send this data to your server
@@ -28,9 +35,12 @@ const GoogleSignIn = () => {
                 .then(() => {
                     console.log("Google Sign-In Successful: ", data);
                     // Navigate or proceed further
+                    console.log("Google Sign-In Successful: ", data);
+                    // Navigate or proceed further
                 })
                 .catch((error) => console.error("There was an error: ", error));
         } else {
+            console.error("Credential missing in the response.");
             console.error("Credential missing in the response.");
         }
     };
