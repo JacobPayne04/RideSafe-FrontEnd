@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
@@ -11,9 +11,9 @@ const GoogleRegisterDriver = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { email, googleId } = location.state || {};
+    const driverId = typeof window !== 'undefined' ? localStorage.getItem("driverId") : null;
 
-
-    const Formik = useFormik({
+    const formik = useFormik({
         initialValues: {
             firstName : '',
             lastName : '',
@@ -28,7 +28,7 @@ const GoogleRegisterDriver = () => {
         onSubmit: (values) => {
             const data = {...values, email, googleId};
 
-            axios.post("http://localhost:8080/register/driver/google"),data
+            axios.post("http://localhost:8080/register/driver/google", data)
                 .then(()=> {
                 navigate(`/driver/home/${driverId}`);
                 
