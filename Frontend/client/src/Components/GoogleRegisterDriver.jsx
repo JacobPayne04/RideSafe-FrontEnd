@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 
-//#TODO add prefilled fields for complete Sign-up-Driver
+
 
 const GoogleRegisterDriver = () => {
     const location = useLocation();
@@ -42,7 +42,7 @@ const GoogleRegisterDriver = () => {
         },
     });
 
-
+//#TODO add prefilled fields.
     return (
         <form onSubmit={formik.handleSubmit}>
           <h2>Complete Google Sign-Up</h2>

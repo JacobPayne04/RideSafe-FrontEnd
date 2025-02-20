@@ -27,6 +27,7 @@ const GoogleSignIn = () => {
             axios.post(`/http://localhost:8080/signin/${role}/google`, data)
                 .then(() => {
                     console.log("Google Sign-In Successful: ", data);
+                    navigate(`/register/${role}/google`)
                     // Navigate or proceed further
                 })
                 .catch((error) => console.error("There was an error: ", error));
@@ -40,8 +41,11 @@ const GoogleSignIn = () => {
     }
 
     return (
+        
         <div>
             <h2>Google Sign In for {role}</h2>
+            <button onClick={() => navigate(`/register/${role}/google`)}>this is big button</button>
+
             <GoogleLogin
                 clientId="YOUR_GOOGLE_CLIENT_ID"
                 buttonText="Sign in with Google"
