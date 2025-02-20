@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { GoogleLogin } from '@react-oauth/google';
-import { jwtDecode } from 'jwt-decode'; 
+import { jwtDecode } from 'jwt-decode';
 
 
 const GoogleSignIn = () => {
@@ -24,7 +24,7 @@ const GoogleSignIn = () => {
             const data = { email, googleId };
 
             // Send this data to your server
-            axios.post(`/http://localhost:8080/signin/${role}/google`, data)
+            axios.post(`http://localhost:8080/signin/${role}/google`, data)
                 .then(() => {
                     console.log("Google Sign-In Successful: ", data);
                     navigate(`/register/${role}/google`)
