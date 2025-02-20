@@ -7,7 +7,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 const GoogleSignUp = () => {
 
     const navigate = useNavigate()
-    const { role } = useParams
+    const { role } = useParams()
     const location = useLocation()
     const { email, googleId } = location.state || {}
 
