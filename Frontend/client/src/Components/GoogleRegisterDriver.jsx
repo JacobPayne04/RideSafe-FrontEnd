@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
-
+//#TODO add prefilled fields for complete Sign-up-Driver
 
 const GoogleRegisterDriver = () => {
     const location = useLocation();
@@ -17,6 +17,8 @@ const GoogleRegisterDriver = () => {
             firstName : '',
             lastName : '',
             licensPlate : '',
+            email : email,
+            googleId : googleId,
         },
         validationSchema: Yup.object({
             firstName: Yup.string().required('First Name is required'),
@@ -27,7 +29,7 @@ const GoogleRegisterDriver = () => {
         onSubmit: (values) => {
             const data = {...values, email, googleId};
 
-            axios.post("http://localhost:8080/register/driver/google", data)
+            axios.post("http://localhost:8080/new", data)
                 .then(()=> {
                 navigate(`/driver/home/${driverId}`);
                 
@@ -41,7 +43,15 @@ const GoogleRegisterDriver = () => {
     return (
         <form onSubmit={formik.handleSubmit}>
           <h2>Complete Google Sign-Up</h2>
+
           <p>Email: <strong>{email}</strong></p>
+          <input name="email" placeholder="email" value={formik.values.email}
+            onChange={formik.handleChange} onBlur={formik.handleBlur} />
+          {formik.touched.email && formik.errors.email && <div>{formik.errors.email}</div>}
+
+          <input name="googleId" placeholder="googleId" value={formik.values.googleId}
+            onChange={formik.handleChange} onBlur={formik.handleBlur} />
+          {formik.touched.googleId && formik.errors.googleId && <div>{formik.errors.googleId}</div>}
           
           <input name="firstName" placeholder="First Name" value={formik.values.firstName}
             onChange={formik.handleChange} onBlur={formik.handleBlur} />
