@@ -7,7 +7,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 const GoogleSignUp = () => {
 
     const navigate = useNavigate()
-    const { role } = useParams
+    const { role } = useParams()
     const location = useLocation()
     const { email, googleId } = location.state || {}
 
@@ -23,7 +23,7 @@ const GoogleSignUp = () => {
         onSubmit: (values) => {
             const data = { ...values, email, googleId };
 
-            axios.put(`/http:localhost:8080/register/${role}/google`, data)
+            axios.put(`http://localhost:8080/register/${role}/google`, data)
                 .then(() => {
                     console.log("Google Sign Up Successful: ", data)
                 })
