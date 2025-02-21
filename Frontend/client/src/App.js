@@ -13,9 +13,7 @@ import RegisterPassenger from './Components/RegisterPassenger';
 import LoginPassenger from './Components/LoginPassenger';
 import RideForm from './Components/RideForm';
 import PassengerShow1 from './Components/PassengerShow1';
-import ViewRideById from './Components/ViewRideById';
 import DriverHomePage from './Components/DriverHomePage';
-import ViewOneRideById from './Components/ViewOneRideById';
 import ViewRideGoogleMaps from './Components/ViewRideGoogleMaps';
 import GoogleRegisterPassenger from './Components/GoogleRegisterPassenger';
 import GoogleRegisterDriver from './Components/GoogleRegisterDriver';
@@ -43,23 +41,21 @@ function App() {
         <Route path="/login" element={<LoginLandingPage />} />
         <Route path="/login/driver" element={<LoginDriver />} />
         <Route path="/register/driver" element={<RegisterDriver />} />
+        <Route path="register/driver/google" element={<GoogleRegisterDriver />} />
         <Route path="/driver/home/:driverId" element={<DriverHomePage />} />
 
         {/* Passenger Routes */}
         <Route path="/register/passenger" element={<RegisterPassenger />} />
+        <Route path="register/passenger/google" element={<GoogleRegisterPassenger />} />
         <Route path="/login/passenger" element={<LoginPassenger />} />
         <Route path="/Passenger/home" element={<PassengerShow1 />} />
 
         {/* Ride Routes */}
         <Route path="/passenger/:passengerId/book/ride/driver/:driverId" element={<RideForm />} />
-        <Route path="/ride/:rideId" element={<ViewRideById />} />
-        <Route path="/view/ongoing/ride/:rideId" element={<ViewOneRideById />} />
+        <Route path="/view/ride/googlemaps" element={<ViewRideGoogleMaps />} />
 
         {/* Google API Routes */}
         <Route path="/google/signin/:role" element={ <GoogleSignIn/> } />
-        <Route path="/view/ride/googlemaps" element={<ViewRideGoogleMaps />} />
-        <Route path="register/passenger/google" element={<GoogleRegisterPassenger />} />
-        <Route path="register/driver/google" element={<GoogleRegisterDriver />} />
 
         {/* Add a new route here for passenger homepage */}
         {/* Add a new route here for driver homepage */}
