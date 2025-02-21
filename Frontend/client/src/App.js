@@ -36,7 +36,7 @@ function App() {
         <Route path="/admin/home" element={ <AdminHome/> }/>
         
         {/* Driver Routes */}
-        <Route path="/driver/all" element={<AllDrivers />} />
+        <Route path="/drivers/all" element={<AllDrivers />} />
         <Route path="/one/driver/:id" element={<DriverShow1 />} />
         <Route path="/login" element={<LoginLandingPage />} />
         <Route path="/login/driver" element={<LoginDriver />} />
