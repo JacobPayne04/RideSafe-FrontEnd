@@ -45,7 +45,7 @@ function App() {
         <Route path="/view/ongoing/ride/:rideId" element={<ViewOneRideById />} />
         <Route path="/view/ride/googlemaps" element={<ViewRideGoogleMaps />} />
         <Route path="register/passenger/google" element={<GoogleRegisterPassenger />} />
-        <Route path="register/Driver/google" element={<GoogleRegisterDriver />} />
+        <Route path="register/driver/google" element={<GoogleRegisterDriver />} />
         <Route path="/google/signin/:role" element={<GoogleSignIn />} />
 
         {/* Add a new route here for passenger homepage */}
