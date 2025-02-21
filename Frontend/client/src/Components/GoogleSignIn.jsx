@@ -23,6 +23,11 @@ const GoogleSignIn = () => {
             const { email, sub: googleId } = decodedToken;
             const data = { email, googleId };
 
+            localStorage.setItem("user", JSON.stringify(data));
+
+            const user = JSON.parse(localStorage.getItem("user"));
+            console.log(user.email, user.googleId);
+
             // Send this data to your server
             axios.post(`http://localhost:8080/signin/${role}/google`, data)
                 .then(() => {
