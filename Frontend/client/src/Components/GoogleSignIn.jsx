@@ -16,6 +16,7 @@ const GoogleSignIn = () => {
     const { role } = useParams()
 
     const onSuccess = async (response) => {
+    const onSuccess = async (response) => {
         console.log("Google response:", response);
 
         if (response.credential) {
@@ -45,12 +46,31 @@ const GoogleSignIn = () => {
                 }
             } catch (error) {
                 console.error("Error during Google Sign-In process:", error);
+                navigate(`/register/${role}/google`);
+            }
+            console.log("Stored User Data:", JSON.parse(localStorage.getItem("user")));
+
+            try {
+                // Send user data to backend
+                await axios.post(`http://localhost:8080/signup/${role}/google`, data);
+                console.log("Google Sign-In Successful: ", data);
+
+                // Check if account exists
+                const response = await axios.post(`http://localhost:8080/signup/${role}/googleId`, data);
+                
+                if (response.data.exists) { 
+                    const driverId = localStorage.getItem("driverId");
+                    navigate(`/driver/home/${driverId}`);
+                } else {
+                    navigate(`/register/${role}/google`);
+                }
+            } catch (error) {
+                console.error("Error during Google Sign-In process:", error);
             }
         } else {
             console.error("Credential missing in the response.");
         }
     };
-
 
     return (
         
