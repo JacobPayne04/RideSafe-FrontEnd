@@ -1,16 +1,14 @@
-import { useFormik } from 'formik'
-import React from 'react'
-import * as Yup from 'yup';
-import axios from 'axios';
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import React from 'react';
 import { GoogleLogin } from '@react-oauth/google';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
 const clientId = process.env.REACT_APP_CLIENTID;
 
 const GoogleSignIn = () => {
-    const navigate = useNavigate()
-    const { role } = useParams()
+    const navigate = useNavigate();
+    const { role } = useParams();
 
     const onSuccess = async (response) => {
         console.log("Google response:", response);
@@ -27,18 +25,20 @@ const GoogleSignIn = () => {
             console.log("Stored User Data:", JSON.parse(localStorage.getItem("user")));
 
             try {
-                // Send user data to backend
                 await axios.post(`http://localhost:8080/signup/${role}/google`, data);
                 console.log("Google Sign-In Successful: ", data);
 
-                // Check if account exists
                 const response = await axios.post(`http://localhost:8080/signup/${role}/googleId`, data);
-                
-                if (response.data.exists) { 
-                    const driverId = localStorage.getItem("driverId");
-                    navigate(`/driver/home/${driverId}`);
+
+                const email = localStorage.getItem("email")
+
+                if (response.data.exists) {
+                    navigate("/drivers/all")
+                    // const driverId = localStorage.getItem("driverId");
+                    // console.log("Driver Id 🆔🆔🆔", driverId)
+                    // navigate(`/driver/home/${driverId}`);
                 } else {
-                    navigate(`/register/${role}/google`);
+                    navigate("/admin/home");
                 }
             } catch (error) {
                 console.error("Error during Google Sign-In process:", error);
@@ -61,7 +61,7 @@ const GoogleSignIn = () => {
                 cookiePolicy={'single_host_origin'}
             />
         </div>
-    )
+    );
 }
 
 export default GoogleSignIn;
