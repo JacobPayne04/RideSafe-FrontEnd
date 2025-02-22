@@ -6,9 +6,9 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 
+const clientId = process.env.REACT_APP_CLIENTID;
 
 const GoogleSignIn = () => {
-
     const navigate = useNavigate()
     const { role } = useParams()
 
@@ -48,25 +48,20 @@ const GoogleSignIn = () => {
             console.error("Credential missing in the response.");
         }
     };
-    const onFailure = (response) => {
-        console.error("Google Sign-In Failed: ", response)
-    }
 
     return (
-        
         <div>
             <h2>Google Sign In for {role}</h2>
             <button onClick={() => navigate(`/register/${role}/google`)}>this is big button</button>
 
             <GoogleLogin
-                clientId="YOUR_GOOGLE_CLIENT_ID"
+                clientId={clientId}
                 buttonText="Sign in with Google"
                 onSuccess={onSuccess}
-                onFailure={onFailure}
                 cookiePolicy={'single_host_origin'}
             />
         </div>
     )
 }
 
-export default GoogleSignIn
+export default GoogleSignIn;
