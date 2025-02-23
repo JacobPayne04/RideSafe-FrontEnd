@@ -29,7 +29,7 @@ const GoogleRegisterDriver = () => {
         onSubmit: async (values) => {
             try {
                 console.log("Submitting data:", values);
-                const response = await axios.post("http://localhost:8080/driver/new", values, {
+                const response = await axios.post("http://localhost:8080/new", values, {
                     headers: { 'Content-Type': 'application/json' }
                 });
                 console.log("Driver created:", response.data);
