@@ -29,11 +29,11 @@ const GoogleRegisterDriver = () => {
         onSubmit: async (values) => {
             try {
                 console.log("Submitting data:", values);
-                const response = await axios.post("http://localhost:8080/driver/new", values, {
+                const response = await axios.post("http://localhost:8080/new", values, {
                     headers: { 'Content-Type': 'application/json' }
                 });
                 console.log("Driver created:", response.data);
-                const driverId = localStorage.setItem("driverId", response.data.id); 
+                const driverId = localStorage.getItem("driverId");
                 navigate(`/driver/home/${driverId}`);
             } catch (error) {
                 console.error('There was an error!', error.response ? error.response.data : error);

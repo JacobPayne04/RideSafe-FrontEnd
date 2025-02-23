@@ -11,43 +11,28 @@ const GoogleSignIn = () => {
     const { role } = useParams();
 
     const onSuccess = async (response) => {
-        console.log("Google response:", response);
-
         if (response.credential) {
             const decodedToken = jwtDecode(response.credential);
-            console.log("Decoded Token:", decodedToken);
-
             const { email, sub: googleId } = decodedToken;
-            const data = { email, googleId };
-
+            const data = { email, googleId: response.credential }; // Send the actual ID token
+    
             localStorage.setItem("user", JSON.stringify(data));
-
-            console.log("Stored User Data:", JSON.parse(localStorage.getItem("user")));
-
+    
             try {
-                await axios.post(`http://localhost:8080/signup/${role}/google`, data);
-                console.log("Google Sign-In Successful: ", data);
-
-                const response = await axios.post(`http://localhost:8080/signup/${role}/googleId`, data);
-
-                const email = localStorage.getItem("email")
-
-                if (response.data.exists) {
-                    navigate("/drivers/all")
-                    // const driverId = localStorage.getItem("driverId");
-                    // console.log("Driver Id 🆔🆔🆔", driverId)
-                    // navigate(`/driver/home/${driverId}`);
+                const res = await axios.post(`http://localhost:8080/signup/${role}/googleId`, data);
+                if (res.data.exists) {
+                    const driverId = localStorage.getItem("driverId");
+                    navigate(`/driver/home/${driverId}`);
                 } else {
-                    navigate("/admin/home");
+                    navigate(`/register/${role}/google`);
                 }
             } catch (error) {
                 console.error("Error during Google Sign-In process:", error);
                 navigate(`/register/${role}/google`);
             }
-        } else {
-            console.error("Credential missing in the response.");
         }
     };
+    
 
     return (
         <div>
