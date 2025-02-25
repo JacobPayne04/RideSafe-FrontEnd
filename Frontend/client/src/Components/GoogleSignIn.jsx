@@ -14,14 +14,18 @@ const GoogleSignIn = () => {
         if (response.credential) {
             const decodedToken = jwtDecode(response.credential);
             const { email, sub: googleId } = decodedToken;
-            const data = { email, googleId: response.credential }; // Send the actual ID token
-    
+            const data = { email, googleId: response.credential }; // Send ID token
+            
             localStorage.setItem("user", JSON.stringify(data));
     
             try {
-                const res = await axios.post(`http://localhost:8080/signup/${role}/googleId`, data);
+                const res = await axios.post(`http://localhost:8080/signup/${role}/googleId`, data, { withCredentials: true });
+        
+                console.log("Response from backend:", res.data); // Log the response data to verify
+    
                 if (res.data.exists) {
-                    const driverId = localStorage.getItem("driverId");
+                    const driverId = res.data.driverId;
+                    localStorage.setItem("driverId", driverId);
                     navigate(`/driver/home/${driverId}`);
                 } else {
                     navigate(`/register/${role}/google`);
@@ -33,6 +37,8 @@ const GoogleSignIn = () => {
         }
     };
     
+
+
 
     return (
         <div>
