@@ -5,6 +5,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin-top: 100px;
+  margin-left: 100px;
 }
 
 .Driver-Details{
@@ -65,4 +67,34 @@
 
 .toggle-button.online .toggle-thumb {
   left: 25px; /* Move thumb to the right when online */
+}
+
+.Profile-Img-Name-Section{
+  display: flex;
+}
+
+.First-Last-Name-Section{
+  display: flex;
+}
+
+.Settings-Online-Section{
+  display: flex;
+  width: 500px;
+  justify-content: space-between;
+}
+
+.Default-Profile-Picture{
+  height:100px;
+  width: 100px;
+}
+
+.First-Name-Driver{
+  font-size: 20px;
+  font-weight: bold;
+  padding-right: 5px;
+}
+
+.Last-Name-Driver{
+  font-size: 20px;
+  font-weight: bold;
 }
