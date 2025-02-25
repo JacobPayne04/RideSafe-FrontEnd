@@ -14,8 +14,9 @@ const GoogleSignIn = () => {
         if (response.credential) {
             const decodedToken = jwtDecode(response.credential);
             const { email, sub: googleId } = decodedToken;
-            const data = { email, googleId: response.credential }; // Send ID token
+            const data = { email, googleId, idToken: response.credential };// Send the actual ID token
             
+    
             localStorage.setItem("user", JSON.stringify(data));
     
             try {
@@ -26,9 +27,10 @@ const GoogleSignIn = () => {
                 if (res.data.exists) {
                     const driverId = res.data.driverId;
                     localStorage.setItem("driverId", driverId);
+                    console.log("Driver ID:", driverId + {role});
                     navigate(`/driver/home/${driverId}`);
                 } else {
-                    navigate(`/register/${role}/google`);
+                    console.log("User does not exist in the database");
                 }
             } catch (error) {
                 console.error("Error during Google Sign-In process:", error);
