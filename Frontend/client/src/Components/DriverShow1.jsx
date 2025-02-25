@@ -5,19 +5,19 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const DriverShow1 = () => {
-  const { id } = useParams(); 
-  const [driver, setDriver] = useState(null); 
-  const [error, setError] = useState(null); 
+  const { id } = useParams();
+  const [driver, setDriver] = useState(null);
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    let isMounted = true; 
+    let isMounted = true;
     const fetchDriver = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/driver/${id}`);
         console.log(response.data);
         if (isMounted) {
-          setDriver(response.data); 
+          setDriver(response.data);
         }
       } catch (err) {
         if (isMounted) {
@@ -63,21 +63,37 @@ const DriverShow1 = () => {
 
   return (
     <div className="driver-container">
-      <h1 className='Driver-Details'>Driver Details</h1>
 
       <div className="driver-info">
-        <p><strong>Name:</strong> {driver.firstName}</p>
-        <p><strong>Lastname:</strong> {driver.lastName}</p>
-        <p className="status-text">{`Driver is ${driver.online ? "online" : "offline"}`}</p>
-      </div>
-      <div
-        onClick={toggleStatus}
-        className={`toggle-button ${driver.online ? "online" : "offline"}`}
-      >
-        <div className="toggle-thumb"></div>
-      </div>
+        <div className='Profile-Img-Name-Section'>
+          <img src="https://i0.wp.com/toppng.com/uploads/preview/instagram-default-profile-picture-11562973083brycehrmyv.png" className='Default-Profile-Picture' />
 
-      <Link to={`/driver/home/${driver.id}`}>View Rides</Link>
+
+          <div>
+            <div className='First-Last-Name-Section'>
+              <p className='First-Name-Driver'>{driver.firstName}</p>
+              <p className='Last-Name-Driver'>{driver.lastName}</p>
+            </div>
+            <div>0.0 ⭐ 0 ratings</div>
+
+            <div className='Settings-Online-Section'>
+              <p className="status-text">{`You are ${driver.online ? "online" : "offline"}`}</p>
+              <div
+                onClick={toggleStatus}
+                className={`toggle-button ${driver.online ? "online" : "offline"}`}
+              >
+                <div className="toggle-thumb"></div>
+              </div>
+              <div>
+                <Link to={"driver setting page"}>Settings</Link>
+              </div>
+              <div>
+                <Link to={`/driver/home/${driver.id}`}>View Rides</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 
