@@ -20,9 +20,13 @@ const GoogleSignIn = () => {
             localStorage.setItem("user", JSON.stringify(data));
     
             try {
-                const res = await axios.post(`http://localhost:8080/signup/${role}/googleId`, data);
+                const res = await axios.post(`http://localhost:8080/signup/${role}/googleId`, data, { withCredentials: true });
+        
+                console.log("Response from backend:", res.data); // Log the response data to verify
+    
                 if (res.data.exists) {
-                    const driverId = localStorage.getItem("driverId");
+                    const driverId = res.data.driverId;
+                    localStorage.setItem("driverId", driverId);
                     console.log("Driver ID:", driverId + {role});
                     navigate(`/driver/home/${driverId}`);
                 } else {
@@ -35,6 +39,8 @@ const GoogleSignIn = () => {
         }
     };
     
+
+
 
     return (
         <div>
