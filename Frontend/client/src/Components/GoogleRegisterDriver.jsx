@@ -34,7 +34,7 @@ const GoogleRegisterDriver = () => {
                 });
                 console.log("Driver created:", response.data);
                 const driverId = localStorage.getItem("driverId");
-                navigate(`/driver/home/${driverId}`);
+                navigate(`/one/driver/${driverId}`);
             } catch (error) {
                 console.error('There was an error!', error.response ? error.response.data : error);
             }
