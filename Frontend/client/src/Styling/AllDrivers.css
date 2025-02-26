@@ -1,70 +1,85 @@
-/* Styling for the main container */
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  h1 {
-    text-align: center;
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  /* Styling for the driver list */
-  .driver-list {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .driver-list li {
-    background-color: #fff;
-    margin: 10px 0;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .driver-list li:hover {
-    background-color: #f0f0f0;
-  }
-  
-  /* Styling for driver details */
-  .driver-details {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .driver-name {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .driver-email,
-  .driver-license {
-    font-size: 14px;
-    color: #666;
-  }
-  
-  .driver-email::before,
-  .driver-license::before {
-    font-weight: bold;
-    color: #444;
-  }
-  
-  .driver-email::before {
-    content: "Email: ";
-  }
-  
-  .driver-license::before {
-    content: "License Plate: ";
-  }
-  
+.all-drivers-container {
+  background-color: #f3f4f6;
+
+  min-height: 100vh;
+}
+
+.all-drivers-header {
+  background-color: #f97316;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.back-button {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+.header-title {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.all-drivers-main {
+  padding: 1rem;
+}
+
+.all-drivers-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+.driver-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.driver-item {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.driver-info {
+  display: flex;
+  align-items: center;
+}
+
+.driver-icon {
+  background-color: #f97316;
+  border-radius: 50%;
+  padding: 0.5rem;
+  margin-right: 1rem;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.driver-details {
+  flex-grow: 1;
+}
+
+.driver-name {
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: #1f2937;
+}
+
+.driver-email {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.driver-license {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}

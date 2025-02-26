@@ -34,21 +34,23 @@ const PassengerShow1 = () => {
   const handleCancel = () => {
     setShowPopup(false); // Hide the popup
   };
-
   return (
-    <div className="profile-container">
-      {onlineDrivers.map((driver) => (
-        <div className="profile-card" key={driver.id}>
-          <div className="profile-pic-placeholder">Profile Pic</div>
-          <div className="profile-info">
-            <div className="Top-Line">
-              <p>{driver.firstName} {driver.lastName}</p>
-              <button onClick={() => handleBookNowClick(driver.id)}>Book Ride</button>
+    <div className="passenger-show-container">
+      <h1 className="passenger-show-title">Available Drivers</h1>
+      <div className="driver-list">
+        {onlineDrivers.map((driver) => (
+          <div className="driver-card" key={driver.id}>
+            <div className="driver-avatar">
+              <span className="avatar-placeholder">👤</span>
             </div>
-            <p className="invisible-id">{driver.id}</p>
+            <div className="driver-info">
+              <p className="driver-name">{driver.firstName} {driver.lastName}</p>
+              <p className="driver-id">ID: {driver.id}</p>
+            </div>
+            <button className="book-ride-btn" onClick={() => handleBookNowClick(driver.id)}>Book Ride</button>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
 
       {showPopup && (
         <div className="popup-overlay">
