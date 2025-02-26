@@ -56,13 +56,7 @@ function App() {
 
         {/* Google API Routes */}
         <Route path="/google/signin/:role" element={ <GoogleSignIn/> } />
-
-        {/* Add a new route here for passenger homepage */}
-        {/* Add a new route here for driver homepage */}
-        {/* add route here for pasenger/driver settings*/}
-        {/* add route here for pasenger/driver profile page*/}
-        {/* add a route here for Driver drives history  */}
-        {/* add a route here for passenger rides history  */}
+        
       </Routes>
     </GoogleOAuthProvider>
   );
