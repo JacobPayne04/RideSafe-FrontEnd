@@ -27,7 +27,7 @@ const GoogleSignIn = () => {
                 console.log("Response from backend:", res.data);
     
                 if (res.data.exists) {
-                    if(role == "driver"){
+                    if(role === "driver"){
                         console.log("DRIVER ID: ", res.data.driverId)
                         navigate(`/driver/home/${res.data.driverId}`);
                     } else {
