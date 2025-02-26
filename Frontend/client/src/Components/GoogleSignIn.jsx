@@ -29,7 +29,7 @@ const GoogleSignIn = () => {
                 if (res.data.exists) {
                     if(role === "driver"){
                         console.log("DRIVER ID: ", res.data.driverId)
-                        navigate(`/driver/home/${res.data.driverId}`);
+                        navigate(`/one/driver/${res.data.driverId}`);
                     } else {
                         navigate(`/Passenger/home`);
                     }
