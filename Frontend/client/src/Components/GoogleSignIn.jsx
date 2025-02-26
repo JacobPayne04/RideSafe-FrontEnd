@@ -13,7 +13,7 @@ const GoogleSignIn = () => {
     const onSuccess = async (response) => {
         if (response.credential) {
             const idToken = response.credential;  // Should be a full JWT, not just an ID
-            console.log("Received Google ID Token:", idToken); // Debugging
+            console.log("Received Google ID Token:", idToken); // Debugging THIS IS NEW
             
             const decodedToken = jwtDecode(idToken);
     
