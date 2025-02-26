@@ -12,32 +12,35 @@ const GoogleSignIn = () => {
 
     const onSuccess = async (response) => {
         if (response.credential) {
-            const decodedToken = jwtDecode(response.credential);
-            const { email, sub: googleId } = decodedToken;
-            const data = { email, googleId, idToken: response.credential };// Send the actual ID token
+            const idToken = response.credential;  // Should be a full JWT, not just an ID
+            console.log("Received Google ID Token:", idToken); // Debugging
             
+            const decodedToken = jwtDecode(idToken);
     
-            localStorage.setItem("user", JSON.stringify(data));
+            const data = {
+                googleId: idToken,  // Send full JWT, not just sub ID
+                email: decodedToken.email
+            };
     
             try {
                 const res = await axios.post(`http://localhost:8080/signup/${role}/googleId`, data, { withCredentials: true });
-        
-                console.log("Response from backend:", res.data); // Log the response data to verify
+                console.log("Response from backend:", res.data);
     
                 if (res.data.exists) {
-                    const driverId = res.data.driverId;
-                    localStorage.setItem("driverId", driverId);
-                    console.log("Driver ID:", driverId + {role});
-                    navigate(`/driver/home/${driverId}`);
+                    navigate(`/driver/home/${res.data.driverId}`);
                 } else {
-                    console.log("User does not exist in the database");
+                    navigate(`/register/${role}/google`);
                 }
             } catch (error) {
                 console.error("Error during Google Sign-In process:", error);
-                navigate(`/register/${role}/google`);
             }
         }
     };
+    
+    
+    
+    
+    
     
 
 
