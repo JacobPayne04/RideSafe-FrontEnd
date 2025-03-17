@@ -35,6 +35,7 @@ const RideForm = () => {
             toLatitude: '',
             toLongitude: '',
             status: 'PENDING',
+            passengerCount: '1', // Default value set to 1
         },
 
         validationSchema: Yup.object({
@@ -42,7 +43,11 @@ const RideForm = () => {
             driverId: Yup.string().required('Driver ID is required'),
             fromLocation: Yup.string().required('From Location is required'),
             toLocation: Yup.string().required('Destination Location is required'),
-            status: Yup.string().required('Ride status is required')
+            status: Yup.string().required('Ride status is required'),
+            passengerCount: Yup.number()
+                .required('Passenger count is required')
+                .min(1, 'Must be at least 1')
+                .max(5, 'Cannot exceed 5 passengers'),
         }),
 
         onSubmit: (values) => {
@@ -158,6 +163,22 @@ const RideForm = () => {
                 />
                 {formik.touched.toLocation && formik.errors.toLocation && (
                     <div className="error-message">{formik.errors.toLocation}</div>
+                )}
+
+                <p>Number of Passengers</p>
+                <select
+                    className="form-input"
+                    name="passengerCount"
+                    value={formik.values.passengerCount}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                >
+                    {[1, 2, 3, 4, 5].map((num) => (
+                        <option key={num} value={num}>{num}</option>
+                    ))}
+                </select>
+                {formik.touched.passengerCount && formik.errors.passengerCount && (
+                    <div className="error-message">{formik.errors.passengerCount}</div>
                 )}
 
                 <input
