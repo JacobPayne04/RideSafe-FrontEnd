@@ -2,6 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import AllDrivers from './Components/AllDrivers';
 import DriverShow1 from './Components/DriverShow1';
@@ -19,8 +21,9 @@ import GoogleRegisterPassenger from './Components/GoogleRegisterPassenger';
 import GoogleRegisterDriver from './Components/GoogleRegisterDriver';
 import GoogleSignIn from './Components/GoogleSignIn';
 import AdminHome from './Components/AdminHome';
+import CheckoutForm from './Components/CheckoutForm';
 
-
+const stripePromise = loadStripe(process.env.REACT_APP_PK_TEST_PUBLIC_KEY);
 
 function App() {
   const clientId = process.env.REACT_APP_CLIENTID
@@ -57,6 +60,9 @@ function App() {
         {/* Google API Routes */}
         <Route path="/google/signin/:role" element={ <GoogleSignIn/> } />
         
+        {/* Payment Routes */}
+        <Route path="/ride/checkout" element={ <Elements stripe={stripePromise}> <CheckoutForm /> </Elements> } />
+
       </Routes>
     </GoogleOAuthProvider>
   );
