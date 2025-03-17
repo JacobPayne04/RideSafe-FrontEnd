@@ -13,7 +13,7 @@ const DriverHomePage = () => {
     const [onGoingRides, setOngoingRides] = useState([]);
     const navigate = useNavigate();
     const clientRef = useRef(null);
-    const driverId = localStorage.getItem("driverId");
+    const driverId = typeof window !== 'undefined' ? localStorage.getItem("driverId") : null;
 
     const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
     const libraries = ["places"];
