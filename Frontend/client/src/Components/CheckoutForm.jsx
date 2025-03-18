@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import "../Styling/CheckoutForm.css";
+import { useParams, useNavigate } from "react-router-dom";
 
 const CheckoutForm = () => {
   const stripe = useStripe();
@@ -11,6 +12,8 @@ const CheckoutForm = () => {
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("darkMode") === "true"
   );
+  const navigate = useNavigate()
+  const RideAmount = useParams()
 
   useEffect(() => {
     document.body.classList.toggle("dark-mode", darkMode);
@@ -56,6 +59,10 @@ const CheckoutForm = () => {
     setLoading(false);
   };
 
+  const CancelPayment = () => {
+    navigate("/Passenger/home")
+  }
+
   return (
     <div className="checkout-container">
       <button className="dark-mode-toggle" onClick={handleToggleDarkMode}>
@@ -78,6 +85,7 @@ const CheckoutForm = () => {
           {error && <p className="error-message">{error}</p>}
           {success && <p className="success-message">Payment Successful!</p>}
         </form>
+        <button className="cancel-button" onClick={CancelPayment}>Cancel</button>
       </div>
     </div>
   );
