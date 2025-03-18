@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
-import "../Styling/CheckoutForm.css"; // Import the CSS file
+import "../Styling/CheckoutForm.css";
 
 const CheckoutForm = () => {
   const stripe = useStripe();
@@ -8,6 +8,18 @@ const CheckoutForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("darkMode") === "true"
+  );
+
+  useEffect(() => {
+    document.body.classList.toggle("dark-mode", darkMode);
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
+
+  const handleToggleDarkMode = () => {
+    setDarkMode((prevMode) => !prevMode);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -22,10 +34,11 @@ const CheckoutForm = () => {
       const response = await fetch("/api/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: 5000 }) // Amount in cents ($50.00) (we need to change this later to prefil amount with ride amount)
+        body: JSON.stringify({ amount: 5000 }) // Amount in cents ($50.00)
       });
 
       const { clientSecret } = await response.json();
+
       const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: { card: cardElement }
       });
@@ -45,6 +58,10 @@ const CheckoutForm = () => {
 
   return (
     <div className="checkout-container">
+      <button className="dark-mode-toggle" onClick={handleToggleDarkMode}>
+        {darkMode ? "Light Mode" : "Dark Mode"}
+      </button>
+
       <div className="checkout-box">
         <h2 className="checkout-title">Checkout</h2>
         <form onSubmit={handleSubmit}>
