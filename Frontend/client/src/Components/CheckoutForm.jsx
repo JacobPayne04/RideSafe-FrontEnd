@@ -1,67 +1,68 @@
-import React, { useState, useEffect } from "react";
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import axios from "axios";
+import React, { useState } from "react";
+import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
+import "../Styling/CheckoutForm.css"; // Import the CSS file
 
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
-  const [clientSecret, setClientSecret] = useState("");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    // Fetch payment intent when component loads
-    axios
-      .post("http://localhost:8080/ ", {
-        passengerCount: 2, 
-        rate: 20, 
-      })
-      .then((res) => {
-        setClientSecret(res.data.clientSecret);
-      })
-      .catch((err) => {
-        console.error("Error fetching payment intent:", err);
-      });
-  }, []);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     setLoading(true);
+    setError(null);
 
-    if (!stripe || !elements) {
-      setMessage("Stripe has not loaded yet.");
-      setLoading(false);
-      return;
-    }
+    if (!stripe || !elements) return;
 
     const cardElement = elements.getElement(CardElement);
 
-    const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: { card: cardElement },
-    });
+    try {
+      const response = await fetch("/api/create-payment-intent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: 5000 }) // Amount in cents ($50.00) (we need to change this later to prefil amount with ride amount)
+      });
 
-    if (error) {
-      setMessage(`❌ Payment failed: ${error.message}`);
-    } else if (paymentIntent.status === "succeeded") {
-      setMessage("✅ Payment successful!");
+      const { clientSecret } = await response.json();
+      const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: { card: cardElement }
+      });
+
+      if (error) {
+        setError(error.message);
+        setSuccess(false);
+      } else if (paymentIntent.status === "succeeded") {
+        setSuccess(true);
+      }
+    } catch (err) {
+      setError("Something went wrong.");
     }
 
     setLoading(false);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded shadow-md">
-      <h2 className="text-lg font-semibold mb-2">Complete Payment</h2>
-      <CardElement className="p-2 border rounded" />
-      <button
-        type="submit"
-        disabled={!stripe || !clientSecret || loading}
-        className="mt-3 p-2 bg-blue-500 text-white rounded"
-      >
-        {loading ? "Processing..." : "Pay Now"}
-      </button>
-      {message && <p className="mt-2">{message}</p>}
-    </form>
+    <div className="checkout-container">
+      <div className="checkout-box">
+        <h2 className="checkout-title">Checkout</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="card-input">
+            <CardElement />
+          </div>
+          <button
+            type="submit"
+            disabled={loading || !stripe}
+            className="pay-button"
+          >
+            {loading ? "Processing..." : "Pay Now"}
+          </button>
+          {error && <p className="error-message">{error}</p>}
+          {success && <p className="success-message">Payment Successful!</p>}
+        </form>
+      </div>
+    </div>
   );
 };
 
