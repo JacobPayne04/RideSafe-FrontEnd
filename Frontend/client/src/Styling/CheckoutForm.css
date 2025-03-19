@@ -65,7 +65,13 @@
     border: 1px solid #ccc;
     padding: 10px;
     border-radius: 5px;
+    background-color: white; /* Ensure input field has a white background */
   }
+  
+  .dark-mode .card-input {
+    background-color: black; /* Ensure input field has a dark background in dark mode */
+  }
+  
   
   .pay-button {
     width: 100%;
@@ -76,10 +82,29 @@
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
+    margin-top: 1%;
+    transition: background 0.3s;
+  }
+
+  .cancel-button{
+    width: 100%;
+    background-color: var(--button-light);
+    color: var(--button-text-light);
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 1%;
     transition: background 0.3s;
   }
   
   .dark-mode .pay-button {
+    background-color: var(--button-dark);
+    color: var(--button-text-dark);
+  }
+
+  .dark-mode .cancel-button {
     background-color: var(--button-dark);
     color: var(--button-text-dark);
   }
