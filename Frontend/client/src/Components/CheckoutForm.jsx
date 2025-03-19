@@ -13,7 +13,7 @@ const CheckoutForm = () => {
     localStorage.getItem("darkMode") === "true"
   );
   const navigate = useNavigate()
-  const RideAmount = useParams()
+  const RideAmount = 5000 // Amount in cents ($50.00)
 
   useEffect(() => {
     document.body.classList.toggle("dark-mode", darkMode);
@@ -37,7 +37,7 @@ const CheckoutForm = () => {
       const response = await fetch("/api/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: 5000 }) // Amount in cents ($50.00)
+        body: JSON.stringify({ amount: {RideAmount} }) // Amount in cents ($50.00)
       });
 
       const { clientSecret } = await response.json();
@@ -73,7 +73,7 @@ const CheckoutForm = () => {
         <h2 className="checkout-title">Checkout</h2>
         <form onSubmit={handleSubmit}>
           <div className="card-input">
-            <CardElement />
+            <CardElement options={{ style: { base: { fontSize: "16px", color: darkMode ? "white" : "black", "::placeholder": { color: darkMode ? "#ccc" : "#666",  }, }, invalid: { color: "#ff4d4d",  }, }, }}/>
           </div>
           <button
             type="submit"
