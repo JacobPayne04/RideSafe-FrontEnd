@@ -12,13 +12,29 @@ const CheckoutForm = () => {
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("darkMode") === "true"
   );
-  const navigate = useNavigate()
-  const RideAmount = 5000 // Amount in cents ($50.00)
+  const [rideAmount, setRideAmount] = useState(100); // State for ride amount (100 is just a default amount of $1.00 for testing)
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.body.classList.toggle("dark-mode", darkMode);
     localStorage.setItem("darkMode", darkMode);
   }, [darkMode]);
+
+  useEffect(() => {
+    // Fetch ride amount from the backend
+    const fetchRideAmount = async () => {
+      try {
+        const response = await fetch("/api/get-ride-amount");
+        const data = await response.json();
+        setRideAmount(data.amount); // Assuming backend sends { amount: 5000 }
+      } catch (error) {
+        console.error("Error fetching ride amount:", error);
+        setError("Failed to retrieve ride amount.");
+      }
+    };
+
+    fetchRideAmount();
+  }, []);
 
   const handleToggleDarkMode = () => {
     setDarkMode((prevMode) => !prevMode);
@@ -29,7 +45,7 @@ const CheckoutForm = () => {
     setLoading(true);
     setError(null);
 
-    if (!stripe || !elements) return;
+    if (!stripe || !elements || rideAmount === null) return;
 
     const cardElement = elements.getElement(CardElement);
 
@@ -37,7 +53,7 @@ const CheckoutForm = () => {
       const response = await fetch("/api/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: {RideAmount} }) // Amount in cents ($50.00)
+        body: JSON.stringify({ amount: rideAmount }) // Send dynamically fetched amount
       });
 
       const { clientSecret } = await response.json();
@@ -60,8 +76,8 @@ const CheckoutForm = () => {
   };
 
   const CancelPayment = () => {
-    navigate("/Passenger/home")
-  }
+    navigate("/Passenger/home");
+  };
 
   return (
     <div className="checkout-container">
@@ -71,21 +87,28 @@ const CheckoutForm = () => {
 
       <div className="checkout-box">
         <h2 className="checkout-title">Checkout</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="card-input">
-            <CardElement options={{ style: { base: { fontSize: "16px", color: darkMode ? "white" : "black", "::placeholder": { color: darkMode ? "#ccc" : "#666",  }, }, invalid: { color: "#ff4d4d",  }, }, }}/>
-          </div>
-          <button
-            type="submit"
-            disabled={loading || !stripe}
-            className="pay-button"
-          >
-            {loading ? "Processing..." : "Pay Now"}
-          </button>
-          {error && <p className="error-message">{error}</p>}
-          {success && <p className="success-message">Payment Successful!</p>}
-        </form>
-        <button className="cancel-button" onClick={CancelPayment}>Cancel</button>
+        {rideAmount === null ? (
+          <p>Loading ride amount...</p>
+        ) : (
+          <>
+            <p className="amount-display">Total: ${(rideAmount / 100).toFixed(2)}</p>
+            <form onSubmit={handleSubmit}>
+              <div className="card-input">
+                <CardElement options={{ style: { base: { fontSize: "16px", color: darkMode ? "white" : "black", "::placeholder": { color: darkMode ? "#ccc" : "#666" }, }, invalid: { color: "#ff4d4d" }, }, }} />
+              </div>
+              <button
+                type="submit"
+                disabled={loading || !stripe || rideAmount === null}
+                className="pay-button"
+              >
+                {loading ? "Processing..." : "Pay Now"}
+              </button>
+              {error && <p className="error-message">{error}</p>}
+              {success && <p className="success-message">Payment Successful!</p>}
+            </form>
+            <button className="cancel-button" onClick={CancelPayment}>Cancel</button>
+          </>
+        )}
       </div>
     </div>
   );
