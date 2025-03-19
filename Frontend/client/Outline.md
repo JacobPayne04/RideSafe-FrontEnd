@@ -146,9 +146,9 @@ ________________________________________________________
 ### Chunk 1: Payment Processing (4-6 hrs)
 
 #### Backend Payment Integration
-- [ ] Integrate Stripe API into backend (basic payment flow)
+- [ ] Integrate Stripe API into backend (basic payment flow) 
 - [ ] Setup webhooks for payment success/fail callbacks
-- [ ] Verify transactions and update ride status in DB
+- [ ] Verify transactions and update ride status in DB  *Currently* here made service method and controllers for bnackend logic frontend logic almsot done needs api route and gronk port setting to 8080
 - [ ] Add Apple Pay / Google Pay support in backend (config + keys)
 
 #### Frontend Payment Flow

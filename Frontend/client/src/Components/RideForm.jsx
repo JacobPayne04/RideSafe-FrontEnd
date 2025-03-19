@@ -55,7 +55,11 @@ const RideForm = () => {
             axios.post('http://localhost:8080/rides/save', values)
                 .then((response) => {
                     const passengerId = response.data.id;
-                    navigate(`/Passenger/home`);
+                    //*****TEST***************
+                    navigate(`/ride/checkout`)
+                    //*********************** */
+                    //#TODO: and redirect to the payment page for passenge**********🛑*  
+                  //  navigate(`/Passenger/home`);-OLD NAVIGATE.
                 })
                 .catch((error) => {
                     console.error('There was an error!', error);
