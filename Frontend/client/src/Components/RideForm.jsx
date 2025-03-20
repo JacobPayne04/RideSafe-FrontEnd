@@ -55,6 +55,9 @@ const RideForm = () => {
             axios.post('http://localhost:8080/rides/save', values)
                 .then((response) => {
                     const passengerId = response.data.id;
+                    const rideId = response.data.id;
+                    localStorage.setItem('rideId', rideId);
+                    navigate(`/Passenger/home`);
                     //*****TEST***************
                     navigate(`/ride/checkout`)
                     //*********************** */
