@@ -14,7 +14,7 @@ const CheckoutForm = () => {
   );
   const [rideAmount, setRideAmount] = useState(100); // State for ride amount (100 is just a default amount of $1.00 for testing)
   const navigate = useNavigate();
-  const rideId = localStorage.setItem('rideId', rideId);
+  const rideId = localStorage.getItem("rideId");
 
   useEffect(() => {
     document.body.classList.toggle("dark-mode", darkMode);
@@ -45,24 +45,28 @@ const CheckoutForm = () => {
     event.preventDefault();
     setLoading(true);
     setError(null);
-
-    if (!stripe || !elements || rideAmount === null) return;
-
+  
+    if (!stripe || !elements || rideAmount === null || !rideId) {
+      setError("Missing ride details. Please try again.");
+      setLoading(false);
+      return;
+    }
+  
     const cardElement = elements.getElement(CardElement);
-
+  
     try {
       const response = await fetch("/api/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: rideAmount }) // Send dynamically fetched amount
+        body: JSON.stringify({ amount: rideAmount, rideId })
       });
-
+  
       const { clientSecret } = await response.json();
-
+  
       const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: { card: cardElement }
       });
-
+  
       if (error) {
         setError(error.message);
         setSuccess(false);
@@ -72,9 +76,10 @@ const CheckoutForm = () => {
     } catch (err) {
       setError("Something went wrong.");
     }
-
+  
     setLoading(false);
   };
+  
 
   const CancelPayment = () => {
     navigate("/Passenger/home");
