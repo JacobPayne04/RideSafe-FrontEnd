@@ -58,6 +58,11 @@ const RideForm = () => {
                     const rideId = response.data.id;
                     localStorage.setItem('rideId', rideId);
                     navigate(`/Passenger/home`);
+                    //*****TEST***************
+                    navigate(`/ride/checkout`)
+                    //*********************** */
+                    //#TODO: and redirect to the payment page for passenge**********🛑*  
+                  //  navigate(`/Passenger/home`);-OLD NAVIGATE.
                 })
                 .catch((error) => {
                     console.error('There was an error!', error);
