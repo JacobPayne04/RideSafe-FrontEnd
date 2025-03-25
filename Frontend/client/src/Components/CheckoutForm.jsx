@@ -47,7 +47,7 @@ const CheckoutForm = () => {
     setLoading(true);
     setError(null);
   
-    if (!stripe || !elements || rideAmount === null || !rideId) {
+    if (!stripe || !elements || rideAmount === null || !rideId || !passengerCount) {
       setError("Missing ride details. Please try again.");
       setLoading(false);
       return;
@@ -59,7 +59,7 @@ const CheckoutForm = () => {
       const response = await fetch("/api/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({amount: rideAmount, paymentRequestRideId: rideId})
+        body: JSON.stringify({amount: rideAmount, paymentRequestRideId: rideId, passengerCount})
       });
   
       const { clientSecret } = await response.json();
