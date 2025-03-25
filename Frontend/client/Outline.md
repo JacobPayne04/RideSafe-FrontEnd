@@ -146,11 +146,11 @@ ________________________________________________________
 ### Chunk 1: Payment Processing (4-6 hrs)
 
 #### Backend Payment Integration
-- [ ] Integrate Stripe API into backend (basic payment flow) 
-- [ ] Setup webhooks for payment success/fail callbacks
-- [ ] Verify transactions and update ride status in DB                          *Currently* here made service method and controllers for bnackend logic frontend logic almsot done needs api route and gronk port setting to 8080                       3/19/2025 8:pm TODO* - Sign up for mgrok and get the url to put on strip 
-- [ ] Add Apple Pay / Google Pay support in backend (config + keys)              then test route for front end new stripe redirect, make sure to connect 
-                                                                                 Strip webhook.
+- [ ] Integrate Stripe API into backend (basic payment flow) -Testing🛑-
+- [ ] Setup webhooks for payment success/fail callbacks     -Testing🛑-
+- [ ] Verify transactions and update ride status in DB       -Testing🛑-                                      
+- [ ] Add Apple Pay / Google Pay support in backend (config + keys)             
+                                                                                 
 #### Frontend Payment Flow
 - [ ] Build frontend payment form
 - [ ] Implement Apple Pay / Google Pay buttons
