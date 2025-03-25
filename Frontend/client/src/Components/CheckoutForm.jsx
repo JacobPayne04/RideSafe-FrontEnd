@@ -15,6 +15,7 @@ const CheckoutForm = () => {
   const [rideAmount, setRideAmount] = useState(100); // State for ride amount (100 is just a default amount of $1.00 for testing)
   const navigate = useNavigate();
   const rideId = localStorage.getItem("rideId");
+  const passengerCount = localStorage.getItem("passengerCount");
 
   useEffect(() => {
     document.body.classList.toggle("dark-mode", darkMode);
