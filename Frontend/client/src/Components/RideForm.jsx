@@ -57,6 +57,9 @@ const RideForm = () => {
                     const passengerId = response.data.id;
                     const rideId = response.data.id;
                     localStorage.setItem('rideId', rideId);
+                    const passengerCount = response.data.id;
+                    localStorage.setItem('passengerCount', passengerCount)
+                    console.log("Saving Ride Id: ", rideId, " and passengerCount: ", passengerCount, " in localStorage 💥")
                     navigate(`/Passenger/home`);
                     //*****TEST***************
                     navigate(`/ride/checkout`)
