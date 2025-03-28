@@ -35,17 +35,17 @@ TODO-admin panel
 
 
 TODO - Payment process 
-                        | - Backend
+                        | - Backend-TESTING/TWEAKS****
         | - Integrate Stripe API (or other gateway)
         | - Add Apple Pay / Google Pay support
         | - Setup webhooks for payment success/fail
         | - Verify transactions + update ride status
         | - Secure payment routes (auth + validation)
-    | - Frontend UI
+    | - Frontend UI -TESTING/TWEAKS****
         | - Payment form + methods
         | - Support Apple Pay button
         | - Payment status feedback (success/fail animations)
-    | - Internal Logic
+    | - Internal Logic-TESTING/TWEAKS****
         | - Handle transaction retries
         | - Refund process (optional manual/auto flow)
         | - Logging payments in DB
@@ -147,15 +147,15 @@ ________________________________________________________
 
 #### Backend Payment Integration
 - [ ] Integrate Stripe API into backend (basic payment flow) -Testing🛑-
-- [ ] Setup webhooks for payment success/fail callbacks     -Testing🛑-
+- [ ] Setup webhooks for payment success/fail callbacks     -Testing🛑-WEBHOOK IS CONNECTED AND LITSENING BUT NOT COMPLETE
 - [ ] Verify transactions and update ride status in DB       -Testing🛑-                                      
 - [ ] Add Apple Pay / Google Pay support in backend (config + keys)             
                                                                                  
 #### Frontend Payment Flow
-- [ ] Build frontend payment form
-- [ ] Implement Apple Pay / Google Pay buttons
-- [ ] Payment feedback UX: Success/Fail handling (loading, confirmation)
-- [ ] Secure frontend routes + validations (check auth before pay)
+- [ ] Build frontend payment form -Testing🛑-
+- [ ] Implement Apple Pay / Google Pay buttons -TODO#
+- [ ] Payment feedback UX: Success/Fail handling (loading, confirmation) -Testing🛑-
+- [ ] Secure frontend routes + validations (check auth before pay) -TODO#
 
 #### Internal Logic
 - [ ] Transaction retries + logging in DB
