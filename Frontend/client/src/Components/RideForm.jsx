@@ -51,26 +51,28 @@ const RideForm = () => {
                 .max(5, 'Cannot exceed 5 passengers'),
         }),
 
-        onSubmit: (values) => {
-            console.log("form submitted", values);
-            axios.post('http://localhost:8080/rides/save', values)
-                .then((response) => {
-                    const passengerId = response.data.id;
+        onSubmit: async (values) => {
+            try {
+                console.log("Form submitted with values:", values);
+
+                const response = await axios.post('http://localhost:8080/rides/save', values);
+
+                if (response.data && response.data.id) {
                     const rideId = response.data.id;
-                    localStorage.setItem('rideId', rideId);
                     const passengerCount = values.passengerCount;
-                    localStorage.setItem('passengerCount', passengerCount)
-                    console.log("Saving Ride Id: ", rideId, " and passengerCount: ", passengerCount, " in localStorage 💥")
-                    navigate(`/Passenger/home`);
-                    //*****TEST***************
-                    navigate(`/ride/checkout`)
-                    //*********************** */
-                    //#TODO: and redirect to the payment page for passenge**********🛑*  
-                  //  navigate(`/Passenger/home`);-OLD NAVIGATE.
-                })
-                .catch((error) => {
-                    console.error('There was an error!', error);
-                });
+
+                    localStorage.setItem('rideId', rideId);
+                    localStorage.setItem('passengerCount', passengerCount);
+
+                    console.log("Saving Ride Id:", rideId, "and Passenger Count:", passengerCount, "in localStorage");
+
+                    navigate(`/ride/checkout`);
+                } else {
+                    console.error("Error: Ride ID is undefined in response data", response.data);
+                }
+            } catch (error) {
+                console.error('Error saving ride:', error);
+            }
         },
     });
 
@@ -122,11 +124,8 @@ const RideForm = () => {
                     className="form-input"
                     name="passengerId"
                     type="hidden"
-                    placeholder="Passenger ID"
                     value={formik.values.passengerId}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    readOnly={!!passengerId} // Read-only if pre-filled from params
+                    readOnly
                 />
                 {formik.touched.passengerId && formik.errors.passengerId && (
                     <div className="error-message">{formik.errors.passengerId}</div>
@@ -136,11 +135,8 @@ const RideForm = () => {
                     className="form-input"
                     name="driverId"
                     type="hidden"
-                    placeholder="Driver ID"
                     value={formik.values.driverId}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    readOnly={!!driverId} // Read-only if pre-filled from params
+                    readOnly
                 />
                 {formik.touched.driverId && formik.errors.driverId && (
                     <div className="error-message">{formik.errors.driverId}</div>
@@ -196,10 +192,8 @@ const RideForm = () => {
                     className="form-input"
                     name="status"
                     type="hidden"
-                    placeholder="ride status"
                     value={formik.values.status}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
+                    readOnly
                 />
                 {formik.touched.status && formik.errors.status && (
                     <div className="error-message">{formik.errors.status}</div>
