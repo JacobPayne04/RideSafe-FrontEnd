@@ -60,13 +60,8 @@ const RideForm = () => {
                     localStorage.setItem('rideId', rideId);
                     const passengerCount = values.passengerCount;
                     localStorage.setItem('passengerCount', passengerCount)
-                    console.log("Saving Ride Id: ", rideId, " and passengerCount: ", passengerCount, " in localStorage 💥")
-                    navigate(`/Passenger/home`);
-                    //*****TEST***************
+                    console.log(values,"Saving Ride Id: ", rideId, " and passengerCount: ", passengerCount, " in localStorage 💥")
                     navigate(`/ride/checkout`)
-                    //*********************** */
-                    //#TODO: and redirect to the payment page for passenge**********🛑*  
-                  //  navigate(`/Passenger/home`);-OLD NAVIGATE.
                 })
                 .catch((error) => {
                     console.error('There was an error!', error);

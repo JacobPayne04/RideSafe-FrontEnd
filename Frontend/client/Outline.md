@@ -150,6 +150,8 @@ ________________________________________________________
 - [ ] Setup webhooks for payment success/fail callbacks     -Testing🛑-WEBHOOK IS CONNECTED AND LITSENING BUT NOT COMPLETE
 - [ ] Verify transactions and update ride status in DB       -Testing🛑-                                      
 - [ ] Add Apple Pay / Google Pay support in backend (config + keys)             
+
+DO BACK END FUNCTION TODOS paymentController,PaymentService, and ride controller, and fix backend to send ride id for payment request.
                                                                                  
 #### Frontend Payment Flow
 - [ ] Build frontend payment form -Testing🛑-
