@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import "../Styling/CheckoutForm.css";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
-  const [darkMode, setDarkMode] = useState(
-    localStorage.getItem("darkMode") === "true"
-  );
-  const [rideAmount, setRideAmount] = useState(100); // State for ride amount (100 is just a default amount of $1.00 for testing)
-  const navigate = useNavigate();
+  const [darkMode, setDarkMode] = useState(localStorage.getItem("darkMode") === "true");
+  const [rideAmount, setRideAmount] = useState(null); 
+
   const rideId = localStorage.getItem("rideId");
   const passengerCount = localStorage.getItem("passengerCount");
 
@@ -23,12 +23,18 @@ const CheckoutForm = () => {
   }, [darkMode]);
 
   useEffect(() => {
-    // Fetch ride amount from the backend
     const fetchRideAmount = async () => {
       try {
-        const response = await fetch("/api/get-ride-amount");
+        if (!rideId || !passengerCount) {
+          setError("Missing ride details.");
+          return;
+        }
+
+        const response = await fetch(`/api/get-ride-amount?rideId=${rideId}&passengerCount=${passengerCount}`);
+        if (!response.ok) throw new Error("Failed to fetch ride amount.");
+
         const data = await response.json();
-        setRideAmount(data.amount); // Assuming backend sends { amount: 5000 }
+        setRideAmount(data.amount);
       } catch (error) {
         console.error("Error fetching ride amount:", error);
         setError("Failed to retrieve ride amount.");
@@ -36,7 +42,7 @@ const CheckoutForm = () => {
     };
 
     fetchRideAmount();
-  }, []);
+  }, [rideId, passengerCount]);
 
   const handleToggleDarkMode = () => {
     setDarkMode((prevMode) => !prevMode);
@@ -46,28 +52,30 @@ const CheckoutForm = () => {
     event.preventDefault();
     setLoading(true);
     setError(null);
-  
+
     if (!stripe || !elements || rideAmount === null || !rideId || !passengerCount) {
       setError("Missing ride details. Please try again.");
       setLoading(false);
       return;
     }
-  
+
     const cardElement = elements.getElement(CardElement);
-  
+
     try {
       const response = await fetch("/api/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({amount: rideAmount, paymentRequestRideId: rideId, passengerCount})
+        body: JSON.stringify({ amount: rideAmount, paymentRequestRideId: rideId, passengerCount }),
       });
-  
+
+      if (!response.ok) throw new Error("Failed to create payment intent.");
+
       const { clientSecret } = await response.json();
-  
+
       const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: { card: cardElement }
+        payment_method: { card: cardElement },
       });
-  
+
       if (error) {
         setError(error.message);
         setSuccess(false);
@@ -77,10 +85,9 @@ const CheckoutForm = () => {
     } catch (err) {
       setError("Something went wrong.");
     }
-  
+
     setLoading(false);
   };
-  
 
   const CancelPayment = () => {
     navigate("/Passenger/home");
@@ -101,7 +108,18 @@ const CheckoutForm = () => {
             <p className="amount-display">Total: ${(rideAmount / 100).toFixed(2)}</p>
             <form onSubmit={handleSubmit}>
               <div className="card-input">
-                <CardElement options={{ style: { base: { fontSize: "16px", color: darkMode ? "white" : "black", "::placeholder": { color: darkMode ? "#ccc" : "#666" }, }, invalid: { color: "#ff4d4d" }, }, }} />
+                <CardElement
+                  options={{
+                    style: {
+                      base: {
+                        fontSize: "16px",
+                        color: darkMode ? "white" : "black",
+                        "::placeholder": { color: darkMode ? "#ccc" : "#666" },
+                      },
+                      invalid: { color: "#ff4d4d" },
+                    },
+                  }}
+                />
               </div>
               <button
                 type="submit"
