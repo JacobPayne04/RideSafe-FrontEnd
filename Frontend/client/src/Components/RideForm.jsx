@@ -36,7 +36,7 @@ const RideForm = () => {
             toLongitude: '',
             status: 'PENDING',
             isPaid: false, 
-            passengerCount: '1', // Default value set to 1
+            passengerAmount: '1', // Default value set to 1
         },
 
         validationSchema: Yup.object({
@@ -45,7 +45,7 @@ const RideForm = () => {
             fromLocation: Yup.string().required('From Location is required'),
             toLocation: Yup.string().required('Destination Location is required'),
             status: Yup.string().required('Ride status is required'),
-            passengerCount: Yup.number()
+            passengerAmount: Yup.number()
                 .required('Passenger count is required')
                 .min(1, 'Must be at least 1')
                 .max(5, 'Cannot exceed 5 passengers'),
@@ -59,12 +59,12 @@ const RideForm = () => {
 
                 if (response.data && response.data.id) {
                     const rideId = response.data.id;
-                    const passengerCount = values.passengerCount;
+                    const passengerAmount = values.passengerAmount;
 
                     localStorage.setItem('rideId', rideId);
-                    localStorage.setItem('passengerCount', passengerCount);
+                    localStorage.setItem('passengerAmount', passengerAmount);
 
-                    console.log("Saving Ride Id:", rideId, "and Passenger Count:", passengerCount, "in localStorage");
+                    console.log("Saving Ride Id:", rideId, "and Passenger Count:", passengerAmount, "in localStorage");
 
                     navigate(`/ride/checkout`);
                 } else {
@@ -175,8 +175,8 @@ const RideForm = () => {
                 <p>Number of Passengers</p>
                 <select
                     className="form-input"
-                    name="passengerCount"
-                    value={formik.values.passengerCount}
+                    name="passengerAmount"
+                    value={formik.values.passengerAmount}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                 >
@@ -184,8 +184,8 @@ const RideForm = () => {
                         <option key={num} value={num}>{num}</option>
                     ))}
                 </select>
-                {formik.touched.passengerCount && formik.errors.passengerCount && (
-                    <div className="error-message">{formik.errors.passengerCount}</div>
+                {formik.touched.passengerAmount && formik.errors.passengerAmount && (
+                    <div className="error-message">{formik.errors.passengerAmount}</div>
                 )}
 
                 <input
