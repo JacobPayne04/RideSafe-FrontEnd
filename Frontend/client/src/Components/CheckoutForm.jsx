@@ -33,11 +33,12 @@ const CheckoutForm = () => {
           setError("Missing ride details.");
           return;
         }
-
-        const response = await fetch(`/api/get-ride-details?rideId=${rideId}`);
+    
+        const response = await fetch(`http://localhost:8080/details?rideId=${rideId}`);
         if (!response.ok) throw new Error("Failed to fetch ride details.");
-
+    
         const data = await response.json();
+        console.log('Fetched ride details:', data);  // Add this log
         setRideAmount(data.amount || 0);  // Use fallback if amount is undefined
         setRate(data.rate || 0);  // Use fallback if rate is undefined
       } catch (error) {
@@ -45,6 +46,7 @@ const CheckoutForm = () => {
         setError("Failed to retrieve ride details.");
       }
     };
+    
 
     fetchRideDetails();
   }, [rideId, passengerAmount]);
