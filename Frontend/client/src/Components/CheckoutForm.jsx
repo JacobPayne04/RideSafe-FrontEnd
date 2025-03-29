@@ -12,7 +12,8 @@ const CheckoutForm = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [darkMode, setDarkMode] = useState(localStorage.getItem("darkMode") === "true");
-  const [rideAmount, setRideAmount] = useState(null); 
+  const [rideAmount, setRideAmount] = useState(null);
+  const [rate, setRate] = useState(null);
 
   const rideId = localStorage.getItem("rideId");
   const passengerCount = localStorage.getItem("passengerCount");
@@ -23,25 +24,26 @@ const CheckoutForm = () => {
   }, [darkMode]);
 
   useEffect(() => {
-    const fetchRideAmount = async () => {
+    const fetchRideDetails = async () => {
       try {
         if (!rideId || !passengerCount) {
           setError("Missing ride details.");
           return;
         }
 
-        const response = await fetch(`/api/get-ride-amount?rideId=${rideId}&passengerCount=${passengerCount}`);
-        if (!response.ok) throw new Error("Failed to fetch ride amount.");
+        const response = await fetch(`/api/get-ride-details?rideId=${rideId}`);
+        if (!response.ok) throw new Error("Failed to fetch ride details.");
 
         const data = await response.json();
         setRideAmount(data.amount);
+        setRate(data.rate);
       } catch (error) {
-        console.error("Error fetching ride amount:", error);
-        setError("Failed to retrieve ride amount.");
+        console.error("Error fetching ride details:", error);
+        setError("Failed to retrieve ride details.");
       }
     };
 
-    fetchRideAmount();
+    fetchRideDetails();
   }, [rideId, passengerCount]);
 
   const handleToggleDarkMode = () => {
@@ -53,7 +55,7 @@ const CheckoutForm = () => {
     setLoading(true);
     setError(null);
 
-    if (!stripe || !elements || rideAmount === null || !rideId || !passengerCount) {
+    if (!stripe || !elements || rideAmount === null || !rideId || !passengerCount || !rate) {
       setError("Missing ride details. Please try again.");
       setLoading(false);
       return;
@@ -62,10 +64,14 @@ const CheckoutForm = () => {
     const cardElement = elements.getElement(CardElement);
 
     try {
-      const response = await fetch("/api/create-payment-intent", {
+      const response = await fetch("http://localhost:8080create-Payment-Intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: rideAmount, paymentRequestRideId: rideId, passengerCount }),
+        body: JSON.stringify({ 
+          paymentRequestRideId: rideId, 
+          passengerCount: parseInt(passengerCount), 
+          rate: parseInt(rate) 
+        }),
       });
 
       if (!response.ok) throw new Error("Failed to create payment intent.");
@@ -81,6 +87,15 @@ const CheckoutForm = () => {
         setSuccess(false);
       } else if (paymentIntent.status === "succeeded") {
         setSuccess(true);
+
+        // Update the ride as paid
+        await fetch(`http://localhost:8080/update-ride-payment`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ rideId }),
+        });
+
+        setTimeout(() => navigate("/Passenger/home"), 2000);
       }
     } catch (err) {
       setError("Something went wrong.");
