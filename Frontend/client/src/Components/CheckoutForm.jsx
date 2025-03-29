@@ -26,30 +26,30 @@ const CheckoutForm = () => {
   useEffect(() => {
     console.log('Ride ID:', rideId);
     console.log('Passenger Count:', passengerAmount);
-
+  
     const fetchRideDetails = async () => {
       try {
         if (!rideId || !passengerAmount) {
           setError("Missing ride details.");
           return;
         }
-    
-        const response = await fetch(`http://localhost:8080/details?rideId=${rideId}`);
+  
+        const response = await fetch(`http://localhost:8080/details/${rideId}`);
         if (!response.ok) throw new Error("Failed to fetch ride details.");
-    
+  
         const data = await response.json();
         console.log('Fetched ride details:', data);  // Add this log
-        setRideAmount(data.amount || 0);  // Use fallback if amount is undefined
-        setRate(data.rate || 0);  // Use fallback if rate is undefined
+        setRideAmount(data.passengerAmount || 0);  // Set passengerAmount if available
+        setRate(data.rate || 0);  // Set rate, or fallback if not present
       } catch (error) {
         console.error("Error fetching ride details:", error);
         setError("Failed to retrieve ride details.");
       }
     };
-    
-
+  
     fetchRideDetails();
   }, [rideId, passengerAmount]);
+  
 
   const handleToggleDarkMode = () => {
     setDarkMode((prevMode) => !prevMode);
