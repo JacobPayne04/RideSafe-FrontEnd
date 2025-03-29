@@ -64,7 +64,7 @@ const CheckoutForm = () => {
     const cardElement = elements.getElement(CardElement);
 
     try {
-      const response = await fetch("http://localhost:8080create-Payment-Intent", {
+      const response = await fetch("http://localhost:8080/create-Payment-Intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
