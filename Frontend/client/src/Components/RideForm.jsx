@@ -59,7 +59,7 @@ const RideForm = () => {
         );
 
         if (response.data && response.data.rideId) {
-          localStorage.setItem("rideId", response.data.id);
+          localStorage.setItem("rideId", response.data.rideId);
           localStorage.setItem("passengerAmount", values.passengerAmount);
           navigate(`/ride/checkout`);
         } else {

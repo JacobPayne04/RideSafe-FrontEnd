@@ -12,11 +12,11 @@ const CheckoutForm = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [darkMode, setDarkMode] = useState(localStorage.getItem("darkMode") === "true");
-  const [rideAmount, setRideAmount] = useState(null);
-  const [rate, setRate] = useState(null);
+  const [rideAmount, setRideAmount] = useState(0);  // Default to 0 to avoid null issues
+  const [rate, setRate] = useState(0);  // Default to 0 to avoid null issues
 
   const rideId = localStorage.getItem("rideId");
-  const passengerCount = localStorage.getItem("passengerCount");
+  const passengerAmount = localStorage.getItem("passengerAmount");
 
   useEffect(() => {
     document.body.classList.toggle("dark-mode", darkMode);
@@ -24,9 +24,12 @@ const CheckoutForm = () => {
   }, [darkMode]);
 
   useEffect(() => {
+    console.log('Ride ID:', rideId);
+    console.log('Passenger Count:', passengerAmount);
+
     const fetchRideDetails = async () => {
       try {
-        if (!rideId || !passengerCount) {
+        if (!rideId || !passengerAmount) {
           setError("Missing ride details.");
           return;
         }
@@ -35,8 +38,8 @@ const CheckoutForm = () => {
         if (!response.ok) throw new Error("Failed to fetch ride details.");
 
         const data = await response.json();
-        setRideAmount(data.amount);
-        setRate(data.rate);
+        setRideAmount(data.amount || 0);  // Use fallback if amount is undefined
+        setRate(data.rate || 0);  // Use fallback if rate is undefined
       } catch (error) {
         console.error("Error fetching ride details:", error);
         setError("Failed to retrieve ride details.");
@@ -44,7 +47,7 @@ const CheckoutForm = () => {
     };
 
     fetchRideDetails();
-  }, [rideId, passengerCount]);
+  }, [rideId, passengerAmount]);
 
   const handleToggleDarkMode = () => {
     setDarkMode((prevMode) => !prevMode);
@@ -55,7 +58,8 @@ const CheckoutForm = () => {
     setLoading(true);
     setError(null);
 
-    if (!stripe || !elements || rideAmount === null || !rideId || !passengerCount || !rate) {
+    // Check for missing ride details and valid Stripe elements
+    if (!stripe || !elements || rideAmount === 0 || !rideId || !passengerAmount || rate === 0) {
       setError("Missing ride details. Please try again.");
       setLoading(false);
       return;
@@ -67,10 +71,10 @@ const CheckoutForm = () => {
       const response = await fetch("http://localhost:8080/create-Payment-Intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          paymentRequestRideId: rideId, 
-          passengerCount: parseInt(passengerCount), 
-          rate: parseInt(rate) 
+        body: JSON.stringify({
+          paymentRequestRideId: rideId,
+          passengerAmount: parseInt(passengerAmount),  // Ensure it's parsed as an integer
+          rate: parseInt(rate),  // Ensure it's parsed as an integer
         }),
       });
 
@@ -116,7 +120,7 @@ const CheckoutForm = () => {
 
       <div className="checkout-box">
         <h2 className="checkout-title">Checkout</h2>
-        {rideAmount === null ? (
+        {rideAmount === 0 ? (
           <p>Loading ride amount...</p>
         ) : (
           <>
@@ -138,7 +142,7 @@ const CheckoutForm = () => {
               </div>
               <button
                 type="submit"
-                disabled={loading || !stripe || rideAmount === null}
+                disabled={loading || !stripe || rideAmount === 0}
                 className="pay-button"
               >
                 {loading ? "Processing..." : "Pay Now"}
