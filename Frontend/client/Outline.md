@@ -146,13 +146,14 @@ ________________________________________________________
 ### Chunk 1: Payment Processing (4-6 hrs)
 
 #### Backend Payment Integration
-- [ ] Integrate Stripe API into backend (basic payment flow) -Testing🛑-
-- [ ] Setup webhooks for payment success/fail callbacks     -Testing🛑-WEBHOOK IS CONNECTED AND LITSENING BUT NOT COMPLETE
+- [ ] Integrate Stripe API into backend (basic payment flow) -Testing🛑- / DONE✔
+- [ ] Setup webhooks for payment success/fail callbacks     -Testing🛑-WEBHOOK IS CONNECTED AND LITSENING BUT NOT COMPLETE  / DONE✔/works from test not implimentation
 - [ ] Verify transactions and update ride status in DB       -Testing🛑-                                      
-- [ ] Add Apple Pay / Google Pay support in backend (config + keys)   TODO          
+- [ ] Add Apple Pay / Google Pay support in backend (config + keys)   TODO#   
+NOW BACKEND ONLY NEEDS STRIPE API KEY I THINK      
                                                                                  
 #### Frontend Payment Flow
-- [ ] Build frontend payment form -Testing🛑-
+- [ ] Build frontend payment form -Testing🛑- DONE✔
 - [ ] Implement Apple Pay / Google Pay buttons -TODO#
 - [ ] Payment feedback UX: Success/Fail handling (loading, confirmation) -Testing🛑-
 - [ ] Secure frontend routes + validations (check auth before pay) -TODO#
