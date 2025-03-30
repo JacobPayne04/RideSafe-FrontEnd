@@ -39,7 +39,8 @@ const RideForm = () => {
       toLongitude: "",
       status: "PENDING",
       isPaid: false,
-      passengerAmount: "1",
+      passengerAmount: "1", // Set to 1 by default
+      rate: 10, // You can start with a default rate if necessary
     },
     validationSchema: Yup.object({
       passengerId: Yup.string().required("Passenger ID is required"),
@@ -53,9 +54,13 @@ const RideForm = () => {
     }),
     onSubmit: async (values) => {
       try {
+        // Calculate rate dynamically based on passengerAmount
+        const calculatedRate = 10 * values.passengerAmount;
+        const rideData = { ...values, rate: calculatedRate }; // Add calculated rate to the values
+
         const response = await axios.post(
           "http://localhost:8080/rides/save",
-          values
+          rideData
         );
 
         if (response.data && response.data.rideId) {
