@@ -72,7 +72,7 @@ const CheckoutForm = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          paymentRequestRideId: rideId,
+          rideId: rideId,
           rate: parseInt(rate),  // Ensure it's parsed as an integer
         }),
       });
