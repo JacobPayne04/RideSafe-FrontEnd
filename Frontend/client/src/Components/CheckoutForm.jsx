@@ -12,7 +12,6 @@ const CheckoutForm = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [darkMode, setDarkMode] = useState(localStorage.getItem("darkMode") === "true");
-  const [rideAmount, setRideAmount] = useState(0);  // Default to 0 to avoid null issues
   const [rate, setRate] = useState(0);  // Default to 0 to avoid null issues
 
   const rideId = localStorage.getItem("rideId");
@@ -39,7 +38,6 @@ const CheckoutForm = () => {
   
         const data = await response.json();
         console.log('Fetched ride details:', data);  // Add this log
-        setRideAmount(data.passengerAmount || 0);  // Set passengerAmount if available
         setRate(data.rate || 0);  // Set rate, or fallback if not present
       } catch (error) {
         console.error("Error fetching ride details:", error);
@@ -61,7 +59,7 @@ const CheckoutForm = () => {
     setError(null);
 
     // Check for missing ride details and valid Stripe elements
-    if (!stripe || !elements || rideAmount === 0 || !rideId || !passengerAmount || rate === 0) {
+    if (!stripe || !elements || !rideId || !passengerAmount || rate === 0) {
       setError("Missing ride details. Please try again.");
       setLoading(false);
       return;
@@ -75,7 +73,6 @@ const CheckoutForm = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           paymentRequestRideId: rideId,
-          passengerAmount: parseInt(passengerAmount),  // Ensure it's parsed as an integer
           rate: parseInt(rate),  // Ensure it's parsed as an integer
         }),
       });
@@ -122,11 +119,11 @@ const CheckoutForm = () => {
 
       <div className="checkout-box">
         <h2 className="checkout-title">Checkout</h2>
-        {rideAmount === 0 ? (
+        {rate === 0 ? (
           <p>Loading ride amount...</p>
         ) : (
           <>
-            <p className="amount-display">Total: ${(rideAmount / 100).toFixed(2)}</p>
+            <p className="amount-display">Total: ${(rate).toFixed(2)}</p>
             <form onSubmit={handleSubmit}>
               <div className="card-input">
                 <CardElement
@@ -144,7 +141,7 @@ const CheckoutForm = () => {
               </div>
               <button
                 type="submit"
-                disabled={loading || !stripe || rideAmount === 0}
+                disabled={loading || !stripe || rate === 0}
                 className="pay-button"
               >
                 {loading ? "Processing..." : "Pay Now"}
