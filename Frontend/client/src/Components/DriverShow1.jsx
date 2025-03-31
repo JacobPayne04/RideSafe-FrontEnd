@@ -73,6 +73,7 @@ const DriverShow1 = () => {
             <div className='First-Last-Name-Section'>
               <p className='First-Name-Driver'>{driver.firstName}</p>
               <p className='Last-Name-Driver'>{driver.lastName}</p>
+              <p> driver Id: {driver.id}</p>
             </div>
             <div>0.0 ⭐ 0 ratings</div>
 
@@ -87,10 +88,13 @@ const DriverShow1 = () => {
               <div>
                 <Link to={"driver setting page"}>Settings</Link>
               </div>
-              <div>
-                <Link to={`/driver/home/${driver.id}`}>View Rides</Link>
-              </div>
             </div>
+              <div>
+                <Link to={`/driver/home/${id}`}>View Rides</Link>
+              </div>
+              <div>
+                <Link to={`/edit/driver/${id}/info`}>Edit Profile</Link>
+              </div>
           </div>
         </div>
       </div>

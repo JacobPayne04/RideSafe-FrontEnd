@@ -22,6 +22,7 @@ import GoogleRegisterDriver from './Components/GoogleRegisterDriver';
 import GoogleSignIn from './Components/GoogleSignIn';
 import AdminHome from './Components/AdminHome';
 import CheckoutForm from './Components/CheckoutForm';
+import EditDriver from './Components/EditDriver';
 
 const stripePromise = loadStripe(process.env.REACT_APP_PK_TEST_PUBLIC_KEY);
 
@@ -46,6 +47,7 @@ function App() {
         <Route path="/register/driver" element={<RegisterDriver />} />
         <Route path="register/driver/google" element={<GoogleRegisterDriver />} />
         <Route path="/driver/home/:driverId" element={<DriverHomePage />} />
+        <Route path="/edit/driver/:id/info" element={<EditDriver/>}/>
 
         {/* Passenger Routes */}
         <Route path="/register/passenger" element={<RegisterPassenger />} />
