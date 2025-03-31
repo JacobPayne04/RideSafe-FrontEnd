@@ -54,15 +54,25 @@ const RideForm = () => {
     }),
     onSubmit: async (values) => {
       try {
-        // Calculate rate dynamically based on passengerAmount
-        const calculatedRate = 10 * values.passengerAmount;
+        // Fetch the driver's rate
+        const driverResponse = await axios.get(`http://localhost:8080/driver/${values.driverId}`);
+        console.log("Driver Response:", driverResponse.data); // Check the structure of the response
+    
+        // Access the correct driverRate field from the response
+        const driversRate = driverResponse.data.driverRate; // Correctly access driverRate
+    
+        console.log("Driver's Rate:", driversRate);  // This should now give the correct rate
+    
+        if (!driversRate) {
+          throw new Error("Driver's rate is not available");
+        }
+    
+        // Calculate total rate dynamically
+        const calculatedRate = driversRate * values.passengerAmount;
         const rideData = { ...values, rate: calculatedRate }; // Add calculated rate to the values
-
-        const response = await axios.post(
-          "http://localhost:8080/rides/save",
-          rideData
-        );
-
+    
+        const response = await axios.post("http://localhost:8080/rides/save", rideData);
+    
         if (response.data && response.data.rideId) {
           localStorage.setItem("rideId", response.data.rideId);
           localStorage.setItem("passengerAmount", values.passengerAmount);
@@ -71,9 +81,9 @@ const RideForm = () => {
           console.error("Error: Ride ID is undefined in response data", response.data);
         }
       } catch (error) {
-        console.error("Error saving ride:", error);
+        console.error("Error fetching driver rate or saving ride:", error);
       }
-    },
+    }    
   });
 
   // Initialize Google Places Autocomplete
