@@ -148,7 +148,7 @@ ________________________________________________________
 #### Backend Payment Integration
 - [ ] Integrate Stripe API into backend (basic payment flow) -Testing🛑- / DONE✔
 - [ ] Setup webhooks for payment success/fail callbacks     -Testing🛑 DONE✔
-- [ ] Verify transactions and update ride status in DB       -Testing🛑-    DONE✔                                   
+- [ ] Verify transactions and update ride status in DB       -Testing🛑-  DONE✔                                   
 - [ ] Add Apple Pay / Google Pay support in backend (config + keys)   TODO#   
 - [ ] 
     
