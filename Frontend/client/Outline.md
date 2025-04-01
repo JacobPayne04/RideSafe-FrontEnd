@@ -147,10 +147,11 @@ ________________________________________________________
 
 #### Backend Payment Integration
 - [ ] Integrate Stripe API into backend (basic payment flow) -Testing🛑- / DONE✔
-- [ ] Setup webhooks for payment success/fail callbacks     -Testing🛑-WEBHOOK IS CONNECTED AND LITSENING BUT NOT COMPLETE  / DONE✔/works from test not implimentation
-- [ ] Verify transactions and update ride status in DB       -Testing🛑-                                      
+- [ ] Setup webhooks for payment success/fail callbacks     -Testing🛑 DONE✔
+- [ ] Verify transactions and update ride status in DB       -Testing🛑-    DONE✔                                   
 - [ ] Add Apple Pay / Google Pay support in backend (config + keys)   TODO#   
-NOW BACKEND ONLY NEEDS STRIPE API KEY I THINK      
+- [ ] 
+    
                                                                                  
 #### Frontend Payment Flow
 - [ ] Build frontend payment form -Testing🛑- DONE✔
@@ -161,9 +162,8 @@ NOW BACKEND ONLY NEEDS STRIPE API KEY I THINK
 #### Internal Logic
 - [ ] Transaction retries + logging in DB
 - [ ] Refund process (manual button first, auto flow later)
-- [ ] Plan future add-ons (split payments, currency conversion)
 
----
+---                                                                                                                                                                                                                                                                                        
 
 ### Chunk 2: Geo-Location / Multi-University Edge Case (4 hrs)
 
@@ -177,6 +177,11 @@ NOW BACKEND ONLY NEEDS STRIPE API KEY I THINK
 - [ ] Frontend: display drivers closest to university (limit N drivers)
 - [ ] Validate driver location every X seconds (WebSocket/REST fallback)
 - [ ] Future: Heatmap drivers density (optional for later)
+
+### Chunk 2.5  create driver onboarding ###
+
+  make driver manual on boarding to be bale to drive and be accepted.
+  set up stripe account.
 
 ---
 
