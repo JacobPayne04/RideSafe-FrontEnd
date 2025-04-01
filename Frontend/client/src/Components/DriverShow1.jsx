@@ -16,6 +16,8 @@ const DriverShow1 = () => {
       try {
         const response = await axios.get(`http://localhost:8080/driver/${id}`);
         console.log(response.data);
+        console.log("Stripe Public Key:", process.env.REACT_APP_PK_TEST_PUBLIC_KEY);
+
         if (isMounted) {
           setDriver(response.data);
         }
