@@ -12,13 +12,12 @@ const GoogleSignIn = () => {
 
     const onSuccess = async (response) => {
         if (response.credential) {
-            const idToken = response.credential;  // Should be a full JWT, not just an ID
-            console.log("Received Google ID Token:", idToken); // Debugging THIS IS NEW
-            
-            const decodedToken = jwtDecode(idToken);
+            const idToken = response.credential;  // This is the Google ID token (JWT)
+            console.log("Received Google ID Token:", idToken);  // Log the actual token for debugging
     
+            const decodedToken = jwtDecode(idToken);
             const data = {
-                googleId: idToken,  // Send full JWT, not just sub ID
+                googleId: idToken,  // Send the Google ID token, not the Client ID
                 email: decodedToken.email
             };
     
@@ -27,8 +26,7 @@ const GoogleSignIn = () => {
                 console.log("Response from backend:", res.data);
     
                 if (res.data.exists) {
-
-                    if(role == "driver"){
+                    if (role === "driver") {
                         navigate(`/one/driver/${res.data.driverId}`);
                     } else {
                         navigate(`/Passenger/home`);
