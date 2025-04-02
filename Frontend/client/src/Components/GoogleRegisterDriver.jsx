@@ -33,15 +33,21 @@ const GoogleRegisterDriver = () => {
                     headers: { 'Content-Type': 'application/json' }
                 });
                 console.log("Driver created:", response.data);
-                const driverId = localStorage.getItem("driverId");
-                console.log("Navigating to:", `/one/driver/${driverId}`); 
-                if (driverId) {
-                    navigate(`/one/driver/${driverId}`);
+        
+                const driverId = response.data.id; // Ensure API returns _id
+                if (!driverId) {
+                    console.error("🚨 Error: No driver ID returned from API.");
+                    return;
                 }
+        
+                localStorage.setItem("driverId", driverId);
+                console.log("Navigating to:", `/one/driver/${driverId}`);
+        
+                navigate(`/one/driver/${driverId}`);
             } catch (error) {
                 console.error('There was an error!', error.response ? error.response.data : error);
             }
-        },
+        }
     });
 
     return (
