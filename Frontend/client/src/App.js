@@ -51,7 +51,7 @@ function App() {
         <Route path="/login/driver" element={<LoginDriver />} />
         <Route path="/register/driver" element={<RegisterDriver />} />
         <Route path="/register/driver/google" element={<GoogleRegisterDriver />} />
-        <Route path="/driver/home/:driverId" element={<DriverHomePage />} />
+        <Route path="/driver/home/:id" element={<DriverHomePage />} />
         <Route path="/edit/driver/:id/info" element={<EditDriver />} />
 
         {/* Passenger Routes */}

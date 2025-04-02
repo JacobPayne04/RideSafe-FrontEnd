@@ -30,6 +30,8 @@ const DriverHomePage = () => {
             .get(`http://localhost:8080/driver/${driverId}/rides/ongoing`)
             .then((response) => {
                 setOngoingRides(response.data);
+                const driverId = response.data.id;
+                localStorage.setItem("driverId", driverId);
                 console.log('Updated Ongoing Rides:', response.data);
             })
             .catch((error) => {
