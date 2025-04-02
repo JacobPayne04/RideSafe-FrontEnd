@@ -17,19 +17,15 @@ const RideForm = () => {
       script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
       script.async = true;
       script.onload = () => setGoogleLoaded(true);
-      script.onerror = () => {
-        console.error("Failed to load Google Maps API script.");
-      };
       document.head.appendChild(script);
-  
+
       return () => {
-        document.head.removeChild(script);  // Cleanup on component unmount
+        document.head.removeChild(script);
       };
     } else {
       setGoogleLoaded(true);
     }
   }, []);
-  
 
   const formik = useFormik({
     initialValues: {
@@ -87,37 +83,32 @@ const RideForm = () => {
       } catch (error) {
         console.error("Error fetching driver rate or saving ride:", error);
       }
-    }    
+    }
+    
   });
 
   // Initialize Google Places Autocomplete
   useEffect(() => {
-    if (googleLoaded && window.google && window.google.maps && window.google.maps.places) {
+    if (googleLoaded && window.google) {
       const options = { types: ["geocode"] };
 
       const setupAutocomplete = (id, latField, lngField) => {
         const input = document.getElementById(id);
         if (input) {
-          try {
-            const autocomplete = new window.google.maps.places.Autocomplete(input, options);
-            autocomplete.addListener("place_changed", () => {
-              const place = autocomplete.getPlace();
-              if (place.geometry) {
-                formik.setFieldValue(latField, place.geometry.location.lat());
-                formik.setFieldValue(lngField, place.geometry.location.lng());
-                formik.setFieldValue(id, place.formatted_address);
-              }
-            });
-          } catch (error) {
-            console.error("Error initializing autocomplete:", error);
-          }
+          const autocomplete = new window.google.maps.places.Autocomplete(input, options);
+          autocomplete.addListener("place_changed", () => {
+            const place = autocomplete.getPlace();
+            if (place.geometry) {
+              formik.setFieldValue(latField, place.geometry.location.lat());
+              formik.setFieldValue(lngField, place.geometry.location.lng());
+              formik.setFieldValue(id, place.formatted_address);
+            }
+          });
         }
       };
 
       setupAutocomplete("fromLocation", "fromLatitude", "fromLongitude");
       setupAutocomplete("toLocation", "toLatitude", "toLongitude");
-    } else {
-      console.error("Google Maps API or Places library is not loaded");
     }
   }, [googleLoaded]);
 
