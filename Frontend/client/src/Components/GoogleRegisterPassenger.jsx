@@ -28,6 +28,7 @@ const GoogleRegisterPassenger = () => {
       try {
         console.log("Submitting data:", values);
         const response = await axios.post("http://localhost:8080/new/passenger", values, {
+          
           headers: { 'Content-Type': 'application/json' }
         });
         console.log("Passenger created:", response.data);

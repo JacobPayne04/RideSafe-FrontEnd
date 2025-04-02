@@ -33,6 +33,7 @@ const GoogleRegisterDriver = () => {
                     headers: { 'Content-Type': 'application/json' }
                 });
                 console.log("Driver created:", response.data);
+             
         
                 const driverId = response.data.id; // Ensure API returns _id
                 if (!driverId) {

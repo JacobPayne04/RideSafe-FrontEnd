@@ -12,14 +12,11 @@ const DriverShow1 = () => {
 
   useEffect(() => {
     let isMounted = true;
-    console.log(id + "this is the id that showing up as null in browser 🛑")
     const fetchDriver = async () => {
       try {
      
         const response = await axios.get(`http://localhost:8080/driver/${id}`);
-           console.log(id + "this is the id that showing up as null in browser 🛑")
         console.log(response.data);
-        console.log("Stripe Public Key:", process.env.REACT_APP_PK_TEST_PUBLIC_KEY);
 
         if (isMounted) {
           setDriver(response.data);

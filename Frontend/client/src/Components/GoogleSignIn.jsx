@@ -24,6 +24,7 @@ const GoogleSignIn = () => {
             try {
                 const res = await axios.post(`http://localhost:8080/signup/${role}/googleId`, data, { withCredentials: true });
                 console.log("Response from backend:", res.data);
+                console.log(data.email + " " + data.googleId + " google id and email")
     
                 if (res.data.exists) {
                     if (role === "driver") {
@@ -32,6 +33,7 @@ const GoogleSignIn = () => {
                         navigate(`/Passenger/home`);
                     }
                 } else {
+                    localStorage.setItem("user", JSON.stringify(data));
                     navigate(`/register/${role}/google`);
                 }
             } catch (error) {
