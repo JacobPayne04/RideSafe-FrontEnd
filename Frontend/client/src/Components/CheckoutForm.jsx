@@ -57,16 +57,16 @@ const CheckoutForm = () => {
     event.preventDefault();
     setLoading(true);
     setError(null);
-
+  
     // Check for missing ride details and valid Stripe elements
     if (!stripe || !elements || !rideId || !passengerAmount || rate === 0) {
       setError("Missing ride details. Please try again.");
       setLoading(false);
       return;
     }
-
+  
     const cardElement = elements.getElement(CardElement);
-
+  
     try {
       const response = await fetch("http://localhost:8080/create-Payment-Intent", {
         method: "POST",
@@ -76,35 +76,41 @@ const CheckoutForm = () => {
           rate: parseInt(rate),  // Ensure it's parsed as an integer
         }),
       });
+  
       const responseBody = await response.json();
       console.log('Response from /create-Payment-Intent:', responseBody);
       if (!response.ok) throw new Error("Failed to create payment intent.");
-
-      const { clientSecret } = await response.json();
-
+  
+      const { clientSecret, paymentIntentId } = responseBody;  // Get both clientSecret and paymentIntentId
+      console.log("Client Secret:", clientSecret);
+      console.log("Payment Intent ID:", paymentIntentId);  // Log the paymentIntentId
+  
       const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: { card: cardElement },
+          payment_method: { card: cardElement },
       });
-
+      
+      console.log('PaymentIntent:', paymentIntent);
+      console.log('Stripe Error:', error);
+  
       if (error) {
         setError(error.message);
         setSuccess(false);
       } else if (paymentIntent.status === "succeeded") {
         setSuccess(true);
-
+  
         // Update the ride as paid
         await fetch(`http://localhost:8080/update-ride-payment`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ rideId }),
         });
-
+  
         setTimeout(() => navigate("/Passenger/home"), 2000);
       }
     } catch (err) {
-      setError("Something went wrong.");
+      setError("Something went wrong.", err);
     }
-
+  
     setLoading(false);
   };
 
