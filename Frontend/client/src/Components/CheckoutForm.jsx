@@ -76,7 +76,8 @@ const CheckoutForm = () => {
           rate: parseInt(rate),  // Ensure it's parsed as an integer
         }),
       });
-
+      const responseBody = await response.json();
+      console.log('Response from /create-Payment-Intent:', responseBody);
       if (!response.ok) throw new Error("Failed to create payment intent.");
 
       const { clientSecret } = await response.json();
