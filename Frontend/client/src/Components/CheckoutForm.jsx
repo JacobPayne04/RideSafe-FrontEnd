@@ -99,12 +99,22 @@ const CheckoutForm = () => {
         setSuccess(true);
   
         // Update the ride as paid
-        await fetch(`http://localhost:8080/update-ride-payment`, {
+        const updateResponse = await fetch("http://localhost:8080/update-ride-payment", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ rideId }),
         });
   
+        const updateResponseBody = await updateResponse.json();
+        console.log("Response from /update-ride-payment:", updateResponseBody);
+  
+        if (updateResponse.ok) {
+          console.log("Ride payment successfully updated.");
+        } else {
+          console.error("Failed to update ride payment status:", updateResponseBody);
+        }
+  
+        console.log("Navigating back to Passenger home...");
         setTimeout(() => navigate("/Passenger/home"), 2000);
       }
     } catch (err) {
