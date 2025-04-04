@@ -133,6 +133,9 @@ const CheckoutForm = () => {
   };
 
   const CancelPayment = () => {
+    //here will call the await function 
+    //axiost route is /refund will take care but it needs the 
+    //paymentIntent to look up apyment to set as false in the service
     navigate("/Passenger/home");
   };
 
