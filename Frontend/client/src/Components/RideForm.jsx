@@ -4,28 +4,18 @@ import { useFormik } from "formik";
 import "../Styling/RideForm.css";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { useJsApiLoader } from "@react-google-maps/api";
+
+const libraries = ["places"];
 
 const RideForm = () => {
-  const [googleLoaded, setGoogleLoaded] = useState(false);
-  const navigate = useNavigate();
   const { passengerId, driverId } = useParams();
+  const navigate = useNavigate();
 
-  // Load Google Maps API
-  useEffect(() => {
-    if (!window.google) {
-      const script = document.createElement("script");
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
-      script.async = true;
-      script.onload = () => setGoogleLoaded(true);
-      document.head.appendChild(script);
-
-      return () => {
-        document.head.removeChild(script);
-      };
-    } else {
-      setGoogleLoaded(true);
-    }
-  }, []);
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    libraries,
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -39,8 +29,8 @@ const RideForm = () => {
       toLongitude: "",
       status: "PENDING",
       isPaid: false,
-      passengerAmount: "1", // Set to 1 by default
-      rate: 10, // You can start with a default rate if necessary
+      passengerAmount: "1",
+      rate: 10,
     },
     validationSchema: Yup.object({
       passengerId: Yup.string().required("Passenger ID is required"),
@@ -54,25 +44,18 @@ const RideForm = () => {
     }),
     onSubmit: async (values) => {
       try {
-        // Fetch the driver's rate
         const driverResponse = await axios.get(`http://localhost:8080/driver/${values.driverId}`);
-        console.log("Driver Response:", driverResponse.data); // Check the structure of the response
-    
-        // Access the correct driverRate field from the response
-        const driversRate = driverResponse.data.driverRate; // Correctly access driverRate
-    
-        console.log("Driver's Rate:", driversRate);  // This should now give the correct rate
-    
+        const driversRate = driverResponse.data.driverRate;
+
         if (!driversRate) {
           throw new Error("Driver's rate is not available");
         }
-    
-        // Calculate total rate dynamically
+
         const calculatedRate = driversRate * values.passengerAmount;
-        const rideData = { ...values, rate: calculatedRate }; // Add calculated rate to the values
-    
+        const rideData = { ...values, rate: calculatedRate };
+
         const response = await axios.post("http://localhost:8080/rides/save", rideData);
-    
+
         if (response.data && response.data.rideId) {
           localStorage.setItem("rideId", response.data.rideId);
           localStorage.setItem("passengerAmount", values.passengerAmount);
@@ -83,13 +66,11 @@ const RideForm = () => {
       } catch (error) {
         console.error("Error fetching driver rate or saving ride:", error);
       }
-    }
-    
+    },
   });
 
-  // Initialize Google Places Autocomplete
   useEffect(() => {
-    if (googleLoaded && window.google) {
+    if (isLoaded && window.google?.maps?.places) {
       const options = { types: ["geocode"] };
 
       const setupAutocomplete = (id, latField, lngField) => {
@@ -110,7 +91,7 @@ const RideForm = () => {
       setupAutocomplete("fromLocation", "fromLatitude", "fromLongitude");
       setupAutocomplete("toLocation", "toLatitude", "toLongitude");
     }
-  }, [googleLoaded]);
+  }, [isLoaded]);
 
   return (
     <div className="form-container">
