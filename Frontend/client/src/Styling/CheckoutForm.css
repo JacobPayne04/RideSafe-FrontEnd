@@ -151,3 +151,33 @@
     color: var(--button-text-mode-dark);
   }
   
+  .timer-popup {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #222;
+    color: white;
+    padding: 16px 24px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
+    z-index: 999;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  
+  .refund-button {
+    background-color: #ff4d4d;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .refund-button:hover {
+    background-color: #cc0000;
+  }
+  
