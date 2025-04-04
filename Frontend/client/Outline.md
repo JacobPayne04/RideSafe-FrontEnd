@@ -134,6 +134,12 @@ TODO - TEST
     | - Security Pen Testing (optional/future)
 
 
+---                                           
+ # TOMARROW add driver id field to payment request -> add it to the payment request form in teh front end to send ->destructure in the create paymetn intent service -> send it through wiuth the rest of the payment intrnet trhough teh controller -> webhook recievs it -> destructure it in the webhook -> add it to the createPaymentIntent params (rideID,DrvierId) -> destrucrture in the payment service to then be used to subscrivbe the driver ✔DONE                                                                                                                                 
+ #FrontEnd -add driverId field to the payment form from local storage -> 
+ #Backend - Add driverId field to payment request -> Frontend sends payment request -> destructure in create payment intent -> add it into the payload to payment controller ->webhook revieves payload -> destructure under the rideId const before extracted from metadata -> add it into prams with updateRidePaymentAmount -> pull it from params and add the driver id to teh driver destiantion              
+DONE✔
+
 ________________________________________________________
 CHUNKED TASK TODO
 ________________________________________________________
@@ -154,22 +160,27 @@ ________________________________________________________
     
                                                                                  
 #### Frontend Payment Flow
-- [✔ ] Build frontend payment form 
+- [✔] Build frontend payment form 
 - [ ] Implement Apple Pay / Google Pay buttons -TODO#
-- [ ✔] Payment feedback UX: Success/Fail handling (loading, confirmation)
+- [✔] Payment feedback UX: Success/Fail handling (loading, confirmation)
 - [ ] Secure frontend routes + validations (check auth before pay) -TODO#
 
-#### Internal Logic
+#### Internal Logic ^^ 4/4/2025 ^^TODO#
 - [ ] Transaction retries + logging in DB
 - [ ] Refund process (manual button first, auto flow later)
+- Frontend:## refund process flow.
+- [ ] front end checkout have 10 min timer start DateNow()-> after 10 min unhide the refund button 
+- Backend:## refund logic.
+create refund route for stripe to refund payment and to update ride as cancelled to not be rendered.
+- [ ] FIX GOOGLE MAPS LOADING ERROR
+- [ ]  Add Stripe’s PaymentRequestButtonElement - apple pay, venmo ect
+- [ ]  Add the payment Button in Your Component for other apps
 
----                                           
- # TOMARROW add driver id field to payment request -> add it to the payment request form in teh front end to send ->destructure in the create paymetn intent service -> send it through wiuth the rest of the payment intrnet trhough teh controller -> webhook recievs it -> destructure it in the webhook -> add it to the createPaymentIntent params (rideID,DrvierId) -> destrucrture in the payment service to then be used to subscrivbe the driver ✔DONE                                                                                                                                 
- #FrontEnd -add driverId field to the payment form from local storage -> 
- #Backend - Add driverId field to payment request -> Frontend sends payment request -> destructure in create payment intent -> add it into the payload to payment controller ->webhook revieves payload -> destructure under the rideId const before extracted from metadata -> add it into prams with updateRidePaymentAmount -> pull it from params and add the driver id to teh driver destiantion              
-DONE✔
 
 
+#### Driver Stripe account setup / allowed to drive variable
+- [ ] add account set up for stripe and that to update the drivers account as driveable
+  
 ### Chunk 2: Geo-Location / Multi-University Edge Case (4 hrs)
 
 #### Driver Location & Origin Setup
