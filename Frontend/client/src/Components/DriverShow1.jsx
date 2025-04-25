@@ -45,6 +45,9 @@ const DriverShow1 = () => {
           }
         }
       );
+      console.log("Longitude:", coords.longitude);
+          console.log("Latitude:", coords.latitude);
+          console.log("Driver before update:", driver);
       setDriver(prev => ({ ...prev, online: true }));
     } catch (err) {
       console.error("Failed to go online:", err);
