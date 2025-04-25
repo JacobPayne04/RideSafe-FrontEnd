@@ -166,16 +166,17 @@ ________________________________________________________
 - [ ] Secure frontend routes + validations (check auth before pay) -TODO#
 
 #### Internal Logic ^^ 4/4/2025 ^^TODO#
-- [ ] Transaction retries + logging in DB
-- [ ] Refund process (manual button first, auto flow later)
+- [ ] Transaction retries + logging in DB ??????????
+- [✔] Refund process (manual button first, auto flow later)
 - Frontend:## refund process flow.
-- [ ] front end checkout have 10 min timer start DateNow()-> after 10 min unhide the refund button 
+- [✔] front end checkout have 10 min timer start DateNow()-> after 10 min unhide the refund button 
+  
 - Backend:## refund logic.
 create refund route for stripe to refund payment and to update ride as cancelled to not be rendered.
-- [ ] FIX GOOGLE MAPS LOADING ERROR
+- [✔] FIX GOOGLE MAPS LOADING ERROR
 - [ ]  Add Stripe’s PaymentRequestButtonElement - apple pay, venmo ect
 - [ ]  Add the payment Button in Your Component for other apps
-- [ ]  
+  
 
 
 
@@ -328,7 +329,7 @@ create refund route for stripe to refund payment and to update ride as cancelled
 - QA + Polish UI
 
 -------------------------------------
-📁 1. Data Model Preparation
+📁 1. Data Model Preparation   |DONE|
 
 🔹 1.1 Update Driver Model
 
@@ -345,6 +346,10 @@ public void setLocation(GeoJsonPoint location) { this.location = location; }
 🔹 1.2 Passenger Model
 
 No changes needed
+
+
+---------------------------
+
 
 📁 2. Driver Location Handling
 
@@ -368,6 +373,9 @@ Set isOnline = false
 
 Optionally clear location
 
+---------------------------
+
+
 📁 3. MongoDB Indexing
 
 🔹 3.1 Create Geospatial Index
@@ -375,6 +383,10 @@ Optionally clear location
 Run once in Mongo shell:
 
 db.drivers.createIndex({ location: "2dsphere" })
+
+---------------------------
+
+
 
 📁 4. Nearby Driver Query (Backend)
 
@@ -392,6 +404,10 @@ Query query = new Query(Criteria.where("location")
 query.addCriteria(Criteria.where("isOnline").is(true));
 
 Return filtered list of drivers
+
+
+---------------------------
+
 
 📁 5. Frontend Integration
 
