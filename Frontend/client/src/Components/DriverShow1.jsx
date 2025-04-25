@@ -33,7 +33,7 @@ const DriverShow1 = () => {
   const goOnline = async (coords) => {
     try {
       await axios.put(
-        `http://localhost:8080/driver/${id}/status`,
+        `http://localhost:8080/${id}/status`,
         {
           isOnline: true,
           longitude: coords.longitude,
@@ -55,7 +55,7 @@ const DriverShow1 = () => {
   const goOffline = async () => {
     try {
       await axios.put(
-        `http://localhost:8080/driver/${id}/status`,
+        `http://localhost:8080/${id}/status`,
         {
           isOnline: false
         },
