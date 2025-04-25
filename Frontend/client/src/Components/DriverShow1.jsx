@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import '../Styling/DriverShow1.css';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import '../Styling/DriverShow1.css';
+import { getCurrentCoords } from '../utils/geolocation';
 
 const DriverShow1 = () => {
   const { id } = useParams();
@@ -12,12 +12,10 @@ const DriverShow1 = () => {
 
   useEffect(() => {
     let isMounted = true;
+
     const fetchDriver = async () => {
       try {
-     
         const response = await axios.get(`http://localhost:8080/driver/${id}`);
-        console.log(response.data);
-
         if (isMounted) {
           setDriver(response.data);
         }
@@ -27,32 +25,56 @@ const DriverShow1 = () => {
         }
       }
     };
+
     fetchDriver();
     return () => {
       isMounted = false;
     };
   }, [id]);
 
+  const goOnline = async () => {
+    getCurrentCoords(async (err, coords) => {
+      if (err) {
+        alert("Location access denied: " + err.message);
+        return;
+      }
+
+      try {
+        await axios.put(
+          `http://localhost:8080/driver/${id}/online`,
+          {
+            longitude: coords.longitude,
+            latitude: coords.latitude,
+          }
+        );
+        setDriver(prev => ({ ...prev, online: true }));
+      } catch (err) {
+        console.error("Failed to update location:", err);
+        alert("Could not go online.");
+      }
+    });
+  };
+
   const toggleStatus = async () => {
-    if (loading) return;
-    const newStatus = !driver.online; // Use the correct property name
+    if (loading || !driver) return;
+    const goingOnline = !driver.online;
     setLoading(true);
 
-    try {
-      await axios.put(
-        `http://localhost:8080/${id}/status`,
-        null,
-        { params: { isOnline: newStatus } } // Assuming the backend expects 'isOnline'
-      );
-      setDriver((prevDriver) => ({
-        ...prevDriver,
-        online: newStatus, // Update the correct property in state
-      }));
-    } catch (error) {
-      console.error("Error updating status:", error);
-    } finally {
-      setLoading(false);
+    if (goingOnline) {
+      await goOnline();
+    } else {
+      try {
+        await axios.put(`http://localhost:8080/${id}/status`, null, {
+          params: { isOnline: false },
+        });
+        setDriver(prev => ({ ...prev, online: false }));
+      } catch (err) {
+        console.error("Failed to go offline:", err);
+        alert("Could not go offline.");
+      }
     }
+
+    setLoading(false);
   };
 
   if (error) {
@@ -65,17 +87,18 @@ const DriverShow1 = () => {
 
   return (
     <div className="driver-container">
-
       <div className="driver-info">
         <div className='Profile-Img-Name-Section'>
-          <img src="https://i0.wp.com/toppng.com/uploads/preview/instagram-default-profile-picture-11562973083brycehrmyv.png" className='Default-Profile-Picture' />
-
-
+          <img
+            src="https://i0.wp.com/toppng.com/uploads/preview/instagram-default-profile-picture-11562973083brycehrmyv.png"
+            className='Default-Profile-Picture'
+            alt="Profile"
+          />
           <div>
             <div className='First-Last-Name-Section'>
               <p className='First-Name-Driver'>{driver.firstName}</p>
               <p className='Last-Name-Driver'>{driver.lastName}</p>
-              <p> driver Id: {driver.id}</p>
+              <p>Driver ID: {driver.id}</p>
             </div>
             <div>0.0 ⭐ 0 ratings</div>
 
@@ -88,18 +111,14 @@ const DriverShow1 = () => {
                 <div className="toggle-thumb"></div>
               </div>
             </div>
-              <div>
-                <Link to={`/driver/home/${id}`}>View Rides</Link>
-              </div>
-              <div>
-                <Link to={`/edit/driver/${id}/info`}>Edit Profile</Link>
-              </div>
+
+            <div><Link to={`/driver/home/${id}`}>View Rides</Link></div>
+            <div><Link to={`/edit/driver/${id}/info`}>Edit Profile</Link></div>
           </div>
         </div>
       </div>
     </div>
   );
-
 };
 
 export default DriverShow1;
