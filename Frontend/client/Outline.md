@@ -188,7 +188,8 @@ create refund route for stripe to refund payment and to update ride as cancelled
 ### Chunk 2: Geo-Location / Multi-University Edge Case (4 hrs)
 
 #### Driver Location & Origin Setup
-- [ ] Get driver’s real-time geo location (backend API + frontend tracking)
+- [✔] Get driver’s real-time geo location (backend API + frontend tracking)
+- [✔] Get passenger's real-time geo location (backend API + frontend tracking)
 - [ ] Use Google Places API to detect nearest university (origin logic)
 - [ ] Save ride origins in DB
 
@@ -353,7 +354,7 @@ No changes needed
 
 📁 2. Driver Location Handling
 
-🔹 2.1 On Driver Online
+🔹 2.1 On Driver Online  |DONE|
 
 Accept latitude and longitude from frontend
 
@@ -376,7 +377,7 @@ Optionally clear location
 ---------------------------
 
 
-📁 3. MongoDB Indexing
+📁 3. MongoDB Indexing TODO#####
 
 🔹 3.1 Create Geospatial Index
 
