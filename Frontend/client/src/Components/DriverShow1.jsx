@@ -30,52 +30,65 @@ const DriverShow1 = () => {
     };
   }, [id]);
 
+  const goOnline = async (coords) => {
+    try {
+      await axios.put(
+        `http://localhost:8080/driver/${id}/status`,
+        {
+          isOnline: true,
+          longitude: coords.longitude,
+          latitude: coords.latitude
+        },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      setDriver(prev => ({ ...prev, online: true }));
+    } catch (err) {
+      console.error("Failed to go online:", err);
+      alert("Could not go online.");
+    }
+  };
+
+  const goOffline = async () => {
+    try {
+      await axios.put(
+        `http://localhost:8080/driver/${id}/status`,
+        {
+          isOnline: false
+        },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      setDriver(prev => ({ ...prev, online: false }));
+    } catch (err) {
+      console.error("Failed to go offline:", err);
+      alert("Could not go offline.");
+    }
+  };
+
   const toggleStatus = async () => {
     if (loading || !driver) return;
-    const goingOnline = !driver.online;
     setLoading(true);
 
-    if (goingOnline) {
+    if (!driver.online) {
       getCurrentCoords(async (err, coords) => {
         if (err) {
           alert("Location access denied: " + err.message);
           setLoading(false);
           return;
         }
-
-        try {
-          await axios.put(`http://localhost:8080/${id}/status`, null, {
-            params: {
-              isOnline: true,
-              longitude: coords.longitude,
-              latitude: coords.latitude
-            }
-          });
-          console.log("Longitude:", coords.longitude);
-          console.log("Latitude:", coords.latitude);
-          console.log("Driver before update:", driver);
-
-
-          setDriver(prev => ({ ...prev, online: true }));
-        } catch (err) {
-          console.error("Failed to go online:", err);
-          alert("Could not go online.");
-        } finally {
-          setLoading(false);
-        }
+        await goOnline(coords);
+        setLoading(false);
       });
     } else {
-      try {
-        await axios.put(`http://localhost:8080/${id}/status`, null, {
-          params: { isOnline: false }
-        });
-        setDriver(prev => ({ ...prev, online: false }));
-      } catch (err) {
-        console.error("Failed to go offline:", err);
-        alert("Could not go offline.");
-      } finally {
-        setLoading(false);
-      }
+      await goOffline();
+      setLoading(false);
     }
   };
 
