@@ -175,6 +175,9 @@ create refund route for stripe to refund payment and to update ride as cancelled
 - [ ] FIX GOOGLE MAPS LOADING ERROR
 - [ ]  Add Stripe’s PaymentRequestButtonElement - apple pay, venmo ect
 - [ ]  Add the payment Button in Your Component for other apps
+- [ ]  
+
+
 
 
 
@@ -323,4 +326,115 @@ create refund route for stripe to refund payment and to update ride as cancelled
 - Then Redis/APM/Admin Panel
 - Deploy
 - QA + Polish UI
+
+-------------------------------------
+📁 1. Data Model Preparation
+
+🔹 1.1 Update Driver Model
+
+Add field:
+
+@GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
+private GeoJsonPoint location;
+
+Add getter and setter:
+
+public GeoJsonPoint getLocation() { return location; }
+public void setLocation(GeoJsonPoint location) { this.location = location; }
+
+🔹 1.2 Passenger Model
+
+No changes needed
+
+📁 2. Driver Location Handling
+
+🔹 2.1 On Driver Online
+
+Accept latitude and longitude from frontend
+
+Convert to GeoJsonPoint(longitude, latitude)
+
+Set location and mark driver as online
+
+Example logic:
+
+driver.setLocation(new GeoJsonPoint(longitude, latitude));
+driver.setIsOnline(true);
+driverRepository.save(driver);
+
+🔹 2.2 On Driver Offline
+
+Set isOnline = false
+
+Optionally clear location
+
+📁 3. MongoDB Indexing
+
+🔹 3.1 Create Geospatial Index
+
+Run once in Mongo shell:
+
+db.drivers.createIndex({ location: "2dsphere" })
+
+📁 4. Nearby Driver Query (Backend)
+
+🔹 4.1 Accept Passenger Location
+
+Use browser geolocation to get latitude and longitude
+
+Send it to backend API
+
+🔹 4.2 Backend Query Example
+
+Query query = new Query(Criteria.where("location")
+    .nearSphere(new Point(passengerLng, passengerLat))
+    .maxDistance(10.0 / 3963.2));  // 10 miles in radians
+query.addCriteria(Criteria.where("isOnline").is(true));
+
+Return filtered list of drivers
+
+📁 5. Frontend Integration
+
+🔹 5.1 Fetch Passenger Location
+
+navigator.geolocation.getCurrentPosition(pos => {
+  const lat = pos.coords.latitude;
+  const lng = pos.coords.longitude;
+  // Send to backend
+});
+
+🔹 5.2 Display Nearby Drivers
+
+Show returned drivers on list or map
+
+Handle empty result set gracefully
+
+📌 Notes
+
+Coordinates must be [longitude, latitude]
+
+GeoJsonPoint from spring-data-mongodb
+
+maxDistance uses radians: miles / 3963.2
+
+No caching or rate-limiting needed for MVP
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
