@@ -1,0 +1,105 @@
+/* PassengerHomePage.css - Mobile-friendly styles for Safari */
+
+/* Base styles and reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f8f8f8;
+    color: #333;
+  }
+  
+  /* Container styles */
+  .passenger-home-container {
+    padding: 16px;
+    max-width: 100%;
+    height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Header section */
+  .header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .header-section h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #222;
+  }
+  
+  /* Profile icon */
+  .profile-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #eaeaea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+  
+  .profile-icon:active {
+    transform: scale(0.95);
+    background-color: #e0e0e0;
+  }
+  
+  .profile-emoji {
+    font-size: 24px;
+  }
+  
+  /* Main action section */
+  .main-action-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+  }
+  
+  /* Book ride button */
+  .book-ride-button {
+    background-color: #ff6b00;
+    color: white;
+    border: none;
+    border-radius: 28px;
+    padding: 16px 32px;
+    font-size: 18px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+    width: 80%;
+    max-width: 300px;
+    transition: all 0.2s ease;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  
+  .book-ride-button:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+  }
+  
+  /* Safari-specific adjustments */
+  @supports (-webkit-touch-callout: none) {
+    .book-ride-button {
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    
+    /* Fix for iOS Safari bottom bar */
+    .passenger-home-container {
+      padding-bottom: 80px;
+    }
+  }

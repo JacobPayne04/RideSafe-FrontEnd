@@ -23,6 +23,8 @@ import GoogleSignIn from './Components/GoogleSignIn';
 import AdminHome from './Components/AdminHome';
 import CheckoutForm from './Components/CheckoutForm';
 import EditDriver from './Components/EditDriver';
+import PassengerHomePage from './Components/PassengerHomePage';
+import PassengerSettings from './Components/PassengerSettings';
 
 // ✅ Load Stripe key correctly
 const stripePromise = loadStripe(process.env.REACT_APP_PK_TEST_PUBLIC_KEY);
@@ -58,7 +60,11 @@ function App() {
         <Route path="/register/passenger" element={<RegisterPassenger />} />
         <Route path="/register/passenger/google" element={<GoogleRegisterPassenger />} />
         <Route path="/login/passenger" element={<LoginPassenger />} />
-        <Route path="/Passenger/home" element={<PassengerShow1 />} />
+        <Route path="/Passenger/show1/Booking" element={<PassengerShow1 />} />
+        <Route path="/Passenger/home" element={<PassengerHomePage />} />
+        <Route path="/Passenger/home/settings" element={<PassengerSettings />} />
+
+        
 
         {/* Ride Routes */}
         <Route path="/passenger/:passengerId/book/ride/driver/:driverId" element={<RideForm />} />

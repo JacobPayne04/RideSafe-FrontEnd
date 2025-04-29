@@ -1,0 +1,155 @@
+/* EditPassenger.css - Mobile-friendly styles for Safari */
+
+/* Base styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f8f8f8;
+    color: #333;
+  }
+  
+  /* Container styles */
+  .edit-passenger-container {
+    padding: 20px 16px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  /* Back button */
+  .back-button {
+    background-color: #f1f1f1;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: #444;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 16px;
+    transition: all 0.2s ease;
+  }
+  
+  .back-button:active {
+    transform: scale(0.98);
+    background-color: #e8e8e8;
+  }
+  
+  /* Heading styles */
+  h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  
+  /* Error message */
+  .error-message {
+    background-color: #ffeeee;
+    color: #e53935;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  /* Form styles */
+  .edit-passenger-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  /* Form sections */
+  .form-section {
+    background-color: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+  
+  .form-section h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  /* Input groups */
+  .input-group {
+    margin-bottom: 16px;
+  }
+  
+  .input-group:last-child {
+    margin-bottom: 0;
+  }
+  
+  .input-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 6px;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    transition: border-color 0.2s ease;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  
+  .input-group input:focus {
+    outline: none;
+    border-color: #ff6b00;
+    background-color: #fff;
+  }
+  
+  /* Submit button */
+  .submit-button {
+    background-color: #ff6b00;
+    color: white;
+    border: none;
+    border-radius: 24px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 8px;
+    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+    transition: all 0.2s ease;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  
+  .submit-button:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+  }
+  
+  /* Safari-specific adjustments */
+  @supports (-webkit-touch-callout: none) {
+    .submit-button, .input-group input, .back-button {
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    
+    /* Fix for iOS Safari bottom bar */
+    .edit-passenger-container {
+      padding-bottom: 80px;
+    }
+  }
