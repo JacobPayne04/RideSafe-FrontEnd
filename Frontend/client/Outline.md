@@ -377,7 +377,7 @@ Optionally clear location
 ---------------------------
 
 
-📁 3. MongoDB Indexing TODO#####
+📁 3. MongoDB Indexing  |DONE|
 
 🔹 3.1 Create Geospatial Index
 
@@ -389,7 +389,7 @@ db.drivers.createIndex({ location: "2dsphere" })
 
 
 
-📁 4. Nearby Driver Query (Backend)
+📁 4. Nearby Driver Query (Backend) TODO###
 
 🔹 4.1 Accept Passenger Location
 
@@ -412,7 +412,7 @@ Return filtered list of drivers
 
 📁 5. Frontend Integration
 
-🔹 5.1 Fetch Passenger Location
+🔹 5.1 Fetch Passenger Location  |DONE|
 
 navigator.geolocation.getCurrentPosition(pos => {
   const lat = pos.coords.latitude;
@@ -420,7 +420,7 @@ navigator.geolocation.getCurrentPosition(pos => {
   // Send to backend
 });
 
-🔹 5.2 Display Nearby Drivers
+🔹 5.2 Display Nearby Drivers TODO###
 
 Show returned drivers on list or map
 

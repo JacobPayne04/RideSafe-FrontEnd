@@ -17,6 +17,8 @@ const DriverShow1 = () => {
         const response = await axios.get(`http://localhost:8080/driver/${id}`);
         if (isMounted) {
           setDriver(response.data);
+          console.log("Rendered driver.isOnline:", driver?.isOnline);
+
         }
       } catch (err) {
         if (isMounted) {
@@ -27,6 +29,8 @@ const DriverShow1 = () => {
     fetchDriver();
     return () => {
       isMounted = false;
+      console.log("Rendered driver.isOnline:", driver?.isOnline);
+
     };
   }, [id]);
 
@@ -46,9 +50,9 @@ const DriverShow1 = () => {
         }
       );
       console.log("Longitude:", coords.longitude);
-          console.log("Latitude:", coords.latitude);
-          console.log("Driver before update:", driver);
-      setDriver(prev => ({ ...prev, online: true }));
+      console.log("Latitude:", coords.latitude);
+      console.log("Driver before update:", driver);
+      setDriver(prev => ({ ...prev, isOnline: true }));
     } catch (err) {
       console.error("Failed to go online:", err);
       alert("Could not go online.");
@@ -68,7 +72,7 @@ const DriverShow1 = () => {
           }
         }
       );
-      setDriver(prev => ({ ...prev, online: false }));
+      setDriver(prev => ({ ...prev, isOnline: false }));
     } catch (err) {
       console.error("Failed to go offline:", err);
       alert("Could not go offline.");
@@ -79,7 +83,7 @@ const DriverShow1 = () => {
     if (loading || !driver) return;
     setLoading(true);
 
-    if (!driver.online) {
+    if (!driver.isOnline) {
       getCurrentCoords(async (err, coords) => {
         if (err) {
           alert("Location access denied: " + err.message);
@@ -121,10 +125,10 @@ const DriverShow1 = () => {
             <div>0.0 ⭐ 0 ratings</div>
 
             <div className='Settings-Online-Section'>
-              <p className="status-text">{`You are ${driver.online ? "online" : "offline"}`}</p>
+              <p className="status-text">{`You are ${driver.isOnline ? "online" : "offline"}`}</p>
               <div
                 onClick={toggleStatus}
-                className={`toggle-button ${driver.online ? "online" : "offline"}`}
+                className={`toggle-button ${driver.isOnline ? "online" : "offline"}`}
               >
                 <div className="toggle-thumb"></div>
               </div>

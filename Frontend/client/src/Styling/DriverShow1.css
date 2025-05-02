@@ -9,7 +9,7 @@
   margin-left: 100px;
 }
 
-.Driver-Details{
+.Driver-Details {
   padding-bottom: 20px;
   text-decoration: underline;
 }
@@ -28,7 +28,7 @@
   font-weight: bold;
 }
 
-/* Toggle button container */
+/* Toggle button base */
 .toggle-button {
   display: flex;
   align-items: center;
@@ -38,21 +38,21 @@
   border-radius: 15px;
   margin-top: 10px;
   cursor: pointer;
-  background-color: #ccc;
   position: relative;
   transition: background-color 0.3s ease;
+  background-color: #999; /* fallback background */
 }
 
-/* Online and offline colors */
+/* Forcefully override background colors */
 .toggle-button.online {
-  background-color: #4caf50;
+  background-color: #4caf50 !important; /* green */
 }
 
 .toggle-button.offline {
-  background-color: #f44336;
+  background-color: #f44336 !important; /* red */
 }
 
-/* The circular toggle thumb */
+/* Toggle thumb base */
 .toggle-thumb {
   position: absolute;
   width: 20px;
@@ -61,40 +61,44 @@
   background-color: #fff;
   top: 50%;
   transform: translateY(-50%);
-  left: 3px;
   transition: left 0.3s ease;
 }
 
+/* Thumb position based on state */
 .toggle-button.online .toggle-thumb {
-  left: 25px; /* Move thumb to the right when online */
+  left: 27px;
 }
 
-.Profile-Img-Name-Section{
+.toggle-button.offline .toggle-thumb {
+  left: 3px;
+}
+
+.Profile-Img-Name-Section {
   display: flex;
 }
 
-.First-Last-Name-Section{
+.First-Last-Name-Section {
   display: flex;
 }
 
-.Settings-Online-Section{
+.Settings-Online-Section {
   display: flex;
   width: 500px;
   justify-content: space-between;
 }
 
-.Default-Profile-Picture{
-  height:100px;
+.Default-Profile-Picture {
+  height: 100px;
   width: 100px;
 }
 
-.First-Name-Driver{
+.First-Name-Driver {
   font-size: 20px;
   font-weight: bold;
   padding-right: 5px;
 }
 
-.Last-Name-Driver{
+.Last-Name-Driver {
   font-size: 20px;
   font-weight: bold;
 }
