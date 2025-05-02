@@ -28,8 +28,10 @@ const GoogleSignIn = () => {
     
                 if (res.data.exists) {
                     if (role === "driver") {
+                        localStorage.setItem("driverId", res.data.driverId); 
                         navigate(`/one/driver/${res.data.driverId}`);
                     } else {
+                        localStorage.setItem("passengerId", res.data.passengerId);
                         navigate(`/Passenger/home`);
                     }
                 } else {
