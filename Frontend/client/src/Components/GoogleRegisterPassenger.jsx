@@ -32,7 +32,8 @@ const GoogleRegisterPassenger = () => {
           headers: { 'Content-Type': 'application/json' }
         });
         console.log("Passenger created:", response.data);
-        const passengerId = localStorage.getItem("passengerId");
+        const passengerId = response.data.id; // or response.data.passengerId depending on your backend
+        localStorage.setItem("passengerId", passengerId);
         navigate("/Passenger/home");
       } catch (error) {
         console.error('There was an error!', error.response ? error.response.data : error);
