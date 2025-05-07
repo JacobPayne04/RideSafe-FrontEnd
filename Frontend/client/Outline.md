@@ -175,7 +175,6 @@ ________________________________________________________
 create refund route for stripe to refund payment and to update ride as cancelled to not be rendered.
 - [✔] FIX GOOGLE MAPS LOADING ERROR
 - [ ]  Add Stripe’s PaymentRequestButtonElement - apple pay, venmo ect
-- [ ]  Add the payment Button in Your Component for other apps
   
 
 
@@ -184,6 +183,7 @@ create refund route for stripe to refund payment and to update ride as cancelled
 
 #### Driver Stripe account setup / allowed to drive variable
 - [ ] add account set up for stripe and that to update the drivers account as driveable
+- [ ] Add isallowed to Drive for giving cords to render for passengers
   
 ### Chunk 2: Geo-Location / Multi-University Edge Case (4 hrs)
 
@@ -193,11 +193,11 @@ create refund route for stripe to refund payment and to update ride as cancelled
 
 #### Rendering Drivers Based on Proximity
 - [✔] Backend: filter drivers by origin + proximity logic ##TODO
-- [] Frontend: display drivers closest to passengers
+- [✔] Frontend: display drivers closest to passengers
 
 ### Chunk 2.5  create driver onboarding ###
 
-  make driver manual on boarding to be bale to drive and be accepted.
+ - []  make driver manual on boarding to be bale to drive and be accepted.
   set up stripe account.
 
 ---
@@ -325,6 +325,15 @@ create refund route for stripe to refund payment and to update ride as cancelled
 - Deploy
 - QA + Polish UI
 
+
+
+
+
+
+
+
+
+
 -------------------------------------
 📁 1. Data Model Preparation   |DONE|
 
@@ -416,13 +425,13 @@ navigator.geolocation.getCurrentPosition(pos => {
   // Send to backend
 });
 
-🔹 5.2 Display Nearby Drivers TODO###
+🔹 5.2 Display Nearby Drivers |DONE|
 
 Show returned drivers on list or map
 
 Handle empty result set gracefully
 
-🔹 5.3 TEST - TODO###
+🔹 5.3 TEST - |DONE|
 
 📌 Notes :
 
