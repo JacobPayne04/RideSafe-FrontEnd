@@ -11,16 +11,29 @@ const PassengerShow1 = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchOnlineDrivers = async () => {
+    const fetchNearbyDrivers = async () => {
+      const latitude = localStorage.getItem('passengerLatitude');
+      const longitude = localStorage.getItem('passengerLongitude');
+  
+      if (!latitude || !longitude) {
+        console.error('❌ Missing passenger coordinates in localStorage');
+        return;
+      }
+  
       try {
-        const res = await axios.get('http://localhost:8080/online/drivers');
+        const res = await axios.post('http://localhost:8080/nearby/drivers', {
+          latitude: parseFloat(latitude),
+          longitude: parseFloat(longitude)
+        });
         setOnlineDrivers(res.data);
       } catch (error) {
-        console.error('❌ Error in fetching online drivers:', error);
+        console.error('❌ Error fetching nearby drivers:', error);
       }
     };
-    fetchOnlineDrivers();
+  
+    fetchNearbyDrivers();
   }, []);
+  
 
   const handleNav = () => {
     navigate(`/passenger/${passengerId}/book/ride/driver/${selectedDriverId}`);
