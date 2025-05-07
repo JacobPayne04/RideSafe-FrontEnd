@@ -19,6 +19,10 @@ const PassengerHomePage = () => {
         } else {
           navigator.geolocation.getCurrentPosition(
             (position) => {
+              // Save coordinates in localStorage
+              localStorage.setItem('passengerLatitude', position.coords.latitude);
+              localStorage.setItem('passengerLongitude', position.coords.longitude);
+    
               resolve({
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude
@@ -31,7 +35,7 @@ const PassengerHomePage = () => {
           );
         }
       });
-    };
+    };    
   
     // Function to update passenger location in the backend
     const updatePassengerLocation = async (passengerId) => {
