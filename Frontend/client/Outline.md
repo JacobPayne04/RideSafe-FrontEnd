@@ -190,14 +190,10 @@ create refund route for stripe to refund payment and to update ride as cancelled
 #### Driver Location & Origin Setup
 - [✔] Get driver’s real-time geo location (backend API + frontend tracking)
 - [✔] Get passenger's real-time geo location (backend API + frontend tracking)
-- [ ] Use Google Places API to detect nearest university (origin logic)
-- [ ] Save ride origins in DB
 
 #### Rendering Drivers Based on Proximity
-- [ ] Backend: filter drivers by origin + proximity logic
-- [ ] Frontend: display drivers closest to university (limit N drivers)
-- [ ] Validate driver location every X seconds (WebSocket/REST fallback)
-- [ ] Future: Heatmap drivers density (optional for later)
+- [✔] Backend: filter drivers by origin + proximity logic ##TODO
+- [] Frontend: display drivers closest to passengers
 
 ### Chunk 2.5  create driver onboarding ###
 
@@ -389,7 +385,7 @@ db.drivers.createIndex({ location: "2dsphere" })
 
 
 
-📁 4. Nearby Driver Query (Backend) TODO###
+📁 4. Nearby Driver Query (Backend) |DONE|
 
 🔹 4.1 Accept Passenger Location
 
@@ -426,14 +422,13 @@ Show returned drivers on list or map
 
 Handle empty result set gracefully
 
-📌 Notes
+🔹 5.3 TEST - TODO###
+
+📌 Notes :
 
 Coordinates must be [longitude, latitude]
-
 GeoJsonPoint from spring-data-mongodb
-
 maxDistance uses radians: miles / 3963.2
-
 No caching or rate-limiting needed for MVP
 
 
