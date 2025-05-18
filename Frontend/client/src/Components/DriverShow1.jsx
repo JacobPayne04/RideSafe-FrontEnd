@@ -116,11 +116,10 @@ const DriverShow1 = () => {
             className='Default-Profile-Picture'
             alt="Profile"
           />
-          <div>
+          <div className='Profile-Info-Section'>
             <div className='First-Last-Name-Section'>
               <p className='First-Name-Driver'>{driver.firstName}</p>
               <p className='Last-Name-Driver'>{driver.lastName}</p>
-              <p>Driver ID: {driver.id}</p>
             </div>
             <div>0.0 ⭐ 0 ratings</div>
 
@@ -134,8 +133,10 @@ const DriverShow1 = () => {
               </div>
             </div>
 
-            <div><Link to={`/driver/home/${id}`}>View Rides</Link></div>
-            <div><Link to={`/edit/driver/${id}/info`}>Edit Profile</Link></div>
+            <div className='Driver-Profile-Button-Section'>
+              <div className='Driver-Button-Profile'><Link to={`/driver/home/${id}`}>View Rides</Link></div>
+              <div className='Driver-Button-Profile'><Link to={`/edit/driver/${id}/info`}>Edit Profile</Link></div>
+            </div>
           </div>
         </div>
       </div>
