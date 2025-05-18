@@ -40,7 +40,7 @@ const RegisterDriverLandingPage = () => {
                 <p>Already a passenger? <button className="register-card"><Link to="/login/passenger">Login Passenger</Link></button></p>
             </div>
             <div>
-                <p>Sign In With <button onClick={handleGoogleSignInPopUp}>Google</button></p>
+               <button onClick={handleGoogleSignInPopUp} className='register-card-google'>Sign In With Google</button>
 
             </div>
 

@@ -17,6 +17,7 @@
     color: #333;
 }
 
+
 /* Card styling for register options */
 .register-card {
     cursor: pointer;
@@ -24,20 +25,51 @@
     width: 80%;
     max-width: 400px;
     text-align: center;
-    border: 2px solid #007bff;
+    border: 2px solid white;
     border-radius: 10px;
     margin: 10px 0;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-size: 1.2rem;
-    color: #007bff;
+    background-color: #ff6b00;
+    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+    font-size: 18px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    -webkit-appearance: none;
+    appearance: none;
+    color: white;
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
 /* Hover effect for the cards */
 .register-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+}
+
+/* Card styling for register options */
+.register-card-google {
+    cursor: pointer;
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    border: 2px solid white;
+    border-radius: 10px;
+    margin: 10px 0;
+    background-color: #ff6b00;
+    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+    font-size: 18px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    -webkit-appearance: none;
+    appearance: none;
+    color: white;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Hover effect for the cards */
+.register-card-google:hover {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
 }
 .login-prompt {
     text-align: center;
