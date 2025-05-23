@@ -155,13 +155,13 @@ ________________________________________________________
 - [✔] Integrate Stripe API into backend (basic payment flow) 
 - [✔] Setup webhooks for payment success/fail callbacks     
 - [✔] Verify transactions and update ride status in DB                                         
-- [ ] Add Apple Pay / Google Pay support in backend (config + keys)  -🛑TODO#🛑  
+- [✔] Add Apple Pay / Google Pay support in backend (config + keys)  -🛑TODO#🛑  
 
     
                                                                                  
 #### Frontend Payment Flow
 - [✔] Build frontend payment form 
-- [ ] Implement Apple Pay / Google Pay buttons -TODO#
+- [✔] Implement Apple Pay / Google Pay buttons -TODO#
 - [✔] Payment feedback UX: Success/Fail handling (loading, confirmation)
 - [ ] Secure frontend routes + validations (check auth before pay) -🛑TODO#🛑
 
