@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import "../Styling/CheckoutForm.css";
 import { useNavigate } from "react-router-dom";
+import { PaymentRequestButtonElement } from "@stripe/react-stripe-js";
+
+
 
 const CheckoutForm = () => {
   const stripe = useStripe();
@@ -14,7 +17,9 @@ const CheckoutForm = () => {
   const [darkMode, setDarkMode] = useState(localStorage.getItem("darkMode") === "true");
   const [rate, setRate] = useState(0);
   const [showTimerPopup, setShowTimerPopup] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
+  const [timeLeft, setTimeLeft] = useState(600); // 10 minutes
+
+  const [paymentRequest, setPaymentRequest] = useState(null);
 
   const rideId = localStorage.getItem("rideId");
   const passengerAmount = localStorage.getItem("passengerAmount");
@@ -46,7 +51,27 @@ const CheckoutForm = () => {
     fetchRideDetails();
   }, [rideId, passengerAmount]);
 
-  // Countdown timer for refund popup
+  useEffect(() => {
+    if (!stripe || !rate) return;
+
+    const pr = stripe.paymentRequest({
+      country: "US",
+      currency: "usd",
+      total: {
+        label: "Ride Payment",
+        amount: parseInt(rate * 100), // cents
+      },
+      requestPayerName: true,
+      requestPayerEmail: true,
+    });
+
+    pr.canMakePayment().then((result) => {
+      if (result) {
+        setPaymentRequest(pr);
+      }
+    });
+  }, [stripe, rate]);
+
   useEffect(() => {
     if (!showTimerPopup) return;
 
@@ -69,8 +94,7 @@ const CheckoutForm = () => {
   };
 
   const handleRefund = () => {
-    alert("Refund requested. (You can implement the backend call here)");
-    // Example:
+    alert("Refund requested.");
     // fetch('/refund', { method: 'POST', body: JSON.stringify({ rideId }) })
   };
 
@@ -111,7 +135,7 @@ const CheckoutForm = () => {
         setSuccess(false);
       } else if (paymentIntent.status === "succeeded") {
         setSuccess(true);
-        setShowTimerPopup(true); // Start 10-minute timer
+        setShowTimerPopup(true);
 
         const updateResponse = await fetch("http://localhost:8080/update-ride-payment", {
           method: "POST",
@@ -122,7 +146,6 @@ const CheckoutForm = () => {
         if (!updateResponse.ok) {
           console.error("Failed to update ride payment status.");
         }
-
       }
     } catch (err) {
       setError("Something went wrong.");
@@ -133,9 +156,6 @@ const CheckoutForm = () => {
   };
 
   const CancelPayment = () => {
-    //here will call the await function 
-    //axiost route is /refund will take care but it needs the 
-    //paymentIntent to look up apyment to set as false in the service
     navigate("/Passenger/home");
   };
 
@@ -158,37 +178,42 @@ const CheckoutForm = () => {
         ) : (
           <>
             <p className="amount-display">Total: ${rate.toFixed(2)}</p>
-            <form onSubmit={handleSubmit}>
-              <div className="card-input">
-                <CardElement
-                  options={{
-                    style: {
-                      base: {
-                        fontSize: "16px",
-                        color: darkMode ? "white" : "black",
-                        "::placeholder": { color: darkMode ? "#ccc" : "#666" },
+
+            {paymentRequest ? (
+              <PaymentRequestButtonElement options={{ paymentRequest }} className="pay-button" />
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <div className="card-input">
+                  <CardElement
+                    options={{
+                      style: {
+                        base: {
+                          fontSize: "16px",
+                          color: darkMode ? "white" : "black",
+                          "::placeholder": { color: darkMode ? "#ccc" : "#666" },
+                        },
+                        invalid: { color: "#ff4d4d" },
                       },
-                      invalid: { color: "#ff4d4d" },
-                    },
-                  }}
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={loading || !stripe || rate === 0}
-                className="pay-button"
-              >
-                {loading ? "Processing..." : "Pay Now"}
-              </button>
-              {error && <p className="error-message">{error}</p>}
-              {success && <p className="success-message">Payment Successful!</p>}
-            </form>
+                    }}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={loading || !stripe || rate === 0}
+                  className="pay-button"
+                >
+                  {loading ? "Processing..." : "Pay Now"}
+                </button>
+              </form>
+            )}
+
+            {error && <p className="error-message">{error}</p>}
+            {success && <p className="success-message">Payment Successful!</p>}
             <button className="cancel-button" onClick={CancelPayment}>Cancel</button>
           </>
         )}
       </div>
 
-      {/* Timer Popup */}
       {showTimerPopup && (
         <div className="timer-popup">
           <p>Refund available for: {formatTime(timeLeft)}</p>

@@ -155,7 +155,7 @@ ________________________________________________________
 - [✔] Integrate Stripe API into backend (basic payment flow) 
 - [✔] Setup webhooks for payment success/fail callbacks     
 - [✔] Verify transactions and update ride status in DB                                         
-- [ ] Add Apple Pay / Google Pay support in backend (config + keys)   TODO#   
+- [ ] Add Apple Pay / Google Pay support in backend (config + keys)  -🛑TODO#🛑  
 
     
                                                                                  
@@ -163,18 +163,20 @@ ________________________________________________________
 - [✔] Build frontend payment form 
 - [ ] Implement Apple Pay / Google Pay buttons -TODO#
 - [✔] Payment feedback UX: Success/Fail handling (loading, confirmation)
-- [ ] Secure frontend routes + validations (check auth before pay) -TODO#
+- [ ] Secure frontend routes + validations (check auth before pay) -🛑TODO#🛑
 
 #### Internal Logic ^^ 4/4/2025 ^^TODO#
-- [ ] Transaction retries + logging in DB ??????????
 - [✔] Refund process (manual button first, auto flow later)
 - Frontend:## refund process flow.
 - [✔] front end checkout have 10 min timer start DateNow()-> after 10 min unhide the refund button 
   
 - Backend:## refund logic.
 create refund route for stripe to refund payment and to update ride as cancelled to not be rendered.
-- [✔] FIX GOOGLE MAPS LOADING ERROR
-- [ ]  Add Stripe’s PaymentRequestButtonElement - apple pay, venmo ect
+- [✔] FIX GOOGLE MAPS LOADING ERROR ---- 
+- [ ]  Add Stripe’s PaymentRequestButtonElement - apple pay, venmo ect -🛑TODO#🛑
+- [✔]  FIX google maps api key to a new account for it to work -^^CURRENT^^
+- [ ]  fix javascript button not staying green based on adatabasse state
+- [ ]  
   
 
 
@@ -182,10 +184,11 @@ create refund route for stripe to refund payment and to update ride as cancelled
 
 
 #### Driver Stripe account setup / allowed to drive variable
-- [ ] add account set up for stripe and that to update the drivers account as driveable
-- [ ] Add isallowed to Drive for giving cords to render for passengers
+- [ ] add account set up for stripe and that to update the drivers account as driveable-🛑TODO#🛑
+- [ ] Add isallowed to Drive for giving cords to render for passengers-🛑TODO#🛑
   
 ### Chunk 2: Geo-Location / Multi-University Edge Case (4 hrs)
+- [✔]
 
 #### Driver Location & Origin Setup
 - [✔] Get driver’s real-time geo location (backend API + frontend tracking)
@@ -197,9 +200,10 @@ create refund route for stripe to refund payment and to update ride as cancelled
 
 ### Chunk 2.5  create driver onboarding ###
 
- - []  make driver manual on boarding to be bale to drive and be accepted.
-  set up stripe account.
-
+ - [ ]  make driver manual on boarding to be able to drive and be accepted.
+  and set up stripe account. -🛑TODO#🛑
+  - [ ] SPECIFIC* style main website
+  - [ ] clean up and refactoring - clean up all comments and unsed commented code nad naming convenetions.
 ---
 
 ### Chunk 3: Security & Authentication (4 hrs)
