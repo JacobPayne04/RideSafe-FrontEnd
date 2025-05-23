@@ -208,7 +208,38 @@ const CheckoutForm = () => {
             )}
 
             {error && <p className="error-message">{error}</p>}
-            {success && <p className="success-message">Payment Successful!</p>}
+           {success && (
+  <>
+    <p className="success-message">Payment Successful!</p>
+    <p style={{ marginTop: "10px" }}>
+      You covered the ride. Share these links so the other riders can pay you back:
+    </p>
+
+    <div className="payment-request-links">
+  {[...Array(passengerAmount - 1)].map((_, i) => {
+    const splitAmount = (rate / passengerAmount).toFixed(2);
+    const note = encodeURIComponent("Ride share split");
+    const venmoLink = `https://venmo.com?txn=pay&audience=private&amount=${splitAmount}&note=${note}`;
+    const cashAppLink = `https://cash.app/$yourcashappusername/${splitAmount}`;
+    const paypalLink = `https://paypal.me/yourpaypalusername/${splitAmount}`;
+
+    return (
+      <div key={i} className="payment-box">
+        <p>Rider {i + 2}</p>
+        <a href={venmoLink} target="_blank" rel="noopener noreferrer">Venmo</a>
+        <a href={cashAppLink} target="_blank" rel="noopener noreferrer">Cash App</a>
+        <a href={paypalLink} target="_blank" rel="noopener noreferrer">PayPal</a>
+      </div>
+    );
+  })}
+</div>
+
+    <p style={{ marginTop: "10px", fontSize: "0.85rem" }}>
+      Replace <code>$yourcashappusername</code> and <code>yourpaypalusername</code> with your actual usernames.
+    </p>
+  </>
+)}
+
             <button className="cancel-button" onClick={CancelPayment}>Cancel</button>
           </>
         )}
