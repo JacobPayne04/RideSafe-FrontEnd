@@ -7,6 +7,7 @@ import SockJS from 'sockjs-client';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { acceptRide, completeRide } from '../RideServices/RideProccessing.js';
+import '../Styling/ViewRideGoogleMaps.css'
 
 const scriptUrl = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
 const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
@@ -142,7 +143,7 @@ const ViewRideGoogleMaps = () => {
 
   return (
     <div>
-      <button onClick={() => handleEndRide(rideId)}>END RIDE</button>
+      <button className="End-Ride-Btn" onClick={() => handleEndRide(rideId)}>END RIDE</button>
       <div style={{ textAlign: "center", marginBottom: "10px" }}>
         {travelInfo.distance && travelInfo.duration && (
           <p>

@@ -1,0 +1,19 @@
+.End-Ride-Btn{
+    cursor: pointer;
+    padding: 20px;
+    text-align: center;
+    border: 2px solid white;
+    border-radius: 10px;
+    margin: 10px 0;
+    background-color: #ff6b00;
+    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.End-Ride-Btn:hover{
+    transform: scale(0.98);
+    box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+}
