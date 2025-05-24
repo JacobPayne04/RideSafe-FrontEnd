@@ -163,8 +163,8 @@ ________________________________________________________
 - [✔] Build frontend payment form 
 - [✔] Implement Apple Pay / Google Pay buttons -TODO#
 - [✔] Payment feedback UX: Success/Fail handling (loading, confirmation)
-- [ ] Secure frontend routes + validations (check auth before pay) -🛑TODO#🛑
 - [✔] add thing to put vnemo name so when yo up[ay poeple cna pay ou back ]
+- [ ] Secure frontend routes + validations (check auth before pay) -🛑TODO#🛑
 
 #### Internal Logic ^^ 4/4/2025 ^^TODO#
 - [✔] Refund process (manual button first, auto flow later)
@@ -176,7 +176,7 @@ create refund route for stripe to refund payment and to update ride as cancelled
 - [✔] FIX GOOGLE MAPS LOADING ERROR ---- 
 - [✔]  Add Stripe’s PaymentRequestButtonElement - apple pay, venmo ect -🛑TODO#🛑
 - [✔]  FIX google maps api key to a new account for it to work -^^CURRENT^^
-- [ ]  fix javascript button not staying green based on adatabasse state
+- [ ]  fix javascript button not staying green based on database state
   
 
 

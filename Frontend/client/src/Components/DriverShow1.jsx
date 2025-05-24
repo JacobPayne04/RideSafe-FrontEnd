@@ -4,6 +4,7 @@ import axios from 'axios';
 import '../Styling/DriverShow1.css';
 import { getCurrentCoords } from '../utils/geolocation';
 
+
 const DriverShow1 = () => {
   const { id } = useParams();
   const [driver, setDriver] = useState(null);
@@ -17,8 +18,7 @@ const DriverShow1 = () => {
         const response = await axios.get(`http://localhost:8080/driver/${id}`);
         if (isMounted) {
           setDriver(response.data);
-          console.log("Rendered driver.isOnline:", driver?.isOnline);
-
+          console.log("Fresh driver data from API - isOnline:", response.data.isOnline);
         }
       } catch (err) {
         if (isMounted) {
@@ -29,10 +29,15 @@ const DriverShow1 = () => {
     fetchDriver();
     return () => {
       isMounted = false;
-      console.log("Rendered driver.isOnline:", driver?.isOnline);
-
     };
   }, [id]);
+
+  // Monitor driver state changes
+  useEffect(() => {
+    if (driver) {
+      console.log("Driver state updated - isOnline:", driver.isOnline);
+    }
+  }, [driver]);
 
   const goOnline = async (coords) => {
     try {
@@ -143,5 +148,4 @@ const DriverShow1 = () => {
     </div>
   );
 };
-
 export default DriverShow1;
