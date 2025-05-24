@@ -13,6 +13,8 @@ const EditPassenger = () => {
     phone: "",
     password: "",
     confirmPassword: "",
+    VenmoUserName: "",
+    CashAppUserName: ""
   });
 
   const [error, setError] = useState("");
@@ -118,6 +120,26 @@ const EditPassenger = () => {
               value={passenger.phone} 
               onChange={handleChange}
               placeholder="Enter your phone number" 
+            />
+          </div>
+          <div className="input-group">
+            <label>Cash App Username</label>
+            <input 
+              type="text" 
+              name="CashAppUsername" 
+              value={passenger.CashAppUserName} 
+              onChange={handleChange}
+              placeholder="Enter your cash app username" 
+            />
+          </div>
+          <div className="input-group">
+            <label>Venmo Username</label>
+            <input 
+              type="text" 
+              name="VenmoUserName" 
+              value={passenger.VenmoUserName} 
+              onChange={handleChange}
+              placeholder="Enter your venmo username" 
             />
           </div>
         </div>
