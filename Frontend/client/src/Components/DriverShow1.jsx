@@ -141,6 +141,7 @@ const DriverShow1 = () => {
             <div className='Driver-Profile-Button-Section'>
               <div className='Driver-Button-Profile'><Link to={`/driver/home/${id}`}>View Rides</Link></div>
               <div className='Driver-Button-Profile'><Link to={`/edit/driver/${id}/info`}>Edit Profile</Link></div>
+              <div className='Driver-Button-Profile'><Link to={`/driver/${id}/stripe/account/setup`}>Add Payment Details</Link></div>
             </div>
           </div>
         </div>

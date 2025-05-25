@@ -55,7 +55,6 @@ const GoogleSignIn = () => {
     return (
         <div>
             <h2>Google Sign In for {role}</h2>
-            <button onClick={() => navigate(`/register/${role}/google`)}>this is big button</button>
 
             <GoogleLogin
                 clientId={clientId}
