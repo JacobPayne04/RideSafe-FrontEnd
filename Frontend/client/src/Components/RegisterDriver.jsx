@@ -42,6 +42,8 @@ const RegisterDriver = () => {
                 .then((response) => {
                     const driverId = response.data.id;
                     localStorage.setItem('driverId', driverId);
+                    const driverEmail = response.data.email;
+                    localStorage.setItem('driverEmail', driverEmail)
                     navigate(`/driver/home/${driverId}`);
                 })
                 .catch((error) => {
