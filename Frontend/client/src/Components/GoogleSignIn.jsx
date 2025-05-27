@@ -9,40 +9,41 @@ const clientId = process.env.REACT_APP_CLIENTID;
 const GoogleSignIn = () => {
     const navigate = useNavigate();
     const { role } = useParams();
+    
 
     const onSuccess = async (response) => {
-        if (response.credential) {
-            const idToken = response.credential;  // This is the Google ID token (JWT)
-            console.log("Received Google ID Token:", idToken);  // Log the actual token for debugging
-    
-            const decodedToken = jwtDecode(idToken);
-            const data = {
-                googleId: idToken,  // Send the Google ID token, not the Client ID
-                email: decodedToken.email
-            };
-    
-            try {
-                const res = await axios.post(`http://localhost:8080/signup/${role}/googleId`, data, { withCredentials: true });
-                console.log("Response from backend:", res.data);
-                console.log(data.email + " " + data.googleId + " google id and email")
-    
-                if (res.data.exists) {
-                    if (role === "driver") {
-                        localStorage.setItem("driverId", res.data.driverId); 
-                        navigate(`/one/driver/${res.data.driverId}`);
-                    } else {
-                        localStorage.setItem("passengerId", res.data.passengerId);
-                        navigate(`/Passenger/home`);
-                    }
-                } else {
-                    localStorage.setItem("user", JSON.stringify(data));
-                    navigate(`/register/${role}/google`);
-                }
-            } catch (error) {
-                console.error("Error during Google Sign-In process:", error);
-            }
-        }
+  if (response.credential) {
+    const idToken = response.credential;
+    const decodedToken = jwtDecode(idToken); // ⬅️ Now it exists
+
+    // ✅ Set email here, AFTER it's defined
+    localStorage.setItem("userEmail", decodedToken.email);
+
+    const data = {
+      googleId: idToken,
+      email: decodedToken.email
     };
+
+    try {
+      const res = await axios.post(`http://localhost:8080/signup/${role}/googleId`, data, { withCredentials: true });
+
+      if (res.data.exists) {
+        if (role === "driver") {
+          localStorage.setItem("driverId", res.data.driverId); 
+          navigate(`/one/driver/${res.data.driverId}`);
+        } else {
+          localStorage.setItem("passengerId", res.data.passengerId);
+          navigate(`/Passenger/home`);
+        }
+      } else {
+        localStorage.setItem("user", JSON.stringify(data));
+        navigate(`/register/${role}/google`);
+      }
+    } catch (error) {
+      console.error("Error during Google Sign-In process:", error);
+    }
+  }
+};
     
     
     
