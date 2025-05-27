@@ -112,6 +112,27 @@ const DriverShow1 = () => {
     return <div>Loading...</div>;
   }
 
+  const driverEmail = localStorage.getItem('driverEmail')
+  const driverId = localStorage.getItem('driverId');
+
+  const onboardStripe = async () => {
+    try{
+      const res = await fetch(`/api/stripe/onboard?email=${driverEmail}&driverId=${driverId}`, {
+        method: "POST",
+      });
+
+      if(!res.ok){
+        throw new Error('Stripe Onboarding request failed')
+      }
+
+      const url = await res.text();
+      window.location.href = url; // send them to Stripe onboarding
+    } catch (err) {
+      console.log("stripe onboarding error: ", err)
+      alert("failed to redirect to Stripe Onboarding")
+    }
+};
+
   return (
     <div className="driver-container">
       <div className="driver-info">
@@ -141,7 +162,7 @@ const DriverShow1 = () => {
             <div className='Driver-Profile-Button-Section'>
               <div className='Driver-Button-Profile'><Link to={`/driver/home/${id}`}>View Rides</Link></div>
               <div className='Driver-Button-Profile'><Link to={`/edit/driver/${id}/info`}>Edit Profile</Link></div>
-              <div className='Driver-Button-Profile'><Link to={`/driver/${id}/stripe/account/setup`}>Add Payment Details</Link></div>
+              <button className='Driver-Button-Profile' onClick={onboardStripe}>Finish Stripe Setup</button>
             </div>
           </div>
         </div>

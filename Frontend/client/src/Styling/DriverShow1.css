@@ -106,30 +106,28 @@
 
 /* NEW STYLING */
 
-.Driver-Profile-Button-Section{
+.Driver-Profile-Button-Section {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px; /* Better than margin for consistent spacing */
+  margin-top: 20px;
 }
 
-.Driver-Button-Profile{
-  cursor: pointer;
-  padding: 10px;
-  width: 50%;
-  max-width: 400px;
+.Driver-Button-Profile {
+  flex: 1 1 120px; /* Allow buttons to shrink/grow, base width 120px */
+  padding: 10px 15px;
   text-align: center;
   border: 2px solid white;
   border-radius: 10px;
-  margin: 10px 0;
   background-color: #ff6b00;
   box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
-  transition: all 0.2s ease;
-  -webkit-appearance: none;
-  appearance: none;
   color: white;
   transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
 }
+
 
 .Driver-Button-Profile:hover {
   transform: scale(0.98);

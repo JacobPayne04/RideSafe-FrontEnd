@@ -42,6 +42,8 @@ const GoogleRegisterDriver = () => {
                 }
         
                 localStorage.setItem("driverId", driverId);
+                const driverEmail = response.data.email;
+                localStorage.setItem('driverEmail', driverEmail)
                 console.log("Navigating to:", `/one/driver/${driverId}`);
         
                 navigate(`/one/driver/${driverId}`);
