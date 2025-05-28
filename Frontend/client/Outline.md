@@ -185,7 +185,7 @@ create refund route for stripe to refund payment and to update ride as cancelled
 
 #### Driver Stripe account setup / allowed to drive variable
 - [ ] add account set up for stripe and that to update the drivers account as driveable-🛑TODO#🛑
-- [ ] Add isallowed to Drive for giving cords to render for passengers-🛑TODO#🛑
+- [ ] Add isallowed to Drive for giving cords to render for passengers-instead of webhook to send it to a admin base there will bne an account with admmin route that renders drivers based on if they are not allowe to drive🛑TODO#🛑
   
 ### Chunk 2: Geo-Location / Multi-University Edge Case (4 hrs)
 - [✔]
@@ -203,7 +203,7 @@ create refund route for stripe to refund payment and to update ride as cancelled
  - [ ]  make driver manual on boarding to be able to drive and be accepted.
   and set up stripe account. -🛑TODO#🛑
   - [ ] SPECIFIC* style main website
-  - [ ] clean up and refactoring - clean up all comments and unsed commented code nad naming convenetions.
+  - [✔] clean up and refactoring - clean up all comments and unsed commented code nad naming convenetions.
 ---
 
 ### Chunk 3: Security & Authentication (4 hrs)
@@ -223,7 +223,24 @@ create refund route for stripe to refund payment and to update ride as cancelled
 
 ## 2. SYSTEM INFRASTRUCTURE
 
-### Chunk 4: Redis Caching (3-4 hrs)
+
+### Chunk 4: Datadog / APM Monitoring (3-4 hrs)
+
+#### Backend APM Setup
+- [ ] Install Datadog Agent on backend (Spring Boot)
+- [ ] Configure environment variables: DD_AGENT_HOST, DD_SERVICE, DD_ENV
+- [ ] Enable tracing and logging integrations
+- [ ] Track API response times, error rates, traffic stats
+- [ ] Track business metrics (ride bookings, accept/decline rates)
+
+#### Dashboards + Alerts
+- [ ] Build dashboards for active users, API rates, errors
+- [ ] Setup alerts for high latency/error thresholds
+- [ ] Document Datadog setup for other devs
+
+---
+
+### Chunk 5: Redis Caching (3-4 hrs)
 
 #### Backend Redis Integration
 - [ ] Install Redis server (local/dev first)
@@ -239,19 +256,6 @@ create refund route for stripe to refund payment and to update ride as cancelled
 
 ---
 
-### Chunk 5: Datadog / APM Monitoring (3-4 hrs)
-
-#### Backend APM Setup
-- [ ] Install Datadog Agent on backend (Spring Boot)
-- [ ] Configure environment variables: DD_AGENT_HOST, DD_SERVICE, DD_ENV
-- [ ] Enable tracing and logging integrations
-- [ ] Track API response times, error rates, traffic stats
-- [ ] Track business metrics (ride bookings, accept/decline rates)
-
-#### Dashboards + Alerts
-- [ ] Build dashboards for active users, API rates, errors
-- [ ] Setup alerts for high latency/error thresholds
-- [ ] Document Datadog setup for other devs
 
 ---
 

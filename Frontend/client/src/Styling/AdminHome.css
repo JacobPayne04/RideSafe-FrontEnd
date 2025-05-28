@@ -1,72 +1,148 @@
-.ViewAllDriversButton{
-    background-color: white;
-    color: black;
-    border: none;
-    padding: 5px;
-    border-radius: 10px;
-    margin: 10px;
-    transition: transform 0.2s ease-in-out, padding 0.2s ease-in-out;
+/* Admin container - similar to driver-container */
+.admin-container {
+  padding: 20px;
+  max-width: 800px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 50px;
+  margin-left: 50px;
 }
 
-.ViewAllDriversButton:hover{
-    background-color: black;
-    color: white;
-    border: solid white;
-    transform: scale(1.1);
+/* Main title styling */
+.admin-main-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30px;
+  text-decoration: underline;
 }
 
-.Stat-Section{
-    border: solid black;
-    padding: 10px;
-    margin: 10%;
+/* Section title styling */
+.admin-section-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  margin-top: 30px;
 }
 
-.Pending-Driver-Indiv-Box{
-    border: solid black;
-    border-radius: 10px;
-    padding: 10px;
-    margin: 2%;
+/* Stats section container */
+.admin-stats-section {
+  width: 100%;
+  margin-bottom: 30px;
 }
 
-.accept-driver-button{
-    background-color: rgb(44, 233, 44);
-    border: none;
-    padding: 5px;
-    border-radius: 10px;
-    margin: 10px;
-    transition: transform 0.2s ease-in-out, padding 0.2s ease-in-out;
+/* Individual pending driver box */
+.admin-pending-driver-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 600px;
 }
 
-.decline-driver-button{
-    background-color: rgb(233, 34, 34);
-    border: none;
-    padding: 5px;
-    border-radius: 10px;
-    margin: 10px;
-    transition: transform 0.2s ease-in-out, padding 0.2s ease-in-out;
+/* Driver name in pending box */
+.admin-driver-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  flex: 1;
 }
 
-.view-driver-button{
-    background-color: rgb(220, 220, 233);
-    border: none;
-    padding: 5px;
-    border-radius: 10px;
-    margin: 10px;
-    transition: transform 0.2s ease-in-out, padding 0.2s ease-in-out;
+/* Button section within driver box */
+.admin-driver-button-section {
+  display: flex;
+  gap: 10px;
 }
 
-.accept-driver-button:hover, 
-.decline-driver-button:hover, 
-.view-driver-button:hover {
-    transform: scale(1.1);
+/* Base button styling - similar to Driver-Button-Profile */
+.admin-button {
+  padding: 8px 15px;
+  text-align: center;
+  border: 2px solid white;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  min-width: 90px;
 }
 
-.Driver-Passenger-Total-Section{
-    display: flex;
+/* Accept button - green theme */
+.admin-accept-button {
+  background-color: #4caf50;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
 }
 
-.Two-Line-Rating-Indiv{
-    display: flex;
-    justify-content: space-between;
-    margin: 1%;
+.admin-accept-button:hover {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(76, 175, 80, 0.3);
+}
+
+/* Decline button - red theme */
+.admin-decline-button {
+  background-color: #f44336;
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+}
+
+.admin-decline-button:hover {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(244, 67, 54, 0.3);
+}
+
+/* View button - orange theme (matching original) */
+.admin-view-button {
+  background-color: #ff6b00;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+}
+
+.admin-view-button:hover {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+}
+
+/* No pending drivers message */
+.admin-no-pending-message {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  margin: 20px 0;
+}
+
+/* Navigation buttons section */
+.admin-navigation-section {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+/* Navigation buttons */
+.admin-nav-button {
+  flex: 1 1 150px;
+  padding: 12px 20px;
+  text-align: center;
+  border: 2px solid white;
+  border-radius: 10px;
+  background-color: #ff6b00;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.admin-nav-button:hover {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
 }
