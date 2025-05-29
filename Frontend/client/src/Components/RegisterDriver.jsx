@@ -44,7 +44,7 @@ const RegisterDriver = () => {
                     localStorage.setItem('driverId', driverId);
                     const driverEmail = response.data.email;
                     localStorage.setItem('driverEmail', driverEmail)
-                    navigate(`/driver/home/${driverId}`);
+                    navigate(`/driver/${driverId}/verification/account/setup`);
                 })
                 .catch((error) => {
                     console.error('There was an error!', error);
