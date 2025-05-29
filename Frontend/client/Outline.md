@@ -164,7 +164,6 @@ ________________________________________________________
 - [✔] Implement Apple Pay / Google Pay buttons -TODO#
 - [✔] Payment feedback UX: Success/Fail handling (loading, confirmation)
 - [✔] add thing to put vnemo name so when yo up[ay poeple cna pay ou back ]
-- [ ] Secure frontend routes + validations (check auth before pay) -🛑TODO#🛑
 
 #### Internal Logic ^^ 4/4/2025 ^^TODO#
 - [✔] Refund process (manual button first, auto flow later)
@@ -174,18 +173,14 @@ ________________________________________________________
 - Backend:## refund logic.
 create refund route for stripe to refund payment and to update ride as cancelled to not be rendered.
 - [✔] FIX GOOGLE MAPS LOADING ERROR ---- 
-- [✔]  Add Stripe’s PaymentRequestButtonElement - apple pay, venmo ect -🛑TODO#🛑
+- [✔]  Add Stripe’s PaymentRequestButtonElement - apple pay, venmo ect -
 - [✔]  FIX google maps api key to a new account for it to work -^^CURRENT^^
-- [ ]  fix javascript button not staying green based on database state
+- [ ]  fix javascript button not staying green based on database state TODO###-------🛑🛑🛑🛑🛑
   
 
-
-
-
-
 #### Driver Stripe account setup / allowed to drive variable
-- [ ] add account set up for stripe and that to update the drivers account as driveable-🛑TODO#🛑
-- [ ] Add isallowed to Drive for giving cords to render for passengers-instead of webhook to send it to a admin base there will bne an account with admmin route that renders drivers based on if they are not allowe to drive🛑TODO#🛑
+- [✔] add account set up for stripe and that to update the drivers account as driveable-
+- [✔] Add isallowed to Drive for giving cords to render for passengers-instead of webhook to send it to a admin base there will bne an account with admmin route that renders drivers based on if they are not allowed to drive
   
 ### Chunk 2: Geo-Location / Multi-University Edge Case (4 hrs)
 - [✔]
@@ -200,10 +195,32 @@ create refund route for stripe to refund payment and to update ride as cancelled
 
 ### Chunk 2.5  create driver onboarding ###
 
- - [ ]  make driver manual on boarding to be able to drive and be accepted.
+ - [✔] make driver manual on boarding to be able to drive and be accepted.
   and set up stripe account. -🛑TODO#🛑
-  - [ ] SPECIFIC* style main website
   - [✔] clean up and refactoring - clean up all comments and unsed commented code nad naming convenetions.
+
+---
+
+## 3. USER INTERACTION & FEEDBACK
+
+### Chunk 6: Review System (3 hrs)
+
+#### Ratings Flow
+- [ ] Frontend: After ride popup asking for 1-5 star rating
+- [ ] Backend: Save ratings in DB
+- [ ] Backend: Calculate average driver ratings
+- [ ] Frontend: Show driver rating in driver profile
+- [ ] Batch updates: daily (active drivers), weekly (low use)
+- [ ] Future: Add text reviews and report system (post-launch)
+
+---
+## 5. FRONTEND STYLING (3 hrs)
+### UI/UX Enhancements
+- [ ] Implement light/dark mode toggle
+- [ ] Apply consistent styling (spacing, typography, components)
+- [ ] Mobile responsiveness fixes
+- [ ] Add subtle animations (Framer Motion)
+
 ---
 
 ### Chunk 3: Security & Authentication (4 hrs)
@@ -223,6 +240,21 @@ create refund route for stripe to refund payment and to update ride as cancelled
 
 ## 2. SYSTEM INFRASTRUCTURE
 
+---
+## 4. ADMIN TOOLS & PANEL
+
+### Chunk 7: Admin Panel Stats UI (4 hrs)
+
+#### System Metrics Dashboard
+- [ ] Create admin route/page for metrics
+- [ ] Build charts for active users, requests per second, API error %
+- [ ] Build custom KPIs: ride bookings/hour, driver responses
+- [ ] Data table: logged events/traces with filters (time, type, service)
+- [ ] Implement auto-refresh with WebSocket or polling
+- [ ] RBAC (role-based access control) for admin-only
+- [ ] Future: Export CSV/PDF reports (for management)
+
+---
 
 ### Chunk 4: Datadog / APM Monitoring (3-4 hrs)
 
@@ -240,6 +272,18 @@ create refund route for stripe to refund payment and to update ride as cancelled
 
 ---
 
+### Chunk 10: Testing & QA (4 hrs)
+
+#### Backend + Frontend Tests
+- [ ] Unit tests for backend services + frontend components
+- [ ] Integration tests: API + DB interactions
+- [ ] E2E tests: Cypress/Selenium (ride booking, payment, geo rendering)
+- [ ] Manual QA: full flow testing
+- [ ] Load testing: k6/JMeter (simulate traffic + stress)
+- [ ] Future: Security penetration testing (optional post-launch)
+
+---
+
 ### Chunk 5: Redis Caching (3-4 hrs)
 
 #### Backend Redis Integration
@@ -254,49 +298,8 @@ create refund route for stripe to refund payment and to update ride as cancelled
 - [ ] Trigger cache clear after key data changes
 - [ ] Log cache clears (audit/debugging)
 
----
 
-
----
-
-## 3. USER INTERACTION & FEEDBACK
-
-### Chunk 6: Review System (3 hrs)
-
-#### Ratings Flow
-- [ ] Frontend: After ride popup asking for 1-5 star rating
-- [ ] Backend: Save ratings in DB
-- [ ] Backend: Calculate average driver ratings
-- [ ] Frontend: Show driver rating in driver profile
-- [ ] Batch updates: daily (active drivers), weekly (low use)
-- [ ] Future: Add text reviews and report system (post-launch)
-
----
-
-## 4. ADMIN TOOLS & PANEL
-
-### Chunk 7: Admin Panel Stats UI (4 hrs)
-
-#### System Metrics Dashboard
-- [ ] Create admin route/page for metrics
-- [ ] Build charts for active users, requests per second, API error %
-- [ ] Build custom KPIs: ride bookings/hour, driver responses
-- [ ] Data table: logged events/traces with filters (time, type, service)
-- [ ] Implement auto-refresh with WebSocket or polling
-- [ ] RBAC (role-based access control) for admin-only
-- [ ] Future: Export CSV/PDF reports (for management)
-
----
-
-## 5. FRONTEND STYLING (3 hrs)
-
-### UI/UX Enhancements
-- [ ] Implement light/dark mode toggle
-- [ ] Apply consistent styling (spacing, typography, components)
-- [ ] Mobile responsiveness fixes
-- [ ] Add subtle animations (Framer Motion)
-
----
+-TEST AGAIN WIHT RECDIS ECt
 
 ## 6. DEPLOYMENT & TESTING
 
@@ -314,24 +317,18 @@ create refund route for stripe to refund payment and to update ride as cancelled
 
 ---
 
-### Chunk 10: Testing & QA (4 hrs)
 
-#### Backend + Frontend Tests
-- [ ] Unit tests for backend services + frontend components
-- [ ] Integration tests: API + DB interactions
-- [ ] E2E tests: Cypress/Selenium (ride booking, payment, geo rendering)
-- [ ] Manual QA: full flow testing
-- [ ] Load testing: k6/JMeter (simulate traffic + stress)
-- [ ] Future: Security penetration testing (optional post-launch)
-
----
 
 ### NEXT STEPS:
-- Start with Chunk 1 (Payments) today
-- Move to Geo & Security next
-- Then Redis/APM/Admin Panel
-- Deploy
-- QA + Polish UI
+LEGAL
+
+### LEGAL ###
+- [ ] talk to lawyer
+- [ ] draft tos
+- [ ] code impliment tos
+
+
+
 
 
 
