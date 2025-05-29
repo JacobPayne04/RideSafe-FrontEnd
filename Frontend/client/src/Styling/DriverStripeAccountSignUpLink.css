@@ -1,21 +1,37 @@
-.Stripe-Onboarding-Page{
+.Verification-Form {
+    width: 100%;
+    max-width: 400px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     flex-direction: column;
-    background-color: #f0f2f5;
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
 }
 
-.Stripe-Onboarding-Header{
-    font-size: 24px;
+.Upload-Group {
+    display: flex;
+    flex-direction: column;
     margin-bottom: 20px;
+}
+
+.Upload-Label {
+    margin-bottom: 8px;
+    font-weight: 600;
     color: #333;
 }
 
-.Stripe-Onboarding-btn{
+.Upload-Input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.Stripe-Onboarding-btn {
     cursor: pointer;
-    padding: 20px;
+    padding: 15px;
     width: 100%;
     max-width: 400px;
     text-align: center;
@@ -26,14 +42,23 @@
     box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
     font-size: 18px;
     font-weight: 600;
-    transition: all 0.2s ease;
-    -webkit-appearance: none;
-    appearance: none;
     color: white;
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.Stripe-Onboarding-btn:hover{
+.Stripe-Onboarding-btn:hover {
     transform: scale(0.98);
     box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
 }
+
+.Stripe-Onboarding-Page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f2f5;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  

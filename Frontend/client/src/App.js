@@ -25,7 +25,6 @@ import CheckoutForm from './Components/CheckoutForm';
 import EditDriver from './Components/EditDriver';
 import PassengerHomePage from './Components/PassengerHomePage';
 import PassengerSettings from './Components/PassengerSettings';
-import DriverVarificationForm from './Components/DriverVarificationForm';
 import DriverStripeAccountSignUpLink from './Components/DriverStripeAccountSignUpLink';
 
 // ✅ Load Stripe key correctly
@@ -57,8 +56,7 @@ function App() {
         <Route path="/register/driver/google" element={<GoogleRegisterDriver />} />
         <Route path="/driver/home/:id" element={<DriverHomePage />} />
         <Route path="/edit/driver/:id/info" element={<EditDriver />} />
-        <Route path="/driver/verification" element={<DriverVarificationForm />} />
-        <Route path="/driver/:id/stripe/account/setup" element={<DriverStripeAccountSignUpLink />} />
+        <Route path="/driver/:id/verification/account/setup" element={<DriverStripeAccountSignUpLink />} />
 
         {/* Passenger Routes */}
         <Route path="/register/passenger" element={<RegisterPassenger />} />
