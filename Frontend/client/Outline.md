@@ -197,7 +197,7 @@ create refund route for stripe to refund payment and to update ride as cancelled
 
  - [✔] make driver manual on boarding to be able to drive and be accepted.
   and set up stripe account. -🛑TODO#🛑
-  - [✔] clean up and refactoring - clean up all comments and unsed commented code nad naming convenetions.
+-  [✔] clean up and refactoring - clean up all comments and unsed commented code nad naming convenetions.
 
 ---
 
