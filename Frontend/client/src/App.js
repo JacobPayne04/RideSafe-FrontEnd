@@ -26,6 +26,7 @@ import EditDriver from './Components/EditDriver';
 import PassengerHomePage from './Components/PassengerHomePage';
 import PassengerSettings from './Components/PassengerSettings';
 import DriverStripeAccountSignUpLink from './Components/DriverStripeAccountSignUpLink';
+import DriverRating from './Components/DriverRating';
 
 // ✅ Load Stripe key correctly
 const stripePromise = loadStripe(process.env.REACT_APP_PK_TEST_PUBLIC_KEY);
@@ -57,6 +58,7 @@ function App() {
         <Route path="/driver/home/:id" element={<DriverHomePage />} />
         <Route path="/edit/driver/:id/info" element={<EditDriver />} />
         <Route path="/driver/:id/verification/account/setup" element={<DriverStripeAccountSignUpLink />} />
+        <Route path="/driver/:id/rating/page" element={<DriverRating/>} />
 
         {/* Passenger Routes */}
         <Route path="/register/passenger" element={<RegisterPassenger />} />
