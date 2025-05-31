@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SockJS from 'sockjs-client';
-import Stomp from 'stompjs';
+import { Client } from '@stomp/stompjs';
 import DriverRating from './DriverRating'; 
 
 const PassengerRideWaitingScreen = () => {
@@ -10,19 +10,23 @@ const PassengerRideWaitingScreen = () => {
 
   useEffect(() => {
     const socket = new SockJS('http://localhost:8080/ws');
-    const client = Stomp.over(socket);
-
-    client.connect({}, () => {
-      client.subscribe(`/topic/passenger/${passengerId}`, (msg) => {
-        const payload = JSON.parse(msg.body);
-        if (payload.type === 'RIDE_ENDED') {
-          setDriverId(payload.driverId);
-          setShowRating(true);
-        }
-      });
+    const client = new Client({
+      webSocketFactory: () => socket,
+      reconnectDelay: 5000,
+      onConnect: () => {
+        client.subscribe(`/topic/passenger/${passengerId}`, (msg) => {
+          const payload = JSON.parse(msg.body);
+          if (payload.type === 'RIDE_ENDED') {
+            setDriverId(payload.driverId);
+            setShowRating(true);
+          }
+        });
+      },
     });
-
-    return () => client.disconnect();
+  
+    client.activate();
+  
+    return () => client.deactivate();
   }, [passengerId]);
 
   return (

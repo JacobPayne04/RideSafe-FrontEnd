@@ -28,6 +28,7 @@ import PassengerSettings from './Components/PassengerSettings';
 import DriverStripeAccountSignUpLink from './Components/DriverStripeAccountSignUpLink';
 import DriverRating from './Components/DriverRating';
 import AllPassengers from './Components/AllPassengers';
+import PassengerRideWaitingScreen from './Components/PassengerRideWaitingScreen';
 
 // ✅ Load Stripe key correctly
 const stripePromise = loadStripe(process.env.REACT_APP_PK_TEST_PUBLIC_KEY);
@@ -75,6 +76,7 @@ function App() {
         {/* Ride Routes */}
         <Route path="/passenger/:passengerId/book/ride/driver/:driverId" element={<RideForm />} />
         <Route path="/view/ride/googlemaps" element={<ViewRideGoogleMaps />} />
+        <Route path="/passenger/ride/waiting" element={ <PassengerRideWaitingScreen /> } />
 
         {/* Google API Routes */}
         <Route path="/google/signin/:role" element={<GoogleSignIn />} />
