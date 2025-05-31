@@ -144,8 +144,8 @@ a{
 }
 
 .Rate-Button {
-  background-color: #3b82f6; /* Tailwind's blue-500 */
-  color: white;
+  background-color: rgb(248, 226, 226);/* Tailwind's blue-500 */
+  color: #ff6b00;
   border: none;
   padding: 10px 16px;
   border-radius: 8px;
@@ -155,5 +155,5 @@ a{
 }
 
 .Rate-Button:hover {
-  background-color: #2563eb; /* Tailwind's blue-600 */
+  background-color: rgb(248, 226, 226); /* Tailwind's blue-600 */
 }
