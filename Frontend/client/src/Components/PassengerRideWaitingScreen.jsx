@@ -3,8 +3,9 @@ import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
 import DriverRating from './DriverRating'; 
 
+
 const PassengerRideWaitingScreen = () => {
-  const [showRating, setShowRating] = useState(false);
+  const [showRatingPopup, setShowRatingPopup] = useState(false);
   const [driverId, setDriverId] = useState(null);
   const passengerId = localStorage.getItem('passengerId');
 
@@ -18,25 +19,29 @@ const PassengerRideWaitingScreen = () => {
           const payload = JSON.parse(msg.body);
           if (payload.type === 'RIDE_ENDED') {
             setDriverId(payload.driverId);
-            setShowRating(true);
+            setShowRatingPopup(true); // ✅ Trigger modal here
           }
         });
       },
     });
-  
+
     client.activate();
-  
     return () => client.deactivate();
   }, [passengerId]);
 
   return (
     <div>
       <h1>Waiting for your driver to complete the ride...</h1>
-      {showRating && driverId && (
-        <DriverRating driverId={driverId} onClose={() => setShowRating(false)} />
+
+      {showRatingPopup && driverId && (
+        <div className='fix inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50'>
+          <div className='bg-white p-4 rounded shadow-lg'>
+            <DriverRating driverId={driverId} onClose={() => setShowRatingPopup(false)} />
+          </div>
+        </div>
       )}
     </div>
   );
-};
+}
 
 export default PassengerRideWaitingScreen
