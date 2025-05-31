@@ -175,8 +175,7 @@ create refund route for stripe to refund payment and to update ride as cancelled
 - [✔] FIX GOOGLE MAPS LOADING ERROR ---- 
 - [✔]  Add Stripe’s PaymentRequestButtonElement - apple pay, venmo ect -
 - [✔]  FIX google maps api key to a new account for it to work -^^CURRENT^^
-- [ ]  fix javascript button not staying green based on database state TODO###-------🛑🛑🛑🛑🛑
-- [ ]  fix where the refund button shows up after the timer is over TODO#
+
   
 
 #### Driver Stripe account setup / allowed to drive variable
@@ -207,12 +206,15 @@ create refund route for stripe to refund payment and to update ride as cancelled
 ### Chunk 6: Review System (3 hrs)
 
 #### Ratings Flow
-- [ ] Frontend: After ride popup asking for 1-5 star rating
-- [ ] Backend: Save ratings in DB
-- [ ] Backend: Calculate average driver ratings
+- [✔] Frontend: After ride popup asking for 1-5 star rating
+- [✔] Backend: Save ratings in DB
+- [✔] Backend: Calculate average driver ratings
 - [ ] Frontend: Show driver rating in driver profile
-- [ ] Batch updates: daily (active drivers), weekly (low use)
-- [ ] Future: Add text reviews and report system (post-launch)
+
+
+---
+- [ ]  fix javascript button not staying green based on database state TODO###-------🛑🛑🛑🛑🛑
+---
 
 ---
 ## 5. FRONTEND STYLING (3 hrs)
