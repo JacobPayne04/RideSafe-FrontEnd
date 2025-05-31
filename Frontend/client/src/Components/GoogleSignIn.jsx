@@ -29,6 +29,7 @@ const GoogleSignIn = () => {
 
       if (res.data.exists) {
         if (role === "driver") {
+          localStorage.setItem('driverEmail', res.data.email)
           localStorage.setItem("driverId", res.data.driverId); 
           navigate(`/one/driver/${res.data.driverId}`);
         } else {

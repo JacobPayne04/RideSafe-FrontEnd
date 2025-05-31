@@ -44,9 +44,9 @@ const GoogleRegisterDriver = () => {
                 localStorage.setItem("driverId", driverId);
                 const driverEmail = response.data.email;
                 localStorage.setItem('driverEmail', driverEmail)
-                console.log("Navigating to:", `/one/driver/${driverId}`);
+                console.log("Navigating to:", `/driver/${driverId}/verification/account/setup`);
         
-                navigate(`/one/driver/${driverId}`);
+                navigate(`/driver/${driverId}/verification/account/setup`);
             } catch (error) {
                 console.error('There was an error!', error.response ? error.response.data : error);
             }
