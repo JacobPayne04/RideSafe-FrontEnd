@@ -1,0 +1,51 @@
+.rating-container {
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .rating-prompt {
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+  
+  .stars-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .star-button {
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    color: #d1d5db; /* gray */
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .star-button.selected {
+    background-color: #facc15; /* orangish-yellow */
+    color: white;
+  }
+  
+  .submit-button {
+    padding: 0.5rem 1rem;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .submit-button:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+  }
+  
