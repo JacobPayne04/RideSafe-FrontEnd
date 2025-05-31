@@ -117,12 +117,12 @@ const DriverShow1 = () => {
   const driverId = localStorage.getItem('driverId');
 
   const onboardStripe = async () => {
-    try{
+    try {
       const res = await fetch(`/api/stripe/onboard?email=${driverEmail}&driverId=${driverId}`, {
         method: "POST",
       });
 
-      if(!res.ok){
+      if (!res.ok) {
         throw new Error('Stripe Onboarding request failed')
       }
 
@@ -132,7 +132,7 @@ const DriverShow1 = () => {
       console.log("stripe onboarding error: ", err)
       alert("failed to redirect to Stripe Onboarding")
     }
-};
+  };
 
   return (
     <div className="driver-container">
@@ -165,7 +165,13 @@ const DriverShow1 = () => {
               <div className='Driver-Button-Profile'><Link to={`/edit/driver/${id}/info`}>Edit Profile</Link></div>
               <button className='Driver-Button-Profile' onClick={onboardStripe}>Finish Stripe Setup</button>
               <div className="Driver-Button-Profile">
-                <button className="Rate-Button" onClick={() => setShowRatingPopup(true)}>Rate Driver</button>
+                <button
+                  className="Rate-Button"
+                  onClick={() => setShowRatingPopup(prev => !prev)}
+                >
+                  {showRatingPopup ? "Close" : "Rate Driver"}
+                </button>
+
                 {showRatingPopup && (
                   <div className='fix inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50'>
                     <div className='bg-white p-4 rounded shadow-lg'>
