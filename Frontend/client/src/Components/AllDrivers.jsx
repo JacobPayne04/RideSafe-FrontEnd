@@ -8,7 +8,7 @@ const AllDrivers = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/drivers`)
+      .get(`http://localhost:8080/admin/drivers/all`)
       .then((response) => {
         setDrivers(response.data);
         console.log('Response from server:', response.data);
@@ -18,23 +18,49 @@ const AllDrivers = () => {
       });
   }, []);
 
-  return (
-    <div>
-      <h1>All Drivers</h1>
-      <button>
-          <Link to={'/Passenger/home'}></Link>
-      </button>
-      <ul className="driver-list">
-        {drivers.map((driver) => (
-          <li key={driver._id} className="driver-details">
-            <span className="driver-name">
-              {driver.firstName} {driver.lastName}
-            </span>
-            <span className="driver-email">{driver.email}</span>
-            <span className="driver-license">{driver.licensePlate}</span>
-          </li>
-        ))}
-      </ul>
+   return (
+    <div className="admin-container">
+      <h1 className="admin-main-title">All Drivers</h1>
+      
+      {/* Navigation Section */}
+      <div className="admin-navigation-section">
+        <Link to="/admin/home" className="admin-nav-button admin-nav-link">
+          Back to Admin Home
+        </Link>
+        <Link to="/admin/passengers" className="admin-nav-button admin-nav-link">
+          View All Passengers
+        </Link>
+      </div>
+
+      {/* Drivers Section */}
+      <div className="admin-stats-section">
+        <h2 className="admin-section-title">Driver Directory</h2>
+        {drivers.length === 0 ? (
+          <p className="admin-no-pending-message">No drivers found</p>
+        ) : (
+          <div className="admin-drivers-list">
+            {drivers.map((driver) => (
+              <div key={driver._id} className="admin-pending-driver-box">
+                <div className="admin-driver-info">
+                  <p className="admin-driver-name">
+                    {driver.firstName} {driver.lastName}
+                  </p>
+                  <p className="admin-driver-details">{driver.email}</p>
+                  <p className="admin-driver-details">License: {driver.licensePlate}</p>
+                </div>
+                <div className="admin-driver-button-section">
+                  <button className="admin-button admin-view-button">
+                    View Details
+                  </button>
+                  <button className="admin-button admin-decline-button">
+                    Remove Driver
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

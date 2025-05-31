@@ -27,6 +27,7 @@ import PassengerHomePage from './Components/PassengerHomePage';
 import PassengerSettings from './Components/PassengerSettings';
 import DriverStripeAccountSignUpLink from './Components/DriverStripeAccountSignUpLink';
 import DriverRating from './Components/DriverRating';
+import AllPassengers from './Components/AllPassengers';
 
 // ✅ Load Stripe key correctly
 const stripePromise = loadStripe(process.env.REACT_APP_PK_TEST_PUBLIC_KEY);
@@ -61,6 +62,7 @@ function App() {
         <Route path="/driver/:id/rating/page" element={<DriverRating/>} />
 
         {/* Passenger Routes */}
+        <Route path="/passengers/all" element={<AllPassengers />} />
         <Route path="/register/passenger" element={<RegisterPassenger />} />
         <Route path="/register/passenger/google" element={<GoogleRegisterPassenger />} />
         <Route path="/login/passenger" element={<LoginPassenger />} />

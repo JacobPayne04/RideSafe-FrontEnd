@@ -1,85 +1,210 @@
-.all-drivers-container {
-  background-color: #f3f4f6;
-
-  min-height: 100vh;
+/* Admin container - consistent with admin styling */
+.admin-container {
+  padding: 20px;
+  max-width: 800px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 50px;
+  margin-left: 50px;
 }
 
-.all-drivers-header {
-  background-color: #f97316;
-  padding: 1rem;
+/* Main title styling */
+.admin-main-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30px;
+  text-decoration: underline;
+}
+
+/* Section title styling */
+.admin-section-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  margin-top: 30px;
+}
+
+/* Stats section container */
+.admin-stats-section {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+/* Drivers list container */
+.admin-drivers-list {
+  width: 100%;
+}
+
+/* Individual driver box - reusing pending driver box styling */
+.admin-pending-driver-box {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 600px;
 }
 
-.back-button {
-  color: white;
-  text-decoration: none;
-  font-size: 1.5rem;
+/* Driver info section */
+.admin-driver-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-.header-title {
-  color: white;
-  font-size: 1.25rem;
-  font-weight: bold;
-}
-
-.all-drivers-main {
-  padding: 1rem;
-}
-
-.all-drivers-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  color: #1f2937;
-}
-
-.driver-list {
-  list-style-type: none;
-  padding: 0;
+/* Driver name styling */
+.admin-driver-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
   margin: 0;
 }
 
-.driver-item {
-  background-color: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  padding: 1rem;
-  margin-bottom: 1rem;
+/* Driver details (email, license) */
+.admin-driver-details {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  font-weight: 500;
 }
 
-.driver-info {
+/* Button section within driver box */
+.admin-driver-button-section {
   display: flex;
-  align-items: center;
+  gap: 10px;
 }
 
-.driver-icon {
-  background-color: #f97316;
-  border-radius: 50%;
-  padding: 0.5rem;
-  margin-right: 1rem;
-  color: white;
-  font-size: 1.5rem;
-}
-
-.driver-details {
-  flex-grow: 1;
-}
-
-.driver-name {
+/* Base button styling */
+.admin-button {
+  padding: 8px 15px;
+  text-align: center;
+  border: 2px solid white;
+  border-radius: 8px;
+  font-size: 14px;
   font-weight: 600;
-  font-size: 1.125rem;
-  color: #1f2937;
+  color: white;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  min-width: 90px;
 }
 
-.driver-email {
-  font-size: 0.875rem;
-  color: #4b5563;
+/* Accept button - green theme */
+.admin-accept-button {
+  background-color: #4caf50;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
 }
 
-.driver-license {
-  font-size: 0.75rem;
-  color: #6b7280;
-  margin-top: 0.25rem;
+.admin-accept-button:hover {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(76, 175, 80, 0.3);
+}
+
+/* Decline button - red theme */
+.admin-decline-button {
+  background-color: #f44336;
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+}
+
+.admin-decline-button:hover {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(244, 67, 54, 0.3);
+}
+
+/* View button - orange theme */
+.admin-view-button {
+  background-color: #ff6b00;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+}
+
+.admin-view-button:hover {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+}
+
+/* No pending drivers message */
+.admin-no-pending-message {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  margin: 20px 0;
+}
+
+/* Navigation buttons section */
+.admin-navigation-section {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+/* Navigation buttons */
+.admin-nav-button {
+  flex: 1 1 150px;
+  padding: 12px 20px;
+  text-align: center;
+  border: 2px solid white;
+  border-radius: 10px;
+  background-color: #ff6b00;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.admin-nav-button:hover {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+}
+
+/* Link styling for navigation buttons */
+.admin-nav-link {
+  text-decoration: none;
+  color: white;
+}
+
+.admin-nav-link:visited {
+  color: white;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .admin-container {
+    margin-left: 20px;
+    margin-top: 20px;
+    max-width: 90%;
+  }
+  
+  .admin-pending-driver-box {
+    min-width: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .admin-driver-button-section {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .admin-navigation-section {
+    flex-direction: column;
+  }
+  
+  .admin-nav-button {
+    flex: none;
+    width: 100%;
+  }
 }
