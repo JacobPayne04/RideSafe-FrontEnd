@@ -176,6 +176,7 @@ create refund route for stripe to refund payment and to update ride as cancelled
 - [✔]  Add Stripe’s PaymentRequestButtonElement - apple pay, venmo ect -
 - [✔]  FIX google maps api key to a new account for it to work -^^CURRENT^^
 - [ ]  fix javascript button not staying green based on database state TODO###-------🛑🛑🛑🛑🛑
+- [ ]  fix where the refund button shows up after the timer is over TODO#
   
 
 #### Driver Stripe account setup / allowed to drive variable
@@ -252,7 +253,6 @@ create refund route for stripe to refund payment and to update ride as cancelled
 - [ ] Data table: logged events/traces with filters (time, type, service)
 - [ ] Implement auto-refresh with WebSocket or polling
 - [ ] RBAC (role-based access control) for admin-only
-- [ ] Future: Export CSV/PDF reports (for management)
 
 ---
 
