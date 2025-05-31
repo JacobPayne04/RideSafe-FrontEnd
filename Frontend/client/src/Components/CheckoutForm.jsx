@@ -245,6 +245,10 @@ const CheckoutForm = () => {
         )}
       </div>
 
+      <div>
+        <Link to="/passenger/ride/waiting">done</Link>
+      </div>
+
       {showTimerPopup && (
         <div className="timer-popup">
           <p>Refund available for: {formatTime(timeLeft)}</p>
