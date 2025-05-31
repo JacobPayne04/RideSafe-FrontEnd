@@ -3,13 +3,14 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import '../Styling/DriverShow1.css';
 import { getCurrentCoords } from '../utils/geolocation';
-
+import DriverRating from './DriverRating';
 
 const DriverShow1 = () => {
   const { id } = useParams();
   const [driver, setDriver] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showRatingPopup, setShowRatingPopup] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -163,11 +164,22 @@ const DriverShow1 = () => {
               <div className='Driver-Button-Profile'><Link to={`/driver/home/${id}`}>View Rides</Link></div>
               <div className='Driver-Button-Profile'><Link to={`/edit/driver/${id}/info`}>Edit Profile</Link></div>
               <button className='Driver-Button-Profile' onClick={onboardStripe}>Finish Stripe Setup</button>
+              <div className="Driver-Button-Profile">
+                <button className="Rate-Button" onClick={() => setShowRatingPopup(true)}>Rate Driver</button>
+                {showRatingPopup && (
+                  <div className='fix inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50'>
+                    <div className='bg-white p-4 rounded shadow-lg'>
+                      <DriverRating driverId={driverId} onClose={() => setShowRatingPopup(false)} />
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   );
+
 };
 export default DriverShow1;
