@@ -1,218 +1,300 @@
-/* CheckoutForm.css */
-:root {
-    --background-light: #f5f5f5;
-    --background-dark: #121212;
-    --box-light: black;
-    --box-dark: white;
-    --text-light: white;
-    --text-dark: black;
-    --button-light: white;
-    --button-mode-light: black;
-    --button-mode-dark: white;
-    --button-text-mode-light: white;
-    --button-text-mode-dark: black;
-    --button-dark: black;
-    --button-text-light: black;
-    --button-text-dark: white;
-  }
-  
-  body {
-    background-color: var(--background-light);
-    color: var(--text-light);
-    transition: background 0.3s ease, color 0.3s ease;
-  }
-  
-  .dark-mode {
-    background-color: var(--background-dark);
-    color: var(--text-dark);
-  }
-  
-  .checkout-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
-  
-  .checkout-box {
-    background: var(--box-light);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
-    transition: background 0.3s ease, color 0.3s ease;
-  }
-  
-  .dark-mode .checkout-box {
-    background: var(--box-dark);
-    color: var(--text-dark);
-  }
-  
-  .checkout-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: var(--text-light)
-  }
-
-  .dark-mode .checkout-title {
-    color: var(--text-dark);
-  }
-  
-  .card-input {
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: white; /* Ensure input field has a white background */
-  }
-  
-  .dark-mode .card-input {
-    background-color: black; /* Ensure input field has a dark background in dark mode */
-  }
-  
-  
-  .pay-button {
-    width: 100%;
-    background-color: var(--button-light);
-    color: var(--button-text-light);
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 1%;
-    transition: background 0.3s;
-  }
-
-  .cancel-button{
-    width: 100%;
-    background-color: var(--button-light);
-    color: var(--button-text-light);
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 1%;
-    transition: background 0.3s;
-  }
-  
-  .dark-mode .pay-button {
-    background-color: var(--button-dark);
-    color: var(--button-text-dark);
-  }
-
-  .dark-mode .cancel-button {
-    background-color: var(--button-dark);
-    color: var(--button-text-dark);
-  }
-  
-  .pay-button:hover {
-    background-color: #333;
-  }
-  
-  .dark-mode .pay-button:hover {
-    background-color: #f5f5f5;
-  }
-  
-  .pay-button:disabled {
-    background-color: #888;
-    cursor: not-allowed;
-  }
-  
-  .error-message {
-    color: red;
-    font-size: 14px;
-    margin-top: 10px;
-  }
-  
-  .success-message {
-    color: green;
-    font-size: 14px;
-    margin-top: 10px;
-  }
-  
-  .dark-mode-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: var(--button-mode-light);
-    color: var(--button-text-mode-light);
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .dark-mode .dark-mode-toggle {
-    background: var(--button-mode-dark);
-    color: var(--button-text-mode-dark);
-  }
-  
-  .timer-popup {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #222;
-    color: white;
-    padding: 16px 24px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
-    z-index: 999;
-    display: flex;
-    gap: 16px;
-    align-items: center;
-  }
-  
-  .refund-button {
-    background-color: #ff4d4d;
-    border: none;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .refund-button:hover {
-    background-color: #cc0000;
-  }
-  
-  .payment-request-links {
+.checkout-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 15px;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dark-mode-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #ff6b00;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.dark-mode-toggle:hover {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+}
+
+.checkout-box {
+  width: 100%;
+  max-width: 600px;
+  background-color: white;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.checkout-title {
+  font-size: 2.5rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.amount-display {
+  font-size: 1.8rem;
+  color: #ff6b00;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 15px;
+  background-color: #fff3e6;
+  border-left: 5px solid #ff6b00;
+  border-radius: 8px;
+}
+
+.card-input {
+  margin-bottom: 25px;
+  padding: 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: #fafafa;
+  transition: border-color 0.3s;
+}
+
+.card-input:focus-within {
+  border-color: #ff6b00;
+}
+
+.pay-button {
+  width: 100%;
+  cursor: pointer;
+  padding: 15px 30px;
+  background-color: #ff6b00;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+  margin-bottom: 15px;
+}
+
+.pay-button:hover:not(:disabled) {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+}
+
+.pay-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cancel-button {
+  width: 100%;
+  cursor: pointer;
+  padding: 12px 30px;
+  background-color: #6c757d;
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.cancel-button:hover {
+  background-color: #5a6268;
+}
+
+.error-message {
+  color: #dc3545;
+  font-weight: 500;
+  text-align: center;
+  margin: 15px 0;
+  padding: 10px;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+}
+
+.success-message {
+  color: #28a745;
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 15px 0;
+  padding: 15px;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 8px;
+}
+
+.payment-request-links {
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #fff3e6;
+  border-left: 5px solid #ff6b00;
+  border-radius: 8px;
 }
 
 .payment-box {
-  flex: 1 1 250px;
-  max-width: 300px;
-  padding: 16px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background-color: #f4f4f4;
-  text-align: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .payment-box p {
-  font-weight: bold;
+  font-weight: 600;
+  color: #333;
   margin-bottom: 10px;
+  font-size: 1.1rem;
 }
 
 .payment-box a {
-  display: block;
-  margin: 6px 0;
-  color: #3d95ce;
-  font-weight: 500;
+  display: inline-block;
+  margin-right: 15px;
+  padding: 8px 16px;
+  background-color: #ff6b00;
+  color: white;
   text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
 }
 
 .payment-box a:hover {
-  text-decoration: underline;
+  transform: scale(0.98);
+  box-shadow: 0 1px 3px rgba(255, 107, 0, 0.3);
+}
+
+.timer-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  text-align: center;
+  border: 2px solid #ff6b00;
+}
+
+.timer-popup p {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.refund-button {
+  cursor: pointer;
+  padding: 12px 24px;
+  background-color: #dc3545;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.refund-button:hover {
+  background-color: #c82333;
+}
+
+/* Test button styling to match the design */
+.test-button-container {
+  margin-top: 20px;
+}
+
+.test-button {
+  cursor: pointer;
+  padding: 15px 30px;
+  background-color: #ff6b00;
+  color: white;
+  font-weight: 600;
+  fontSize: 16px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.test-button:hover {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+}
+
+.test-button a {
+  text-decoration: none;
+  color: white;
+}
+
+/* Done link styling */
+.done-link-container {
+  margin-top: 20px;
+}
+
+.done-link {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #28a745;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background-color 0.2s, transform 0.2s;
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.done-link:hover {
+  background-color: #218838;
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(40, 167, 69, 0.3);
+}
+
+/* Dark mode styles */
+body.dark-mode {
+  background-color: #1a1a1a;
+  color: white;
+}
+
+body.dark-mode .checkout-container {
+  background-color: #1a1a1a;
+}
+
+body.dark-mode .checkout-box {
+  background-color: #2d2d2d;
+  color: white;
+}
+
+body.dark-mode .checkout-title {
+  color: white;
+}
+
+body.dark-mode .card-input {
+  background-color: #3a3a3a;
+  border-color: #555;
+}
+
+body.dark-mode .payment-box {
+  background-color: #3a3a3a;
+  color: white;
+}
+
+body.dark-mode .timer-popup {
+  background-color: #2d2d2d;
+  color: white;
 }

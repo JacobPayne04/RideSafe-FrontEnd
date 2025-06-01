@@ -74,7 +74,6 @@ const Test = () => {
                 <p className="todo-item">Google maps ride view implement importing address into Google or Apple Maps</p>
                 <p className="todo-item">Passenger waiting screen</p>
                 <p className="todo-item">Google sign in </p>
-                <p className="todo-item">Checkout form</p>
             </div>
         </div>
     );
