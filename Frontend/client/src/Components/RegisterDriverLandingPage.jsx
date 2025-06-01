@@ -43,6 +43,9 @@ const RegisterDriverLandingPage = () => {
                <button onClick={handleGoogleSignInPopUp} className='register-card-google'>Sign In With Google</button>
 
             </div>
+            <div>
+                <button className="register-card-google"><Link to="/test">TEST</Link></button>
+            </div>
 
             {showSignInPopup && (
                 <div className='popup-overlay'>

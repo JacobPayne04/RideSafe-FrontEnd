@@ -29,6 +29,7 @@ import DriverStripeAccountSignUpLink from './Components/DriverStripeAccountSignU
 import DriverRating from './Components/DriverRating';
 import AllPassengers from './Components/AllPassengers';
 import PassengerRideWaitingScreen from './Components/PassengerRideWaitingScreen';
+import Test from './Components/Test';
 
 // ✅ Load Stripe key correctly
 const stripePromise = loadStripe(process.env.REACT_APP_PK_TEST_PUBLIC_KEY);
@@ -90,6 +91,10 @@ function App() {
             </Elements>
           }
         />
+
+        {/* Test Routes */}
+        <Route path="/test" element={ <Test /> } />
+
       </Routes>
     </GoogleOAuthProvider>
   );
