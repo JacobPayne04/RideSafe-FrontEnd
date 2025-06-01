@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import "../Styling/CheckoutForm.css";
-import { useParams, Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import { PaymentRequestButtonElement } from "@stripe/react-stripe-js";
+import { Link } from "react-router-dom";
 
 
 
