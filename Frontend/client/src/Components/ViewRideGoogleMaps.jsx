@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { GoogleMap, DirectionsRenderer, useJsApiLoader } from "@react-google-maps/api";
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
@@ -64,7 +64,7 @@ const ViewRideGoogleMaps = () => {
                 notification.fromLongitude,
                 notification.toLatitude,
                 notification.toLongitude
-              )} style={{ backgroundColor: '#28a745',color: 'white',border: 'none',padding: '5px 10px',cursor: 'pointer',borderRadius: '4px',marginTop: '5px'}}
+              )} style={{ backgroundColor: '#28a745', color: 'white', border: 'none', padding: '5px 10px', cursor: 'pointer', borderRadius: '4px', marginTop: '5px' }}
             >
               Accept Ride
             </button>
@@ -150,6 +150,32 @@ const ViewRideGoogleMaps = () => {
             <strong>Estimated Ride:</strong> {travelInfo.distance} - {travelInfo.duration}
           </p>
         )}
+      </div>
+      <div>
+        <button
+          style={{
+            cursor: 'pointer',
+            padding: '15px 30px',
+            backgroundColor: '#ff6b00',
+            color: 'white',
+            fontWeight: '600',
+            fontSize: '16px',
+            border: 'none',
+            borderRadius: '8px',
+            boxShadow: '0 4px 12px rgba(255, 107, 0, 0.3)',
+            transition: 'transform 0.2s, box-shadow 0.2s',
+          }}
+          onMouseOver={e => {
+            e.currentTarget.style.transform = 'scale(0.98)';
+            e.currentTarget.style.boxShadow = '0 2px 6px rgba(255, 107, 0, 0.3)';
+          }}
+          onMouseOut={e => {
+            e.currentTarget.style.transform = 'scale(1)';
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 107, 0, 0.3)';
+          }}
+        >
+          <Link to="/test" style={{ textDecoration: 'none', color: 'white' }}>TEST</Link>
+        </button>
       </div>
       <GoogleMap
         mapContainerStyle={containerStyle}

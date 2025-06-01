@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../Styling/DriverStripeAccountSignUpLink.css';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams, Link } from 'react-router-dom';
 
 const DriverStripeAccountSignUpLink = () => {
-  const { id: driverId} = useParams();
+  const { id: driverId } = useParams();
   const driverEmail = localStorage.getItem('driverEmail');
   const location = useLocation();
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const DriverStripeAccountSignUpLink = () => {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    if(params.get('stripe') === 'success'){
+    if (params.get('stripe') === 'success') {
       navigate(`/one/driver/${driverId}`);
     }
   }, [location.search, driverId, navigate]);
@@ -86,6 +86,34 @@ const DriverStripeAccountSignUpLink = () => {
       <button onClick={onboardStripe} className="Stripe-Onboarding-btn">
         Finish Stripe Setup
       </button>
+
+      <div>
+        <button
+          style={{
+            cursor: 'pointer',
+            padding: '15px 30px',
+            backgroundColor: '#ff6b00',
+            color: 'white',
+            fontWeight: '600',
+            fontSize: '16px',
+            border: 'none',
+            borderRadius: '8px',
+            boxShadow: '0 4px 12px rgba(255, 107, 0, 0.3)',
+            transition: 'transform 0.2s, box-shadow 0.2s',
+          }}
+          onMouseOver={e => {
+            e.currentTarget.style.transform = 'scale(0.98)';
+            e.currentTarget.style.boxShadow = '0 2px 6px rgba(255, 107, 0, 0.3)';
+          }}
+          onMouseOut={e => {
+            e.currentTarget.style.transform = 'scale(1)';
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 107, 0, 0.3)';
+          }}
+        >
+          <Link to="/test" style={{ textDecoration: 'none', color: 'white' }}>TEST</Link>
+        </button>
+      </div>
+
     </div>
   );
 };

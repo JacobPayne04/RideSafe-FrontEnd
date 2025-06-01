@@ -34,7 +34,7 @@ const Test = () => {
             <div className="route-section">
                 <h2 className="section-title">Passenger Routes</h2>
                 <Link className="route-card" to="/passengers/all">AllPassengers</Link>
-                <Link className="route-card" to="/register/passengers">RegisterPassenger</Link>
+                <Link className="route-card" to="/register/passenger">RegisterPassenger</Link>
                 <Link className="route-card" to="/register/passenger/google">GoogleRegisterPassenger</Link>
                 <Link className="route-card" to="/login/passenger">LoginPassenger</Link>
                 <Link className="route-card" to="/Passenger/show1/Booking">PassengerShow1</Link>
