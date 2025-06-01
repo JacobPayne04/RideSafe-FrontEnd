@@ -9,7 +9,6 @@ import AllDrivers from './Components/AllDrivers';
 import DriverShow1 from './Components/DriverShow1';
 import LoginDriver from './Components/LoginDriver';
 import RegisterDriverLandingPage from './Components/RegisterDriverLandingPage';
-import LoginLandingPage from './Components/LoginLandingPage';
 import RegisterDriver from './Components/RegisterDriver';
 import RegisterPassenger from './Components/RegisterPassenger';
 import LoginPassenger from './Components/LoginPassenger';
