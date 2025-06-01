@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "../Styling/EditDriver.css"; // Import external stylesheet
 
@@ -60,7 +60,7 @@ const EditDriver = () => {
       <h2>Edit Driver Information</h2>
       {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit} className="edit-driver-form">
-        
+
         {/* Section 1: Personal Details */}
         <div className="form-section">
           <h3>Personal Details</h3>
@@ -106,6 +106,34 @@ const EditDriver = () => {
 
         <button type="submit" className="submit-button">Update Driver</button>
       </form>
+
+      <div>
+        <button
+          style={{
+            cursor: 'pointer',
+            padding: '15px 30px',
+            backgroundColor: '#ff6b00',
+            color: 'white',
+            fontWeight: '600',
+            fontSize: '16px',
+            border: 'none',
+            borderRadius: '8px',
+            boxShadow: '0 4px 12px rgba(255, 107, 0, 0.3)',
+            transition: 'transform 0.2s, box-shadow 0.2s',
+          }}
+          onMouseOver={e => {
+            e.currentTarget.style.transform = 'scale(0.98)';
+            e.currentTarget.style.boxShadow = '0 2px 6px rgba(255, 107, 0, 0.3)';
+          }}
+          onMouseOut={e => {
+            e.currentTarget.style.transform = 'scale(1)';
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 107, 0, 0.3)';
+          }}
+        >
+          <Link to="/test" style={{ textDecoration: 'none', color: 'white' }}>TEST</Link>
+        </button>
+      </div>
+
     </div>
   );
 };

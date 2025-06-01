@@ -164,6 +164,7 @@ const DriverShow1 = () => {
               <div className='Driver-Button-Profile'><Link to={`/driver/home/${id}`}>View Rides</Link></div>
               <div className='Driver-Button-Profile'><Link to={`/edit/driver/${id}/info`}>Edit Profile</Link></div>
               <button className='Driver-Button-Profile' onClick={onboardStripe}>Finish Stripe Setup</button>
+              <div className='Driver-Button-Profile'><Link to={"/test"}>Test</Link></div>
               <div className="Driver-Button-Profile">
                 <button
                   className="Rate-Button"
