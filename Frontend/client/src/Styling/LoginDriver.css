@@ -1,65 +1,160 @@
-/* Container for centering the form */
 .login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: #f0f2f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+  justify-content: center;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 600px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+}
+
+.login-heading {
+  font-size: 1.6rem;
+  color: #333;
+  margin-bottom: 25px;
+  text-align: center;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.login-input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: #fafafa;
+  margin-bottom: 15px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: #ff6b00;
+  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+  background-color: white;
+}
+
+.login-input::placeholder {
+  color: #999;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.login-button {
+  cursor: pointer;
+  width: 100%;
+  padding: 16px;
+  background-color: #ff6b00;
+  color: white;
+  font-weight: 600;
+  font-size: 17px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 15px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.login-button:hover {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+}
+
+.login-button:active {
+  transform: scale(0.96);
+}
+
+.login-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.test-button-container {
+  margin-top: 15px;
+}
+
+.test-button {
+  cursor: pointer;
+  padding: 12px 24px;
+  background-color: #ff6b00;
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.test-link {
+  text-decoration: none;
+  color: white;
+}
+
+/* Mobile optimizations */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 10px;
   }
   
-  /* Heading for login title */
+  .login-form {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+  }
+  
   .login-heading {
-    font-size: 2rem;
-    color: #333;
+    font-size: 1.4rem;
     margin-bottom: 20px;
   }
   
-  /* Form styling */
-  .login-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Styling for input fields */
   .login-input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    font-size: 1rem;
+    padding: 14px 12px;
+    font-size: 16px; /* Prevents zoom on iOS */
+    border-radius: 6px;
+    margin-bottom: 12px;
   }
   
-  /* Error message styling */
-  .error-message {
-    color: red;
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-  }
-  
-  /* Styling for login button */
   .login-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    padding: 18px 16px;
+    font-size: 16px;
+    margin-top: 12px;
+    border-radius: 6px;
+    min-height: 52px; /* Better touch target */
   }
   
-  .login-button:hover {
-    background-color: #0056b3;
+  .test-button-container {
+    margin-top: 10px;
   }
   
+  .test-button {
+    padding: 14px 20px;
+    font-size: 14px;
+    border-radius: 6px;
+    min-height: 44px; /* Better touch target */
+  }
+}

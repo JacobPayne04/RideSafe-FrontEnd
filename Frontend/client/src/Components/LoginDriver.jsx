@@ -55,74 +55,61 @@ const LoginDriver = () => {
     },
   });
 
-  return (
-    <div className="login-container">
-      <h1 className="login-heading">Login Driver</h1>
-      <form onSubmit={formik.handleSubmit} className="login-form">
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          className="login-input"
-        />
-        {formik.touched.email && formik.errors.email && (
-          <div className="error-message">{formik.errors.email}</div>
-        )}
+ return (
+  <div className="login-container">
+    <h1 className="login-heading">Login Driver</h1>
+    <form onSubmit={formik.handleSubmit} className="login-form">
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        value={formik.values.email}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        className="login-input"
+      />
+      {formik.touched.email && formik.errors.email && (
+        <div className="error-message">{formik.errors.email}</div>
+      )}
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          className="login-input"
-        />
-        {formik.touched.password && formik.errors.password && (
-          <div className="error-message">{formik.errors.password}</div>
-        )}
+      <input
+        type="password"
+        name="password"
+        placeholder="Password"
+        value={formik.values.password}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        className="login-input"
+      />
+      {formik.touched.password && formik.errors.password && (
+        <div className="error-message">{formik.errors.password}</div>
+      )}
 
-        {formik.errors.general && (
-          <p className="error-message">{formik.errors.general}</p>
-        )}
+      {formik.errors.general && (
+        <p className="error-message">{formik.errors.general}</p>
+      )}
 
-        <button type="submit" className="login-button" disabled={formik.isSubmitting}>
-          Login
-        </button>
-      </form>
+      <button type="submit" className="login-button" disabled={formik.isSubmitting}>
+        {formik.isSubmitting ? 'Logging in...' : 'Login'}
+      </button>
+    </form>
 
-      <div>
-        <button
-          style={{
-            cursor: 'pointer',
-            padding: '15px 30px',
-            backgroundColor: '#ff6b00',
-            color: 'white',
-            fontWeight: '600',
-            fontSize: '16px',
-            border: 'none',
-            borderRadius: '8px',
-            boxShadow: '0 4px 12px rgba(255, 107, 0, 0.3)',
-            transition: 'transform 0.2s, box-shadow 0.2s',
-          }}
-          onMouseOver={e => {
-            e.currentTarget.style.transform = 'scale(0.98)';
-            e.currentTarget.style.boxShadow = '0 2px 6px rgba(255, 107, 0, 0.3)';
-          }}
-          onMouseOut={e => {
-            e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 107, 0, 0.3)';
-          }}
-        >
-          <Link to="/test" style={{ textDecoration: 'none', color: 'white' }}>TEST</Link>
-        </button>
-      </div>
-
+    <div className="test-button-container">
+      <button
+        className="test-button"
+        onMouseOver={e => {
+          e.currentTarget.style.transform = 'scale(0.98)';
+          e.currentTarget.style.boxShadow = '0 2px 6px rgba(255, 107, 0, 0.3)';
+        }}
+        onMouseOut={e => {
+          e.currentTarget.style.transform = 'scale(1)';
+          e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 107, 0, 0.3)';
+        }}
+      >
+        <Link to="/test" className="test-link">TEST</Link>
+      </button>
     </div>
-  );
-};
-
+  </div>
+);
+}
 export default LoginDriver;
