@@ -21,14 +21,12 @@ const Test = () => {
                 <h2 className="section-title">Driver Routes</h2>
                 <Link className="route-card" to="/drivers/all">AllDrivers</Link>
                 <Link className="route-card" to="/one/driver/67ef0bc76b18b16e97e08a5f">SingleDriver</Link>
-                <Link className="route-card" to="/login">LoginLandingPage</Link>
                 <Link className="route-card" to="/login/driver">LoginDriver</Link>
                 <Link className="route-card" to="/register/driver">Register Driver</Link>
                 <Link className="route-card" to="/register/driver/google">GoogleRegisterDriver</Link>
                 <Link className="route-card" to="/driver/home/67ef0bc76b18b16e97e08a5f">DriverHomePage</Link>
                 <Link className="route-card" to="/edit/driver/67ef0bc76b18b16e97e08a5f/info">EditDriver</Link>
                 <Link className="route-card" to="/driver/67ef0bc76b18b16e97e08a5f/verification/account/setup">Stripe Account</Link>
-                <Link className="route-card" to="/driver/67ef0bc76b18b16e97e08a5f/rating/page">DriverRating</Link>
             </div>
 
             <div className="route-section">
@@ -63,7 +61,6 @@ const Test = () => {
             <div className="route-section">
                 <h2 className="section-title">TODO*</h2>
                 <p className="todo-item">Add Passenger Show 1 Page ("/Passenger/:id")</p>
-                <p className="todo-item">Delete review driver route</p>
                 <p className="todo-item">Fix driver online button not staying green</p>
                 <p className="todo-item">Show driver rating</p>
                 <p className="todo-item">Implement more dark and light modes to pages</p>
@@ -77,7 +74,6 @@ const Test = () => {
                 <p className="todo-item">Google maps ride view implement importing address into Google or Apple Maps</p>
                 <p className="todo-item">Passenger waiting screen</p>
                 <p className="todo-item">Google sign in </p>
-                <p className="todo-item">Checkout form</p>
             </div>
         </div>
     );
