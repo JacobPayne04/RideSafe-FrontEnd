@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import '../Styling/AdminHome.css';
 
@@ -121,6 +121,7 @@ const AdminHome = () => {
       <div className="admin-navigation-section">
         <button className='admin-nav-button' onClick={ViewAllDrivers}>View All Drivers</button>
         <button className='admin-nav-button' onClick={ViewAllPassengers}>View All Passengers</button>
+        <Link to="/test"><button className='admin-nav-button'>Test</button></Link>
       </div>
     </div>
   );

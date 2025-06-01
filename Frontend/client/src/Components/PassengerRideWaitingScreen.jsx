@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
-import DriverRating from './DriverRating'; 
+import DriverRating from './DriverRating';
+import { Link } from 'react-router-dom';
 
 
 const PassengerRideWaitingScreen = () => {
@@ -17,16 +18,16 @@ const PassengerRideWaitingScreen = () => {
       const now = Date.now();
       const storedStartTime = sessionStorage.getItem('timerStartTime');
       const storedRefundShown = sessionStorage.getItem('refundShown');
-      
+
       // If refund was already shown, don't restart timer
       if (storedRefundShown === 'true') {
         setShowRefund(true);
         setTimeLeft(0);
         return;
       }
-      
+
       let startTime;
-      
+
       if (storedStartTime) {
         // Use existing start time
         startTime = parseInt(storedStartTime);
@@ -35,26 +36,26 @@ const PassengerRideWaitingScreen = () => {
         startTime = now;
         sessionStorage.setItem('timerStartTime', startTime.toString());
       }
-      
+
       // Calculate remaining time
       const elapsed = Math.floor((now - startTime) / 1000);
       const remaining = Math.max(0, 600 - elapsed); // 600 seconds = 10 minutes
-      
+
       setTimeLeft(remaining);
-      
+
       if (remaining === 0) {
         setShowRefund(true);
         sessionStorage.setItem('refundShown', 'true');
       }
     };
-    
+
     initializeTimer();
   }, []);
 
   // Timer countdown effect
   useEffect(() => {
     if (timeLeft <= 0) return;
-    
+
     const timer = setInterval(() => {
       setTimeLeft(prev => {
         const newTime = prev - 1;
@@ -110,6 +111,32 @@ const PassengerRideWaitingScreen = () => {
 
   return (
     <div className="p-4 text-center">
+      <div>
+        <button
+          style={{
+            cursor: 'pointer',
+            padding: '15px 30px',
+            backgroundColor: '#ff6b00',
+            color: 'white',
+            fontWeight: '600',
+            fontSize: '16px',
+            border: 'none',
+            borderRadius: '8px',
+            boxShadow: '0 4px 12px rgba(255, 107, 0, 0.3)',
+            transition: 'transform 0.2s, box-shadow 0.2s',
+          }}
+          onMouseOver={e => {
+            e.currentTarget.style.transform = 'scale(0.98)';
+            e.currentTarget.style.boxShadow = '0 2px 6px rgba(255, 107, 0, 0.3)';
+          }}
+          onMouseOut={e => {
+            e.currentTarget.style.transform = 'scale(1)';
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 107, 0, 0.3)';
+          }}
+        >
+          <Link to="/test" style={{ textDecoration: 'none', color: 'white' }}>TEST</Link>
+        </button>
+      </div>
       <h1 className="text-xl mb-4">Waiting for your driver to complete the ride...</h1>
 
       {showRatingPopup && driverId && (

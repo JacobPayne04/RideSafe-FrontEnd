@@ -30,6 +30,9 @@ const AllDrivers = () => {
         <Link to="/admin/passengers" className="admin-nav-button admin-nav-link">
           View All Passengers
         </Link>
+        <Link to="/test" className="admin-nav-button admin-nav-link">
+          Test
+        </Link>
       </div>
 
       {/* Drivers Section */}

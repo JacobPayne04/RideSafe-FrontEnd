@@ -29,6 +29,9 @@ const AllPassengers = () => {
         <Link to="/admin/drivers" className="admin-nav-button admin-nav-link">
           View All Drivers
         </Link>
+        <Link to="/test" className="admin-nav-button admin-nav-link">
+          Test
+        </Link>
       </div>
 
       <div className="admin-stats-section">
