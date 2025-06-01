@@ -63,6 +63,23 @@ const Test = () => {
             <div className="route-section">
                 <h2 className="section-title">TODO*</h2>
                 <p className="todo-item">Add Passenger Show 1 Page ("/Passenger/:id")</p>
+                <p className="todo-item">Delete review driver route</p>
+                <p className="todo-item">Fix driver online button not staying green</p>
+                <p className="todo-item">Show driver rating</p>
+                <p className="todo-item">Implement more dark and light modes to pages</p>
+                <p className="todo-item">## STYLE THE FOLLOWING ... ###</p>
+                <p className="todo-item">Fix login page</p>
+                <p className="todo-item">Fix login driver</p>
+                <p className="todo-item">Google sign up</p>
+                <p className="todo-item">Driver dashboard home page (center it)</p>
+                <p className="todo-item">Edit driver info (spacing )</p>
+                <p className="todo-item">Login Passenger</p>
+                <p className="todo-item">Passenger show1 page</p>
+                <p className="todo-item">Passenger home</p>
+                <p className="todo-item">Google maps ride view implement importing address into Google or Apple Maps</p>
+                <p className="todo-item">Passenger waiting screen</p>
+                <p className="todo-item">Google sign in </p>
+                <p className="todo-item">Checkout form</p>
             </div>
         </div>
     );
