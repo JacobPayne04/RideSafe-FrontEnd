@@ -69,7 +69,6 @@ const Test = () => {
                 <p className="todo-item">Implement more dark and light modes to pages</p>
                 <p className="todo-item">## STYLE THE FOLLOWING ... ###</p>
                 <p className="todo-item">Fix login page</p>
-                <p className="todo-item">Google sign up</p>
                 <p className="todo-item">Driver dashboard home page (center it)</p>
                 <p className="todo-item">Edit driver info (spacing )</p>
                 <p className="todo-item">Login Passenger</p>
