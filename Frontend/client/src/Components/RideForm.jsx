@@ -95,96 +95,84 @@ const RideForm = () => {
   }, [isLoaded]);
 
   return (
-    <div className="form-container">
-      <form onSubmit={formik.handleSubmit} className="form-content">
-        <h2 className="form-title">Where are we going today?</h2>
+  <div className="form-container">
+    <form onSubmit={formik.handleSubmit} className="form-content">
+      <h2 className="form-title">Where are we going today?</h2>
 
-        <input name="passengerId" type="hidden" value={formik.values.passengerId} />
-        <input name="driverId" type="hidden" value={formik.values.driverId} />
-        <input name="status" type="hidden" value={formik.values.status} />
+      <input name="passengerId" type="hidden" value={formik.values.passengerId} />
+      <input name="driverId" type="hidden" value={formik.values.driverId} />
+      <input name="status" type="hidden" value={formik.values.status} />
 
-        <label>Pickup Location</label>
-        <input
-          id="fromLocation"
-          className="form-input"
-          name="fromLocation"
-          type="text"
-          placeholder="Enter pickup location"
-          value={formik.values.fromLocation}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        />
-        {formik.touched.fromLocation && formik.errors.fromLocation && (
-          <div className="error-message">{formik.errors.fromLocation}</div>
-        )}
+      <label className="form-label">Pickup Location</label>
+      <input
+        id="fromLocation"
+        className="form-input"
+        name="fromLocation"
+        type="text"
+        placeholder="Enter pickup location"
+        value={formik.values.fromLocation}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+      />
+      {formik.touched.fromLocation && formik.errors.fromLocation && (
+        <div className="error-message">{formik.errors.fromLocation}</div>
+      )}
 
-        <label>Dropoff Location</label>
-        <input
-          id="toLocation"
-          className="form-input"
-          name="toLocation"
-          type="text"
-          placeholder="Enter dropoff location"
-          value={formik.values.toLocation}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        />
-        {formik.touched.toLocation && formik.errors.toLocation && (
-          <div className="error-message">{formik.errors.toLocation}</div>
-        )}
+      <label className="form-label">Dropoff Location</label>
+      <input
+        id="toLocation"
+        className="form-input"
+        name="toLocation"
+        type="text"
+        placeholder="Enter dropoff location"
+        value={formik.values.toLocation}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+      />
+      {formik.touched.toLocation && formik.errors.toLocation && (
+        <div className="error-message">{formik.errors.toLocation}</div>
+      )}
 
-        <label>Number of Passengers</label>
-        <select
-          className="form-input"
-          name="passengerAmount"
-          value={formik.values.passengerAmount}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-        >
-          {[1, 2, 3, 4, 5].map((num) => (
-            <option key={num} value={num}>
-              {num}
-            </option>
-          ))}
-        </select>
-        {formik.touched.passengerAmount && formik.errors.passengerAmount && (
-          <div className="error-message">{formik.errors.passengerAmount}</div>
-        )}
+      <label className="form-label">Number of Passengers</label>
+      <select
+        className="form-input"
+        name="passengerAmount"
+        value={formik.values.passengerAmount}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+      >
+        {[1, 2, 3, 4, 5].map((num) => (
+          <option key={num} value={num}>
+            {num}
+          </option>
+        ))}
+      </select>
+      {formik.touched.passengerAmount && formik.errors.passengerAmount && (
+        <div className="error-message">{formik.errors.passengerAmount}</div>
+      )}
 
-        <button type="submit" className="form-button">
-          Book Ride
-        </button>
-      </form>
+      <button type="submit" className="form-button">
+        Book Ride
+      </button>
+    </form>
 
-      <div>
-        <button
-          style={{
-            cursor: 'pointer',
-            padding: '15px 30px',
-            backgroundColor: '#ff6b00',
-            color: 'white',
-            fontWeight: '600',
-            fontSize: '16px',
-            border: 'none',
-            borderRadius: '8px',
-            boxShadow: '0 4px 12px rgba(255, 107, 0, 0.3)',
-            transition: 'transform 0.2s, box-shadow 0.2s',
-          }}
-          onMouseOver={e => {
-            e.currentTarget.style.transform = 'scale(0.98)';
-            e.currentTarget.style.boxShadow = '0 2px 6px rgba(255, 107, 0, 0.3)';
-          }}
-          onMouseOut={e => {
-            e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 107, 0, 0.3)';
-          }}
-        >
-          <Link to="/test" style={{ textDecoration: 'none', color: 'white' }}>TEST</Link>
-        </button>
-      </div>
-
+    <div className="test-button-container">
+      <button
+        className="test-button"
+        onMouseOver={e => {
+          e.currentTarget.style.transform = 'scale(0.98)';
+          e.currentTarget.style.boxShadow = '0 2px 6px rgba(255, 107, 0, 0.3)';
+        }}
+        onMouseOut={e => {
+          e.currentTarget.style.transform = 'scale(1)';
+          e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 107, 0, 0.3)';
+        }}
+      >
+        <Link to="/test" className="test-link">TEST</Link>
+      </button>
     </div>
-  );
-};
+  </div>
+);
+}
 
 export default RideForm;
