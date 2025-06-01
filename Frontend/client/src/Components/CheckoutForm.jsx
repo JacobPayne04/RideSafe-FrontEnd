@@ -4,6 +4,7 @@ import "../Styling/CheckoutForm.css";
 import { useParams, Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import { PaymentRequestButtonElement } from "@stripe/react-stripe-js";
+import { useParams, Link } from 'react-router-dom';
 
 
 
