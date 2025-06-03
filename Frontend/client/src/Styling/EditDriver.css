@@ -1,73 +1,286 @@
+/* EditDriver.css */
+
 .edit-driver-container {
-    width: 50%;
-    margin: auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.edit-driver-container h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Error message styling */
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+  padding: 12px 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  max-width: 700px;
+  width: 100%;
+}
+
+/* Form container */
+.edit-driver-form {
+  width: 100%;
+  max-width: 700px;
+  background-color: white;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+/* Form sections */
+.form-section {
+  margin-bottom: 35px;
+  padding-bottom: 25px;
+  border-bottom: 2px solid #f0f2f5;
+}
+
+.form-section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 25px;
+}
+
+.form-section h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #ff6b00;
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #ff6b00;
+  display: inline-block;
+}
+
+/* Input groups */
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 15px 18px;
+  font-size: 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: #fafafa;
+  transition: border-color 0.3s, background-color 0.3s, box-shadow 0.3s;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #ff6b00;
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+}
+
+.input-group input:hover {
+  border-color: #cccccc;
+  background-color: white;
+}
+
+/* Submit button */
+.submit-button {
+  width: 100%;
+  padding: 18px 30px;
+  background-color: #ff6b00;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+  margin-top: 10px;
+}
+
+.submit-button:hover {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+  background-color: #e55a00;
+}
+
+.submit-button:active {
+  transform: scale(0.96);
+}
+
+/* Test button container */
+.edit-driver-container > div:last-child {
+  margin-top: 20px;
+}
+
+.edit-driver-container > div:last-child button {
+  padding: 15px 30px;
+  background-color: #ff6b00;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.edit-driver-container > div:last-child button:hover {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+}
+
+.edit-driver-container > div:last-child button a {
+  text-decoration: none;
+  color: white;
+}
+
+/* Input validation states */
+.input-group input[type="password"]:invalid {
+  border-color: #dc3545;
+}
+
+.input-group input[type="email"]:invalid {
+  border-color: #dc3545;
+}
+
+/* Success state for inputs */
+.input-group input:valid:not(:placeholder-shown) {
+  border-color: #28a745;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .edit-driver-container {
+    padding: 20px 15px;
   }
   
-  h2 {
-    text-align: center;
+  .edit-driver-container h2 {
+    font-size: 2rem;
     margin-bottom: 20px;
-  }
-  
-  .error-message {
-    color: red;
-    text-align: center;
   }
   
   .edit-driver-form {
-    display: flex;
-    flex-direction: column;
+    padding: 25px 20px;
   }
   
   .form-section {
-    margin-bottom: 20px;
-    padding: 15px;
-    background: #f8f8f8;
-    border-radius: 8px;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
   }
   
-  h3 {
-    margin-bottom: 10px;
-    font-size: 18px;
-    color: #333;
+  .form-section h3 {
+    font-size: 1.2rem;
   }
   
-  /* Align label and input side by side */
   .input-group {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 18px;
   }
   
   .input-group label {
-    width: 150px; /* Set a fixed width for labels */
-    font-weight: bold;
+    font-size: 15px;
   }
   
   .input-group input {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 12px 15px;
+    font-size: 15px;
+  }
+  
+  .submit-button {
+    padding: 15px 25px;
     font-size: 16px;
   }
+}
+
+@media (max-width: 480px) {
+  .edit-driver-container {
+    padding: 15px 10px;
+  }
   
-  /* Submit button styling */
+  .edit-driver-container h2 {
+    font-size: 1.8rem;
+  }
+  
+  .edit-driver-form {
+    padding: 20px 15px;
+  }
+  
+  .form-section h3 {
+    font-size: 1.1rem;
+  }
+  
+  .input-group label {
+    font-size: 14px;
+  }
+  
+  .input-group input {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  
   .submit-button {
-    width: 100%;
-    padding: 10px;
-    background: #f97316;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 18px;
-    cursor: pointer;
+    padding: 12px 20px;
+    font-size: 15px;
   }
   
-  .submit-button:hover {
-    background: #eea46e;
+  .edit-driver-container > div:last-child button {
+    padding: 12px 24px;
+    font-size: 14px;
   }
-  
+}
+
+/* Focus trap for better accessibility */
+.edit-driver-form:focus-within {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Form section animations */
+.form-section {
+  animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loading state for submit button */
+.submit-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.submit-button:disabled:hover {
+  background-color: #cccccc;
+  transform: none;
+  box-shadow: 0 4px 12px rgba(204, 204, 204, 0.3);
+}

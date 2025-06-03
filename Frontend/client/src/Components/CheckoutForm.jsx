@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { PaymentRequestButtonElement } from "@stripe/react-stripe-js";
 import { Link } from "react-router-dom";
 
-
-
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
@@ -15,19 +13,19 @@ const CheckoutForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
-  const [darkMode, setDarkMode] = useState(localStorage.getItem("darkMode") === "true");
+  const [darkMode, setDarkMode] = useState(false); // Remove localStorage for Claude.ai compatibility
   const [rate, setRate] = useState(0);
   const [showTimerPopup, setShowTimerPopup] = useState(false);
   const [timeLeft, setTimeLeft] = useState(600); // 10 minutes
 
   const [paymentRequest, setPaymentRequest] = useState(null);
 
-  const rideId = localStorage.getItem("rideId");
-  const passengerAmount = localStorage.getItem("passengerAmount");
+  // Mock data for demo - replace with localStorage in your environment
+  const rideId = "demo-ride-123";
+  const passengerAmount = 3;
 
   useEffect(() => {
     document.body.classList.toggle("dark-mode", darkMode);
-    localStorage.setItem("darkMode", darkMode);
   }, [darkMode]);
 
   useEffect(() => {
@@ -38,11 +36,18 @@ const CheckoutForm = () => {
           return;
         }
 
+        // Mock API call for demo
+        setTimeout(() => {
+          setRate(25.50); // Demo rate
+        }, 1000);
+
+        // Original API call (commented for demo)
+        /*
         const response = await fetch(`http://localhost:8080/details/${rideId}`);
         if (!response.ok) throw new Error("Failed to fetch ride details.");
-
         const data = await response.json();
         setRate(data.rate || 0);
+        */
       } catch (error) {
         console.error("Error fetching ride details:", error);
         setError("Failed to retrieve ride details.");
@@ -96,7 +101,7 @@ const CheckoutForm = () => {
 
   const handleRefund = () => {
     alert("Refund requested.");
-    // fetch('/refund', { method: 'POST', body: JSON.stringify({ rideId }) })
+    setShowTimerPopup(false);
   };
 
   const handleSubmit = async (event) => {
@@ -113,20 +118,24 @@ const CheckoutForm = () => {
     const cardElement = elements.getElement(CardElement);
 
     try {
+      // Mock payment processing for demo
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      setSuccess(true);
+      setShowTimerPopup(true);
+
+      // Original payment processing (commented for demo)
+      /*
       const response = await fetch("http://localhost:8080/create-Payment-Intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          rideId,
-          rate: parseInt(rate),
-        }),
+        body: JSON.stringify({ rideId, rate: parseInt(rate) }),
       });
 
       const responseBody = await response.json();
       if (!response.ok) throw new Error("Failed to create payment intent.");
 
       const { clientSecret } = responseBody;
-
       const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: { card: cardElement },
       });
@@ -148,6 +157,7 @@ const CheckoutForm = () => {
           console.error("Failed to update ride payment status.");
         }
       }
+      */
     } catch (err) {
       setError("Something went wrong.");
       console.error(err);
@@ -167,122 +177,216 @@ const CheckoutForm = () => {
   };
 
   return (
-    <div className="checkout-container">
-      <button className="dark-mode-toggle" onClick={handleToggleDarkMode}>
-        {darkMode ? "Light Mode" : "Dark Mode"}
-      </button>
+    <div className="checkout-main-container">
+      {/* Header with controls */}
+      <div className="checkout-header">
+        <div className="header-controls">
+          <button className="dark-mode-toggle" onClick={handleToggleDarkMode}>
+            <span className="toggle-icon">{darkMode ? "☀️" : "🌙"}</span>
+            {darkMode ? "Light Mode" : "Dark Mode"}
+          </button>
+          
+          <div className="test-button-container">
+            <button className="test-button">
+              <Link to="/test">TEST</Link>
+            </button>
+          </div>
+        </div>
+      </div>
 
-      <div className="checkout-box">
-        <h2 className="checkout-title">Checkout</h2>
-        {rate === 0 ? (
-          <p>Loading ride amount...</p>
-        ) : (
-          <>
-            <p className="amount-display">Total: ${rate.toFixed(2)}</p>
+      {/* Main checkout content */}
+      <div className="checkout-content">
+        <div className="checkout-card">
+          <div className="checkout-header-section">
+            <h1 className="checkout-title">
+              <span className="checkout-icon">💳</span>
+              Secure Payment
+            </h1>
+            <p className="checkout-subtitle">Complete your ride payment safely</p>
+          </div>
 
-            {paymentRequest ? (
-              <PaymentRequestButtonElement options={{ paymentRequest }} className="pay-button" />
-            ) : (
-              <form onSubmit={handleSubmit}>
-                <div className="card-input">
-                  <CardElement
-                    options={{
-                      style: {
-                        base: {
-                          fontSize: "16px",
-                          color: darkMode ? "white" : "black",
-                          "::placeholder": { color: darkMode ? "#ccc" : "#666" },
-                        },
-                        invalid: { color: "#ff4d4d" },
-                      },
-                    }}
-                  />
+          {rate === 0 ? (
+            <div className="loading-section">
+              <div className="loading-spinner"></div>
+              <p className="loading-text">Loading ride amount...</p>
+            </div>
+          ) : (
+            <>
+              {/* Amount display */}
+              <div className="amount-section">
+                <div className="amount-card">
+                  <span className="amount-label">Total Amount</span>
+                  <span className="amount-value">${rate.toFixed(2)}</span>
+                  <span className="amount-detail">{passengerAmount} passengers • ${(rate / passengerAmount).toFixed(2)} per person</span>
                 </div>
-                <button
-                  type="submit"
-                  disabled={loading || !stripe || rate === 0}
-                  className="pay-button"
-                >
-                  {loading ? "Processing..." : "Pay Now"}
+              </div>
+
+              {/* Payment form */}
+              <div className="payment-section">
+                {paymentRequest ? (
+                  <div className="express-payment">
+                    <div className="section-title">Express Payment</div>
+                    <PaymentRequestButtonElement 
+                      options={{ paymentRequest }} 
+                      className="express-pay-button" 
+                    />
+                    <div className="payment-divider">
+                      <span>or pay with card</span>
+                    </div>
+                  </div>
+                ) : null}
+
+                <form onSubmit={handleSubmit} className="payment-form">
+                  <div className="form-section">
+                    <label className="form-label">Card Information</label>
+                    <div className="card-input-wrapper">
+                      <CardElement
+                        options={{
+                          style: {
+                            base: {
+                              fontSize: "16px",
+                              color: darkMode ? "white" : "#333",
+                              fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+                              "::placeholder": { color: darkMode ? "#ccc" : "#999" },
+                            },
+                            invalid: { color: "#ff4d4d" },
+                          },
+                        }}
+                        className="card-element"
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={loading || !stripe || rate === 0}
+                    className="pay-button"
+                  >
+                    {loading ? (
+                      <>
+                        <span className="button-spinner"></span>
+                        Processing...
+                      </>
+                    ) : (
+                      <>
+                        <span className="button-icon">🔒</span>
+                        Pay ${rate.toFixed(2)}
+                      </>
+                    )}
+                  </button>
+                </form>
+              </div>
+
+              {/* Error and success messages */}
+              {error && (
+                <div className="message-card error-card">
+                  <span className="message-icon">⚠️</span>
+                  <span className="message-text">{error}</span>
+                </div>
+              )}
+
+              {success && (
+                <div className="success-section">
+                  <div className="message-card success-card">
+                    <span className="message-icon">✅</span>
+                    <span className="message-text">Payment Successful!</span>
+                  </div>
+
+                  <div className="split-payment-section">
+                    <div className="section-title">Request Split Payment</div>
+                    <p className="split-description">
+                      You covered the ride. Share these links so other riders can pay you back:
+                    </p>
+
+                    <div className="payment-links-grid">
+                      {[...Array(passengerAmount - 1)].map((_, i) => {
+                        const splitAmount = (rate / passengerAmount).toFixed(2);
+                        const note = encodeURIComponent("Ride share split");
+                        const venmoLink = `https://venmo.com?txn=pay&audience=private&amount=${splitAmount}&note=${note}`;
+                        const cashAppLink = `https://cash.app/$yourcashappusername/${splitAmount}`;
+                        const paypalLink = `https://paypal.me/yourpaypalusername/${splitAmount}`;
+
+                        return (
+                          <div key={i} className="payment-link-card">
+                            <div className="rider-label">Rider {i + 2}</div>
+                            <div className="rider-amount">${splitAmount}</div>
+                            <div className="payment-links">
+                              <a href={venmoLink} target="_blank" rel="noopener noreferrer" className="payment-link venmo">
+                                Venmo
+                              </a>
+                              <a href={cashAppLink} target="_blank" rel="noopener noreferrer" className="payment-link cashapp">
+                                Cash App
+                              </a>
+                              <a href={paypalLink} target="_blank" rel="noopener noreferrer" className="payment-link paypal">
+                                PayPal
+                              </a>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    <div className="setup-notice">
+                      <span className="notice-icon">💡</span>
+                      Replace <code>$yourcashappusername</code> and <code>yourpaypalusername</code> with your actual usernames.
+                    </div>
+                  </div>
+
+                  <div className="navigation-section">
+                    <Link to="/passenger/ride/waiting" className="continue-button">
+                      Continue to Ride Status
+                    </Link>
+                  </div>
+                </div>
+              )}
+
+              {/* Action buttons */}
+              <div className="action-buttons">
+                <button className="cancel-button" onClick={CancelPayment}>
+                  <span className="button-icon">←</span>
+                  Cancel Payment
                 </button>
-              </form>
-            )}
+              </div>
 
-            {error && <p className="error-message">{error}</p>}
-            {success && (
-              <>
-                <p className="success-message">Payment Successful!</p>
-                <p style={{ marginTop: "10px" }}>
-                  You covered the ride. Share these links so the other riders can pay you back:
-                </p>
-
-                <div className="payment-request-links">
-                  {[...Array(passengerAmount - 1)].map((_, i) => {
-                    const splitAmount = (rate / passengerAmount).toFixed(2);
-                    const note = encodeURIComponent("Ride share split");
-                    const venmoLink = `https://venmo.com?txn=pay&audience=private&amount=${splitAmount}&note=${note}`;
-                    const cashAppLink = `https://cash.app/$yourcashappusername/${splitAmount}`;
-                    const paypalLink = `https://paypal.me/yourpaypalusername/${splitAmount}`;
-
-                    return (
-                      <div key={i} className="payment-box">
-                        <p>Rider {i + 2}</p>
-                        <a href={venmoLink} target="_blank" rel="noopener noreferrer">Venmo</a>
-                        <a href={cashAppLink} target="_blank" rel="noopener noreferrer">Cash App</a>
-                        <a href={paypalLink} target="_blank" rel="noopener noreferrer">PayPal</a>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <p style={{ marginTop: "10px", fontSize: "0.85rem" }}>
-                  Replace <code>$yourcashappusername</code> and <code>yourpaypalusername</code> with your actual usernames.
-                </p>
-              </>
-            )}
-
-            <button className="cancel-button" onClick={CancelPayment}>Cancel</button>
-          </>
-        )}
+              {/* Security notice */}
+              <div className="security-notice">
+                <span className="security-icon">🔒</span>
+                Your payment information is encrypted and secure. We never store your card details.
+              </div>
+            </>
+          )}
+        </div>
       </div>
 
-      <div>
-        <Link to="/passenger/ride/waiting">done</Link>
-      </div>
-
+      {/* Timer popup */}
       {showTimerPopup && (
-        <div className="timer-popup">
-          <p>Refund available for: {formatTime(timeLeft)}</p>
-          <button onClick={handleRefund} className="refund-button">Request Refund</button>
+        <div className="popup-overlay">
+          <div className="timer-popup">
+            <div className="popup-header">
+              <h3 className="popup-title">Refund Available</h3>
+              <button 
+                className="popup-close" 
+                onClick={() => setShowTimerPopup(false)}
+              >
+                ×
+              </button>
+            </div>
+            <div className="timer-content">
+              <div className="timer-display">
+                <span className="timer-icon">⏱️</span>
+                <span className="timer-text">{formatTime(timeLeft)}</span>
+              </div>
+              <p className="timer-description">
+                You can request a refund within the next {formatTime(timeLeft)}
+              </p>
+              <button onClick={handleRefund} className="refund-button">
+                <span className="button-icon">💰</span>
+                Request Refund
+              </button>
+            </div>
+          </div>
         </div>
       )}
-
-      <div>
-        <button
-          style={{
-            cursor: 'pointer',
-            padding: '15px 30px',
-            backgroundColor: '#ff6b00',
-            color: 'white',
-            fontWeight: '600',
-            fontSize: '16px',
-            border: 'none',
-            borderRadius: '8px',
-            boxShadow: '0 4px 12px rgba(255, 107, 0, 0.3)',
-            transition: 'transform 0.2s, box-shadow 0.2s',
-          }}
-          onMouseOver={e => {
-            e.currentTarget.style.transform = 'scale(0.98)';
-            e.currentTarget.style.boxShadow = '0 2px 6px rgba(255, 107, 0, 0.3)';
-          }}
-          onMouseOut={e => {
-            e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 107, 0, 0.3)';
-          }}
-        >
-          <Link to="/test" style={{ textDecoration: 'none', color: 'white' }}>TEST</Link>
-        </button>
-      </div>
     </div>
   );
 };

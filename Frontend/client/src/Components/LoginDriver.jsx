@@ -8,7 +8,6 @@ import '../Styling/LoginDriver.css';
 const LoginDriver = () => {
   const navigate = useNavigate();
 
-
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -38,7 +37,7 @@ const LoginDriver = () => {
           const driverId = res.data.id;
           localStorage.setItem('driverId', driverId);
           const driverEmail = res.data.email;
-          localStorage.setItem('driverEmail', driverEmail)
+          localStorage.setItem('driverEmail', driverEmail);
           navigate(`/driver/home/${driverId}`);
         } else {
           setFieldError('general', res.data.message || 'Login failed. Please try again.');
@@ -55,61 +54,86 @@ const LoginDriver = () => {
     },
   });
 
- return (
-  <div className="login-container">
-    <h1 className="login-heading">Login Driver</h1>
-    <form onSubmit={formik.handleSubmit} className="login-form">
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        value={formik.values.email}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        className="login-input"
-      />
-      {formik.touched.email && formik.errors.email && (
-        <div className="error-message">{formik.errors.email}</div>
-      )}
+  return (
+    <div className="login-container">
+      <div className="test-button-container">
+        <button
+          className="test-button"
+          onMouseOver={e => {
+            e.currentTarget.style.transform = 'scale(0.98)';
+            e.currentTarget.style.boxShadow = '0 2px 6px rgba(255, 107, 0, 0.3)';
+          }}
+          onMouseOut={e => {
+            e.currentTarget.style.transform = 'scale(1)';
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 107, 0, 0.3)';
+          }}
+        >
+          <Link to="/test" className="test-link">TEST</Link>
+        </button>
+      </div>
 
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        value={formik.values.password}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        className="login-input"
-      />
-      {formik.touched.password && formik.errors.password && (
-        <div className="error-message">{formik.errors.password}</div>
-      )}
+      <h1 className="login-heading">Driver Login</h1>
+      
+      <form onSubmit={formik.handleSubmit} className="login-form">
+        <div className="input-group">
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter your email address"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={`login-input ${
+              formik.touched.email && !formik.errors.email ? 'valid' : ''
+            }`}
+          />
+          {formik.touched.email && formik.errors.email && (
+            <div className="error-message">{formik.errors.email}</div>
+          )}
+        </div>
 
-      {formik.errors.general && (
-        <p className="error-message">{formik.errors.general}</p>
-      )}
+        <div className="input-group">
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={`login-input ${
+              formik.touched.password && !formik.errors.password ? 'valid' : ''
+            }`}
+          />
+          {formik.touched.password && formik.errors.password && (
+            <div className="error-message">{formik.errors.password}</div>
+          )}
+        </div>
 
-      <button type="submit" className="login-button" disabled={formik.isSubmitting}>
-        {formik.isSubmitting ? 'Logging in...' : 'Login'}
-      </button>
-    </form>
+        {formik.errors.general && (
+          <div className="error-message">{formik.errors.general}</div>
+        )}
 
-    <div className="test-button-container">
-      <button
-        className="test-button"
-        onMouseOver={e => {
-          e.currentTarget.style.transform = 'scale(0.98)';
-          e.currentTarget.style.boxShadow = '0 2px 6px rgba(255, 107, 0, 0.3)';
-        }}
-        onMouseOut={e => {
-          e.currentTarget.style.transform = 'scale(1)';
-          e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 107, 0, 0.3)';
-        }}
-      >
-        <Link to="/test" className="test-link">TEST</Link>
-      </button>
+        <button 
+          type="submit" 
+          className={`login-button ${formik.isSubmitting ? 'loading' : ''}`}
+          disabled={formik.isSubmitting}
+        >
+          {formik.isSubmitting ? 'Logging in...' : 'Login'}
+        </button>
+
+        {/* Optional: Add forgot password link */}
+        <div className="forgot-password">
+          <Link to="/forgot-password">Forgot your password?</Link>
+        </div>
+
+        {/* Optional: Add sign up prompt */}
+        <div className="signup-prompt">
+          Don't have an account?
+          <Link to="/register/driver">Sign up as a driver</Link>
+        </div>
+      </form>
     </div>
-  </div>
-);
-}
+  );
+};
+
 export default LoginDriver;

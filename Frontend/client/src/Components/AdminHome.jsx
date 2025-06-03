@@ -54,74 +54,120 @@ const AdminHome = () => {
 
   return (
     <div className="admin-container">
-      <h1 className="admin-main-title">Admin Home Page</h1>
+      <h1 className="admin-main-title">Admin Dashboard</h1>
 
-      <h1 className="admin-section-title">System & Safety Monitoring</h1>
+      <h2 className="admin-section-title">System & Safety Monitoring</h2>
 
-      {/* Pending Drivers */}
+      {/* Pending Drivers Section */}
       <div className='admin-stats-section'>
-        <h1 className="admin-section-title">Pending Drivers</h1>
+        <h2 className="admin-section-title">Pending Driver Approvals</h2>
         {pendingDrivers.length === 0 ? (
-          <p className="admin-no-pending-message">No pending drivers</p>
+          <p className="admin-no-pending-message">
+            ✅ No pending drivers - All applications have been processed!
+          </p>
         ) : (
-          pendingDrivers.map((driver) => {
-            const isExpanded = expandedDriverId === driver.id;
-            return (
-              <div key={driver.id} className='admin-pending-driver-box'>
-                <div className="admin-pending-header">
-                  <p className="admin-driver-name">{driver.firstName} {driver.lastName}</p>
-                  <div className="admin-driver-button-section">
-                    <button
-                      className='admin-button admin-accept-button'
-                      onClick={() => handleApprove(driver.id)}
-                    >
-                      Accept Driver
-                    </button>
-                    <button
-                      className='admin-button admin-decline-button'
-                      onClick={() => handleDecline(driver.id)}
-                    >
-                      Decline Driver
-                    </button>
+          <>
+            <div style={{ 
+              marginBottom: '20px', 
+              padding: '15px', 
+              backgroundColor: '#fff3e6', 
+              borderRadius: '8px',
+              borderLeft: '4px solid #ff6b00'
+            }}>
+              <p style={{ margin: 0, color: '#333', fontWeight: '600' }}>
+                📋 {pendingDrivers.length} driver{pendingDrivers.length !== 1 ? 's' : ''} awaiting approval
+              </p>
+            </div>
+            
+            {pendingDrivers.map((driver) => {
+              const isExpanded = expandedDriverId === driver.id;
+              return (
+                <div key={driver.id} className='admin-pending-driver-box'>
+                  <div className="admin-pending-header">
+                    <div>
+                      <p className="admin-driver-name">
+                        {driver.firstName} {driver.lastName}
+                      </p>
+                      <span className="admin-status-indicator admin-status-pending">
+                        Pending Review
+                      </span>
+                    </div>
+                    
+                    <div className="admin-driver-button-section">
+                      <button
+                        className='admin-button admin-accept-button'
+                        onClick={() => handleApprove(driver.id)}
+                        title="Approve this driver"
+                      >
+                        ✓ Accept
+                      </button>
+                      
+                      <button
+                        className='admin-button admin-decline-button'
+                        onClick={() => handleDecline(driver.id)}
+                        title="Decline this driver"
+                      >
+                        ✗ Decline
+                      </button>
 
-                    {isExpanded ? (
-                      <button
-                        className='admin-button admin-close-button'
-                        onClick={() => toggleExpand(driver.id)}
-                      >
-                        Close
-                      </button>
-                    ) : (
-                      <button
-                        className='admin-button admin-view-button'
-                        onClick={() => toggleExpand(driver.id)}
-                      >
-                        View Driver
-                      </button>
-                    )}
+                      {isExpanded ? (
+                        <button
+                          className='admin-button admin-close-button'
+                          onClick={() => toggleExpand(driver.id)}
+                          title="Hide driver details"
+                        >
+                          ▲ Close
+                        </button>
+                      ) : (
+                        <button
+                          className='admin-button admin-view-button'
+                          onClick={() => toggleExpand(driver.id)}
+                          title="View driver details"
+                        >
+                          ▼ Details
+                        </button>
+                      )}
+                    </div>
                   </div>
+
+                  {isExpanded && (
+                    <div className="admin-driver-details">
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '15px' }}>
+                        <p><strong>📧 Email:</strong> {driver.email}</p>
+                        <p><strong>📱 Phone:</strong> {driver.phoneNumber || "Not provided"}</p>
+                        <p><strong>🆔 License Number:</strong> {driver.licenseNumber || "Not provided"}</p>
+                        <p><strong>🚗 Vehicle Info:</strong> {driver.vehicleInfo || "Not provided"}</p>
+                      </div>
+                      
+                      {driver.registrationDate && (
+                        <p style={{ marginTop: '15px', fontStyle: 'italic', color: '#666' }}>
+                          <strong>📅 Applied:</strong> {new Date(driver.registrationDate).toLocaleDateString()}
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
-
-                {isExpanded && (
-                  <div className="admin-driver-details">
-                    <p><strong>Email:</strong> {driver.email}</p>
-                    <p><strong>Phone:</strong> {driver.phoneNumber || "N/A"}</p>
-                    <p><strong>License Number:</strong> {driver.licenseNumber || "N/A"}</p>
-                    <p><strong>Vehicle Info:</strong> {driver.vehicleInfo || "N/A"}</p>
-                    {/* Add any other driver details you want here */}
-                  </div>
-                )}
-              </div>
-            );
-          })
+              );
+            })}
+          </>
         )}
       </div>
 
-      {/* Navigation Buttons */}
+      {/* Navigation Section */}
       <div className="admin-navigation-section">
-        <button className='admin-nav-button' onClick={ViewAllDrivers}>View All Drivers</button>
-        <button className='admin-nav-button' onClick={ViewAllPassengers}>View All Passengers</button>
-        <Link to="/test"><button className='admin-nav-button'>Test</button></Link>
+        <button className='admin-nav-button' onClick={ViewAllDrivers}>
+          👥 View All Drivers
+        </button>
+        
+        <button className='admin-nav-button' onClick={ViewAllPassengers}>
+          🚶 View All Passengers
+        </button>
+        
+        <Link to="/test" style={{ textDecoration: 'none' }}>
+          <button className='admin-nav-button'>
+            🧪 Test Page
+          </button>
+        </Link>
       </div>
     </div>
   );

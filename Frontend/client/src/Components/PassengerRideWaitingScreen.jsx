@@ -3,7 +3,7 @@ import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
 import DriverRating from './DriverRating';
 import { Link } from 'react-router-dom';
-
+import '../Styling/PassengerRideWaitingScreen.css';
 
 const PassengerRideWaitingScreen = () => {
   const [showRatingPopup, setShowRatingPopup] = useState(false);
@@ -110,58 +110,67 @@ const PassengerRideWaitingScreen = () => {
   };
 
   return (
-    <div className="p-4 text-center">
-      <div>
-        <button
-          style={{
-            cursor: 'pointer',
-            padding: '15px 30px',
-            backgroundColor: '#ff6b00',
-            color: 'white',
-            fontWeight: '600',
-            fontSize: '16px',
-            border: 'none',
-            borderRadius: '8px',
-            boxShadow: '0 4px 12px rgba(255, 107, 0, 0.3)',
-            transition: 'transform 0.2s, box-shadow 0.2s',
-          }}
-          onMouseOver={e => {
-            e.currentTarget.style.transform = 'scale(0.98)';
-            e.currentTarget.style.boxShadow = '0 2px 6px rgba(255, 107, 0, 0.3)';
-          }}
-          onMouseOut={e => {
-            e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 107, 0, 0.3)';
-          }}
-        >
-          <Link to="/test" style={{ textDecoration: 'none', color: 'white' }}>TEST</Link>
-        </button>
-      </div>
-      <h1 className="text-xl mb-4">Waiting for your driver to complete the ride...</h1>
-
-      {showRatingPopup && driverId && (
-        <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50'>
-          <div className='bg-white p-4 rounded shadow-lg'>
-            <DriverRating driverId={driverId} onClose={() => setShowRatingPopup(false)} />
-          </div>
-        </div>
-      )}
-
-      {!showRefund && (
-        <p className="text-gray-600 mt-4">Refund available in: <strong>{formatTime(timeLeft)}</strong></p>
-      )}
-
-      {showRefund && (
-        <div className="mt-6">
-          <button
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-            onClick={handleRefundRequest}
-          >
-            Request Refund
+    <div className="passenger-waiting-container">
+      {/* Main Content Container */}
+      <div className="passenger-waiting-content">
+        {/* Test Button */}
+        <div className="test-button-section">
+          <button className="test-button">
+            <Link to="/test">TEST</Link>
           </button>
+        </div>
+
+        {/* Main Heading */}
+        <h1 className="main-heading">
+          Waiting for your driver to complete the ride...
+        </h1>
+
+        {/* Status Section */}
+        <div className="status-section">
+          {/* Timer Display */}
+          {!showRefund && (
+            <div className="timer-display">
+              <span className="timer-label">Refund available in:</span>
+              <br />
+              <span className="timer-value">
+                {formatTime(timeLeft)}
+              </span>
+            </div>
+          )}
+
+          {/* Refund Button */}
+          {showRefund && (
+            <div className="refund-button-section">
+              <button
+                className="refund-button"
+                onClick={handleRefundRequest}
+              >
+                Request Refund
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Additional Info */}
+        <p className="additional-info">
+          Please wait while your driver completes the journey. You'll be notified once the ride is finished 
+          and can then rate your experience.
+        </p>
+      </div>
+
+      {/* Rating Popup */}
+      {showRatingPopup && driverId && (
+        <div className="rating-popup-overlay">
+          <div className="rating-popup-content">
+            <DriverRating 
+              driverId={driverId} 
+              onClose={() => setShowRatingPopup(false)} 
+            />
+          </div>
         </div>
       )}
     </div>
   );
 };
-export default PassengerRideWaitingScreen
+
+export default PassengerRideWaitingScreen;
