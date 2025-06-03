@@ -1,105 +1,364 @@
-/* PassengerHomePage.css - Mobile-friendly styles for Safari */
+/* PassengerHomePage.css */
 
-/* Base styles and reset */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    -webkit-tap-highlight-color: transparent;
+.passenger-home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+}
+
+/* Test button container at top */
+.passenger-home-container > div:first-child {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+}
+
+.passenger-home-container > div:first-child button {
+  padding: 15px 30px;
+  background-color: #ff6b00;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.passenger-home-container > div:first-child button:hover {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+}
+
+.passenger-home-container > div:first-child button a {
+  text-decoration: none;
+  color: white;
+}
+
+/* Header section */
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 700px;
+  background-color: white;
+  padding: 30px 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+  margin-top: 60px;
+}
+
+.header-section h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  background: linear-gradient(135deg, #ff6b00, #e55a00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Profile icon */
+.profile-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #ff6b00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+}
+
+.profile-icon:hover {
+  transform: scale(1.05);
+  background-color: #e55a00;
+  box-shadow: 0 6px 16px rgba(255, 107, 0, 0.4);
+}
+
+.profile-icon:active {
+  transform: scale(0.95);
+}
+
+.profile-emoji {
+  font-size: 1.8rem;
+  color: white;
+}
+
+/* Main action section */
+.main-action-section {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+/* Book ride button */
+.book-ride-button {
+  width: 100%;
+  padding: 25px 40px;
+  background: linear-gradient(135deg, #ff6b00, #e55a00);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+  box-shadow: 0 8px 24px rgba(255, 107, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+.book-ride-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.book-ride-button:hover::before {
+  left: 100%;
+}
+
+.book-ride-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(255, 107, 0, 0.4);
+}
+
+.book-ride-button:active {
+  transform: translateY(0px);
+  box-shadow: 0 4px 16px rgba(255, 107, 0, 0.3);
+}
+
+/* Disabled state for book ride button */
+.book-ride-button:disabled {
+  background: linear-gradient(135deg, #cccccc, #aaaaaa);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 4px 12px rgba(204, 204, 204, 0.3);
+}
+
+.book-ride-button:disabled:hover {
+  transform: none;
+  box-shadow: 0 4px 12px rgba(204, 204, 204, 0.3);
+}
+
+.book-ride-button:disabled::before {
+  display: none;
+}
+
+/* Error message */
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 12px;
+  padding: 15px 25px;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(248, 215, 218, 0.3);
+  animation: slideInDown 0.3s ease-out;
+}
+
+/* Animations */
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
-  
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background-color: #f8f8f8;
-    color: #333;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  /* Container styles */
+}
+
+.header-section {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.main-action-section {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loading state indicator */
+.book-ride-button:disabled {
+  position: relative;
+}
+
+.book-ride-button:disabled::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  margin: auto;
+  border: 2px solid transparent;
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 1s ease infinite;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+}
+
+@keyframes spin {
+  0% { transform: translateY(-50%) rotate(0deg); }
+  100% { transform: translateY(-50%) rotate(360deg); }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
   .passenger-home-container {
-    padding: 16px;
-    max-width: 100%;
-    height: 100vh;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
+    padding: 20px 15px;
   }
   
-  /* Header section */
+  .passenger-home-container > div:first-child {
+    top: 15px;
+    right: 15px;
+  }
+  
+  .passenger-home-container > div:first-child button {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+  
   .header-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #eaeaea;
+    padding: 25px 30px;
+    margin-top: 50px;
+    margin-bottom: 30px;
   }
   
   .header-section h1 {
-    font-size: 24px;
-    font-weight: 600;
-    color: #222;
+    font-size: 1.8rem;
   }
   
-  /* Profile icon */
   .profile-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #eaeaea;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-  }
-  
-  .profile-icon:active {
-    transform: scale(0.95);
-    background-color: #e0e0e0;
+    width: 50px;
+    height: 50px;
   }
   
   .profile-emoji {
-    font-size: 24px;
+    font-size: 1.5rem;
   }
   
-  /* Main action section */
-  .main-action-section {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 0;
-  }
-  
-  /* Book ride button */
   .book-ride-button {
-    background-color: #ff6b00;
-    color: white;
-    border: none;
-    border-radius: 28px;
-    padding: 16px 32px;
-    font-size: 18px;
-    font-weight: 600;
-    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
-    width: 80%;
-    max-width: 300px;
-    transition: all 0.2s ease;
-    -webkit-appearance: none;
-    appearance: none;
+    padding: 20px 30px;
+    font-size: 1.1rem;
   }
   
-  .book-ride-button:active {
-    transform: scale(0.98);
-    box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+  .error-message {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .passenger-home-container {
+    padding: 15px 10px;
   }
   
-  /* Safari-specific adjustments */
-  @supports (-webkit-touch-callout: none) {
-    .book-ride-button {
-      -webkit-appearance: none;
-      appearance: none;
-    }
-    
-    /* Fix for iOS Safari bottom bar */
-    .passenger-home-container {
-      padding-bottom: 80px;
-    }
+  .passenger-home-container > div:first-child {
+    top: 10px;
+    right: 10px;
   }
+  
+  .passenger-home-container > div:first-child button {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+  
+  .header-section {
+    padding: 20px 25px;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  
+  .header-section h1 {
+    font-size: 1.6rem;
+  }
+  
+  .profile-icon {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .profile-emoji {
+    font-size: 1.3rem;
+  }
+  
+  .book-ride-button {
+    padding: 18px 25px;
+    font-size: 1rem;
+    border-radius: 15px;
+  }
+  
+  .error-message {
+    padding: 10px 15px;
+    font-size: 13px;
+    border-radius: 8px;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .header-section h1 {
+    background: none;
+    -webkit-text-fill-color: #ff6b00;
+    color: #ff6b00;
+  }
+  
+  .book-ride-button {
+    background: #ff6b00;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .book-ride-button,
+  .profile-icon,
+  .header-section,
+  .main-action-section,
+  .error-message {
+    animation: none;
+    transition: none;
+  }
+  
+  .book-ride-button::before {
+    display: none;
+  }
+}

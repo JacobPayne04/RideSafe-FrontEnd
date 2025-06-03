@@ -1,208 +1,341 @@
-/* Admin container - similar to driver-container */
 .admin-container {
-  padding: 20px;
-  max-width: 800px;
-  font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  margin-top: 50px;
-  margin-left: 50px;
+  align-items: center;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Main title styling */
 .admin-main-title {
-  font-size: 28px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 30px;
-  text-decoration: underline;
-}
-
-/* Section title styling */
-.admin-section-title {
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 2.2rem;
+  font-weight: 700;
   color: #333;
   margin-bottom: 20px;
-  margin-top: 30px;
+  text-align: center;
+  background: linear-gradient(135deg, #ff6b00, #e55a00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Stats section container */
-.admin-stats-section {
-  width: 100%;
-  margin-bottom: 30px;
-}
-
-/* Individual pending driver box */
-.admin-pending-driver-box {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 20px;
-  margin-bottom: 15px;
-  border: 2px solid #ddd;
-  border-radius: 10px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  min-width: 600px;
-}
-
-/* Driver name in pending box */
-.admin-driver-name {
-  font-size: 18px;
+.admin-section-title {
+  font-size: 1.6rem;
   font-weight: 600;
   color: #333;
-  margin: 0;
-  flex: 1;
-}
-
-/* Button section within driver box */
-.admin-driver-button-section {
-  display: flex;
-  gap: 10px;
-}
-
-/* Base button styling - similar to Driver-Button-Profile */
-.admin-button {
-  padding: 8px 15px;
+  margin: 30px 0 20px 0;
   text-align: center;
-  border: 2px solid white;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  color: white;
-  transition: transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
-  min-width: 90px;
+  border-bottom: 2px solid #ff6b00;
+  padding-bottom: 10px;
+  width: 100%;
+  max-width: 800px;
 }
 
-/* Accept button - green theme */
-.admin-accept-button {
-  background-color: #4caf50;
-  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
-}
-
-.admin-accept-button:hover {
-  transform: scale(0.98);
-  box-shadow: 0 2px 6px rgba(76, 175, 80, 0.3);
-}
-
-/* Decline button - red theme */
-.admin-decline-button {
-  background-color: #f44336;
-  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
-}
-
-.admin-decline-button:hover {
-  transform: scale(0.98);
-  box-shadow: 0 2px 6px rgba(244, 67, 54, 0.3);
-}
-
-/* View button - orange theme (matching original) */
-.admin-view-button {
-  background-color: #ff6b00;
-  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
-}
-
-.admin-view-button:hover {
-  transform: scale(0.98);
-  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
-}
-
-/* No pending drivers message */
-.admin-no-pending-message {
-  font-size: 16px;
-  color: #666;
-  font-style: italic;
+.admin-stats-section {
+  width: 100%;
+  max-width: 900px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   margin: 20px 0;
 }
 
-/* Navigation buttons section */
-.admin-navigation-section {
+.admin-no-pending-message {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #666;
+  padding: 40px 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  border-left: 4px solid #28a745;
+  margin: 20px 0;
+}
+
+.admin-pending-driver-box {
+  background-color: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.admin-pending-driver-box:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.admin-pending-header {
   display: flex;
-  gap: 15px;
-  margin-top: 30px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: white;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.admin-driver-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.admin-driver-button-section {
+  display: flex;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
-/* Navigation buttons */
-.admin-nav-button {
-  flex: 1 1 150px;
-  padding: 12px 20px;
+.admin-button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 100px;
   text-align: center;
-  border: 2px solid white;
-  border-radius: 10px;
+}
+
+.admin-accept-button {
+  background-color: #28a745;
+  color: white;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+.admin-accept-button:hover {
+  background-color: #218838;
+  transform: scale(0.98);
+  box-shadow: 0 1px 4px rgba(40, 167, 69, 0.3);
+}
+
+.admin-decline-button {
+  background-color: #dc3545;
+  color: white;
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+}
+
+.admin-decline-button:hover {
+  background-color: #c82333;
+  transform: scale(0.98);
+  box-shadow: 0 1px 4px rgba(220, 53, 69, 0.3);
+}
+
+.admin-view-button {
   background-color: #ff6b00;
-  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+  color: white;
+  box-shadow: 0 2px 8px rgba(255, 107, 0, 0.3);
+}
+
+.admin-view-button:hover {
+  background-color: #e55a00;
+  transform: scale(0.98);
+  box-shadow: 0 1px 4px rgba(255, 107, 0, 0.3);
+}
+
+.admin-close-button {
+  background-color: #6c757d;
+  color: white;
+  box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);
+}
+
+.admin-close-button:hover {
+  background-color: #5a6268;
+  transform: scale(0.98);
+  box-shadow: 0 1px 4px rgba(108, 117, 125, 0.3);
+}
+
+.admin-driver-details {
+  padding: 20px;
+  background-color: #fff;
+  border-top: 1px solid #e0e0e0;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 200px;
+  }
+}
+
+.admin-driver-details p {
+  margin: 10px 0;
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.admin-driver-details strong {
+  color: #333;
+  font-weight: 600;
+}
+
+.admin-navigation-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 40px;
+  width: 100%;
+  max-width: 800px;
+}
+
+.admin-nav-button {
+  padding: 15px 25px;
+  background-color: #ff6b00;
+  color: white;
+  border: none;
+  border-radius: 10px;
   font-size: 16px;
   font-weight: 600;
-  color: white;
-  transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  min-width: 150px;
 }
 
 .admin-nav-button:hover {
+  background-color: #e55a00;
   transform: scale(0.98);
   box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
 }
 
-/* Header row with driver name + buttons */
-.admin-pending-header {
+.admin-nav-button a {
+  color: white;
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
+  justify-content: center;
 }
 
-/* Override min-width on driver box for better layout when expanded */
-.admin-pending-driver-box {
-  flex-direction: column;
-  align-items: flex-start;
+/* Status indicators */
+.admin-status-indicator {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-/* Driver details container */
-.admin-driver-details {
-  margin-top: 12px;
-  padding: 15px 20px;
-  background-color: #fff8e1; /* light orangish-yellow */
-  border: 2px solid #ff6b00; /* orange border */
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(255, 107, 0, 0.2);
-  color: #333;
-  font-size: 15px;
-  line-height: 1.4;
-  width: 100%;
-  animation: fadeInDetails 0.3s ease forwards;
+.admin-status-pending {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
 }
 
-.admin-driver-details p {
-  margin: 5px 0;
+.admin-status-approved {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
 }
 
-.admin-driver-details strong {
-  color: #ff6b00;
-}
-
-/* Close button styling (same as view but different color) */
-.admin-close-button {
-  background-color: #555;
-  box-shadow: 0 4px 12px rgba(85, 85, 85, 0.3);
-}
-
-.admin-close-button:hover {
-  background-color: #333;
-  box-shadow: 0 2px 6px rgba(51, 51, 51, 0.3);
-}
-
-/* Fade-in animation */
-@keyframes fadeInDetails {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
+/* Responsive design */
+@media (max-width: 768px) {
+  .admin-container {
+    padding: 20px 10px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  
+  .admin-main-title {
+    font-size: 1.8rem;
+  }
+  
+  .admin-section-title {
+    font-size: 1.4rem;
+  }
+  
+  .admin-stats-section {
+    padding: 20px 15px;
+    margin: 15px 0;
+  }
+  
+  .admin-pending-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+  
+  .admin-driver-button-section {
+    justify-content: center;
+  }
+  
+  .admin-button {
+    flex: 1;
+    min-width: 80px;
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+  
+  .admin-navigation-section {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .admin-nav-button {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-main-title {
+    font-size: 1.6rem;
+  }
+  
+  .admin-section-title {
+    font-size: 1.2rem;
+  }
+  
+  .admin-stats-section {
+    padding: 15px 10px;
+  }
+  
+  .admin-pending-header {
+    padding: 15px;
+  }
+  
+  .admin-driver-name {
+    font-size: 1.1rem;
+  }
+  
+  .admin-driver-button-section {
+    gap: 8px;
+  }
+  
+  .admin-button {
+    font-size: 12px;
+    padding: 6px 10px;
+    min-width: 70px;
+  }
+  
+  .admin-driver-details {
+    padding: 15px;
+  }
+  
+  .admin-driver-details p {
+    font-size: 0.9rem;
+  }
+  
+  .admin-nav-button {
+    padding: 12px 20px;
+    font-size: 15px;
   }
 }

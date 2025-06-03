@@ -1,53 +1,245 @@
+/* DriverHomePage.css */
+
 .register-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 30px;
-    background-color: #f0f2f5;
-    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.register-header {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Navigation link styling */
+.no-link-style {
+  text-decoration: none;
+  color: white;
+  margin-bottom: 30px;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 700px;
+  background-color: white;
+  padding: 20px 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+}
+
+/* Navigation card specific styling */
+.register-card.no-link-style {
+  background-color: #ff6b00;
+  color: white;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+  font-size: 18px;
+  padding: 20px 30px;
+}
+
+.register-card.no-link-style:hover {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+  background-color: #e55a00;
+}
+
+/* Button styling within cards */
+.register-card button {
+  background-color: #ff6b00;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+}
+
+.register-card button:hover {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+  background-color: #e55a00;
+}
+
+/* Card containers for sections */
+.card-container {
+  width: 100%;
+  max-width: 700px;
+  margin-bottom: 30px;
+}
+
+.section-header {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #ff6b00;
+}
+
+/* Notification cards */
+.card-container .register-card {
+  background-color: white;
+  border-left: 4px solid #ff6b00;
+  text-align: left;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.card-container .register-card p {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Ongoing rides cards */
+.card-container .register-card p strong {
+  color: #ff6b00;
+  font-weight: 600;
+}
+
+/* Empty state messages */
+.card-container > p {
+  text-align: center;
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  border: 2px dashed #e0e0e0;
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Test button container */
+.register-container > div:last-child {
+  margin-top: 30px;
+}
+
+.register-container > div:last-child button {
+  padding: 15px 30px;
+  background-color: #ff6b00;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.register-container > div:last-child button:hover {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+}
+
+.register-container > div:last-child button a {
+  text-decoration: none;
+  color: white;
+}
+
+/* Toast container positioning */
+.Toastify__toast-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.Toastify__toast {
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.Toastify__toast--success {
+  background-color: #28a745;
+}
+
+.Toastify__toast--error {
+  background-color: #dc3545;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .register-container {
+    padding: 20px 15px;
   }
   
   .register-header {
     font-size: 2rem;
-    color: #333;
     margin-bottom: 20px;
+  }
+  
+  .register-card {
+    padding: 15px 20px;
+    margin-bottom: 12px;
   }
   
   .section-header {
     font-size: 1.5rem;
-    margin-top: 30px;
-    margin-bottom: 10px;
-    color: #444;
-    text-align: center;
   }
   
   .card-container {
-    width: 100%;
-    max-width: 600px;
+    margin-bottom: 20px;
+  }
+  
+  .register-card.no-link-style {
+    font-size: 16px;
+    padding: 15px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-container {
+    padding: 15px 10px;
+  }
+  
+  .register-header {
+    font-size: 1.8rem;
   }
   
   .register-card {
-    cursor: pointer;
-    padding: 20px;
-    text-align: center;
-    border: 2px solid white;
-    border-radius: 10px;
-    margin: 10px 0;
-    background-color: #ff6b00;
-    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
-    font-size: 18px;
-    font-weight: 600;
-    color: white;
-    transition: transform 0.2s, box-shadow 0.2s;
+    padding: 12px 16px;
+    font-size: 14px;
   }
   
-  .register-card:hover {
-    transform: scale(0.98);
-    box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+  .section-header {
+    font-size: 1.3rem;
   }
   
-  .no-link-style {
-    text-decoration: none;
-    color: inherit;
+  .card-container .register-card p {
+    font-size: 14px;
   }
   
+  .register-card button {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+  
+  .register-container > div:last-child button {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}

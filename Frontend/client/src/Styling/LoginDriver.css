@@ -2,44 +2,79 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 15px;
   background-color: #f0f2f5;
   min-height: 100vh;
-  justify-content: center;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+}
+
+.test-button-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.test-button {
+  cursor: pointer;
+  padding: 15px 30px;
+  background-color: #ff6b00;
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.test-button:hover {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+}
+
+.test-link {
+  text-decoration: none;
+  color: white;
 }
 
 .login-form {
   width: 100%;
-  max-width: 600px;
+  max-width: 500px;
   background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin-bottom: 15px;
+  padding: 50px 40px;
+  border-radius: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-top: 80px;
 }
 
 .login-heading {
-  font-size: 1.6rem;
+  font-size: 2.2rem;
   color: #333;
-  margin-bottom: 25px;
-  text-align: center;
+  margin-bottom: 40px;
   font-weight: 600;
-  line-height: 1.2;
+  text-align: center;
+  margin-top: 0;
+}
+
+.input-group {
+  margin-bottom: 25px;
+  text-align: left;
 }
 
 .login-input {
   width: 100%;
-  padding: 12px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
+  padding: 15px 20px;
   font-size: 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   box-sizing: border-box;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  background-color: #fafafa;
-  margin-bottom: 15px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
 }
 
 .login-input:focus {
@@ -49,41 +84,47 @@
   background-color: white;
 }
 
+.login-input.valid {
+  border-color: #28a745;
+  background-color: #f8fff9;
+}
+
 .login-input::placeholder {
   color: #999;
+  font-weight: 400;
 }
 
 .error-message {
-  color: #e74c3c;
+  color: #dc3545;
   font-size: 14px;
-  margin-top: -10px;
-  margin-bottom: 15px;
-  font-weight: 500;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 6px;
+  border-left: 4px solid #dc3545;
 }
 
 .login-button {
-  cursor: pointer;
   width: 100%;
-  padding: 16px;
+  padding: 15px 20px;
   background-color: #ff6b00;
   color: white;
-  font-weight: 600;
-  font-size: 17px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
   box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
-  transition: transform 0.2s, box-shadow 0.2s;
-  margin-top: 15px;
-  -webkit-tap-highlight-color: transparent;
+  margin-top: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.login-button:hover {
+.login-button:hover:not(:disabled) {
   transform: scale(0.98);
   box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
-}
-
-.login-button:active {
-  transform: scale(0.96);
+  background-color: #e55a00;
 }
 
 .login-button:disabled {
@@ -92,69 +133,112 @@
   transform: none;
 }
 
-.test-button-container {
-  margin-top: 15px;
+.login-button.loading {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
 }
 
-.test-button {
-  cursor: pointer;
-  padding: 12px 24px;
-  background-color: #ff6b00;
-  color: white;
-  font-weight: 600;
-  font-size: 15px;
-  border: none;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
-  transition: transform 0.2s, box-shadow 0.2s;
-  -webkit-tap-highlight-color: transparent;
+.forgot-password {
+  margin-top: 25px;
+  text-align: center;
 }
 
-.test-link {
+.forgot-password a {
+  color: #ff6b00;
   text-decoration: none;
-  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.3s;
 }
 
-/* Mobile optimizations */
-@media (max-width: 480px) {
-  .login-container {
-    padding: 10px;
+.forgot-password a:hover {
+  color: #e55a00;
+  text-decoration: underline;
+}
+
+.signup-prompt {
+  margin-top: 30px;
+  padding-top: 25px;
+  border-top: 1px solid #e0e0e0;
+  text-align: center;
+  color: #666;
+  font-size: 15px;
+}
+
+.signup-prompt a {
+  color: #ff6b00;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 8px;
+  transition: color 0.3s;
+}
+
+.signup-prompt a:hover {
+  color: #e55a00;
+  text-decoration: underline;
+}
+
+/* Loading animation for button */
+.loading::after {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-left: 10px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+      transform: rotate(360deg);
   }
-  
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
   .login-form {
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 8px;
+      margin: 20px;
+      padding: 30px 20px;
+      margin-top: 60px;
   }
   
   .login-heading {
-    font-size: 1.4rem;
-    margin-bottom: 20px;
-  }
-  
-  .login-input {
-    padding: 14px 12px;
-    font-size: 16px; /* Prevents zoom on iOS */
-    border-radius: 6px;
-    margin-bottom: 12px;
-  }
-  
-  .login-button {
-    padding: 18px 16px;
-    font-size: 16px;
-    margin-top: 12px;
-    border-radius: 6px;
-    min-height: 52px; /* Better touch target */
+      font-size: 1.8rem;
+      margin-bottom: 30px;
   }
   
   .test-button-container {
-    margin-top: 10px;
+      position: static;
+      margin-bottom: 20px;
+      text-align: center;
   }
   
-  .test-button {
-    padding: 14px 20px;
-    font-size: 14px;
-    border-radius: 6px;
-    min-height: 44px; /* Better touch target */
+  .login-input {
+      padding: 12px 16px;
+      font-size: 15px;
+  }
+  
+  .login-button {
+      padding: 12px 16px;
+      font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+      padding: 20px 10px;
+  }
+  
+  .login-form {
+      padding: 25px 15px;
+      margin: 10px;
+  }
+  
+  .login-heading {
+      font-size: 1.6rem;
   }
 }
