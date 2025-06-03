@@ -36,7 +36,9 @@ const LoginPassenger = () => {
         if (res.data.message === 'Login successful') {
           const passengerId = res.data.id;
           localStorage.setItem('passengerId', passengerId);
-          navigate('/Passenger/home');
+          const passengerEmail = res.data.email;
+          localStorage.setItem('passengerEmail', passengerEmail);
+          navigate(`/passenger/home/${passengerId}`);
         } else {
           setFieldError('general', res.data.message || 'Login failed. Please try again.');
         }
@@ -54,70 +56,82 @@ const LoginPassenger = () => {
 
   return (
     <div className="login-container">
-      <h1 className="login-heading">Login Passenger</h1>
-      <form onSubmit={formik.handleSubmit} className="login-form">
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          className="login-input"
-        />
-        {formik.touched.email && formik.errors.email && (
-          <div className="error-message">{formik.errors.email}</div>
-        )}
-
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          className="login-input"
-        />
-        {formik.touched.password && formik.errors.password && (
-          <div className="error-message">{formik.errors.password}</div>
-        )}
-
-        {formik.errors.general && (
-          <p className="error-message">{formik.errors.general}</p>
-        )}
-
-        <button type="submit" className="login-button" disabled={formik.isSubmitting}>
-          Login
-        </button>
-      </form>
-
-      <div>
+      <div className="test-button-container">
         <button
-          style={{
-            cursor: 'pointer',
-            padding: '15px 30px',
-            backgroundColor: '#ff6b00',
-            color: 'white',
-            fontWeight: '600',
-            fontSize: '16px',
-            border: 'none',
-            borderRadius: '8px',
-            boxShadow: '0 4px 12px rgba(255, 107, 0, 0.3)',
-            transition: 'transform 0.2s, box-shadow 0.2s',
-          }}
+          className="test-button"
           onMouseOver={e => {
             e.currentTarget.style.transform = 'scale(0.98)';
-            e.currentTarget.style.boxShadow = '0 2px 6px rgba(255, 107, 0, 0.3)';
+            e.currentTarget.style.boxShadow = '0 2px 6px rgba(33, 150, 243, 0.3)';
           }}
           onMouseOut={e => {
             e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 107, 0, 0.3)';
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(33, 150, 243, 0.3)';
           }}
         >
-          <Link to="/test" style={{ textDecoration: 'none', color: 'white' }}>TEST</Link>
+          <Link to="/test" className="test-link">TEST</Link>
         </button>
       </div>
 
+      <h1 className="login-heading">Passenger Login</h1>
+      
+      <form onSubmit={formik.handleSubmit} className="login-form">
+        <div className="input-group">
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter your email address"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={`login-input ${
+              formik.touched.email && !formik.errors.email ? 'valid' : ''
+            }`}
+          />
+          {formik.touched.email && formik.errors.email && (
+            <div className="error-message">{formik.errors.email}</div>
+          )}
+        </div>
+
+        <div className="input-group">
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={`login-input ${
+              formik.touched.password && !formik.errors.password ? 'valid' : ''
+            }`}
+          />
+          {formik.touched.password && formik.errors.password && (
+            <div className="error-message">{formik.errors.password}</div>
+          )}
+        </div>
+
+        {formik.errors.general && (
+          <div className="error-message">{formik.errors.general}</div>
+        )}
+
+        <button 
+          type="submit" 
+          className={`login-button ${formik.isSubmitting ? 'loading' : ''}`}
+          disabled={formik.isSubmitting}
+        >
+          {formik.isSubmitting ? 'Logging in...' : 'Login'}
+        </button>
+
+        {/* Optional: Add forgot password link */}
+        <div className="forgot-password">
+          <Link to="/forgot-password">Forgot your password?</Link>
+        </div>
+
+        {/* Optional: Add sign up prompt */}
+        <div className="signup-prompt">
+          Don't have an account?
+          <Link to="/register/passenger">Sign up as a passenger</Link>
+        </div>
+      </form>
     </div>
   );
 };

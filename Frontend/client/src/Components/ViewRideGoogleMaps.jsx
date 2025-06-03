@@ -13,9 +13,8 @@ const scriptUrl = `https://maps.googleapis.com/maps/api/js?key=${process.env.REA
 const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
 const containerStyle = {
-  width: "90%",
-  height: "700px",
-  marginLeft: "5%"
+  width: "100%",
+  height: "500px",
 };
 
 const libraries = ["places"];
@@ -55,16 +54,17 @@ const ViewRideGoogleMaps = () => {
 
         // Custom Toast Content
         const CustomToast = () => (
-          <div>
+          <div className="custom-toast-content">
             <p>Passenger {notification.passengerId} booked a ride.</p>
             <button
+              className="toast-accept-btn"
               onClick={() => acceptRide(
                 notification.rideId,
                 notification.fromLatitude,
                 notification.fromLongitude,
                 notification.toLatitude,
                 notification.toLongitude
-              )} style={{ backgroundColor: '#28a745', color: 'white', border: 'none', padding: '5px 10px', cursor: 'pointer', borderRadius: '4px', marginTop: '5px' }}
+              )}
             >
               Accept Ride
             </button>
@@ -100,7 +100,6 @@ const ViewRideGoogleMaps = () => {
     };
   }, [driverId]);
 
-
   const handleAcceptRide = async (rideId) => {
     const driverId = localStorage.getItem("driverId");
     acceptRide(rideId, driverId);
@@ -111,7 +110,6 @@ const ViewRideGoogleMaps = () => {
     completeRide(rideId, driverId);
     navigate(`/driver/home/${driverId}`);
   };
-
 
   useEffect(() => {
     if (isLoaded && fromLat && fromLng && toLat && toLng) {
@@ -140,80 +138,81 @@ const ViewRideGoogleMaps = () => {
     }
   }, [isLoaded, fromLat, fromLng, toLat, toLng]);
 
-
   return (
-    <div>
-      <button className="End-Ride-Btn" onClick={() => handleEndRide(rideId)}>END RIDE</button>
-      <div style={{ textAlign: "center", marginBottom: "10px" }}>
-        {travelInfo.distance && travelInfo.duration && (
-          <p>
-            <strong>Estimated Ride:</strong> {travelInfo.distance} - {travelInfo.duration}
-          </p>
-        )}
-      </div>
-      <div>
-        <button
-          style={{
-            cursor: 'pointer',
-            padding: '15px 30px',
-            backgroundColor: '#ff6b00',
-            color: 'white',
-            fontWeight: '600',
-            fontSize: '16px',
-            border: 'none',
-            borderRadius: '8px',
-            boxShadow: '0 4px 12px rgba(255, 107, 0, 0.3)',
-            transition: 'transform 0.2s, box-shadow 0.2s',
-          }}
-          onMouseOver={e => {
-            e.currentTarget.style.transform = 'scale(0.98)';
-            e.currentTarget.style.boxShadow = '0 2px 6px rgba(255, 107, 0, 0.3)';
-          }}
-          onMouseOut={e => {
-            e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 107, 0, 0.3)';
-          }}
-        >
-          <Link to="/test" style={{ textDecoration: 'none', color: 'white' }}>TEST</Link>
+    <div className="ride-maps-container">
+      {/* Control Buttons */}
+      <button className="End-Ride-Btn" onClick={() => handleEndRide(rideId)}>
+        END RIDE
+      </button>
+      
+      <div className="test-button-container">
+        <button className="test-button">
+          <Link to="/test">TEST</Link>
         </button>
       </div>
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={{ lat: fromLat, lng: fromLng }}
-        zoom={14}
-      >
-        {directionsResponse && (
-          <DirectionsRenderer directions={directionsResponse} />
-        )}
-      </GoogleMap>
 
-      <div>
-        {notifications.map((notification, index) => (
-          <div key={index} style={{
-            border: "1px solid black",
-            padding: "10px",
-            margin: "10px",
-            backgroundColor: "#f8f9fa"
-          }}>
-            <p>This passenger {notification.passengerName} booked a ride.</p>
-            {notification.rideId && (
-              <button
-                onClick={() => handleAcceptRide(notification.rideId, notification.fromLatitude, notification.fromLongitude, notification.toLatitude, notification.toLongitude)}
-                disabled={notification.status !== 'PENDING'}
-                style={{
-                  backgroundColor: notification.status === 'PENDING' ? '#28a745' : '#6c757d',
-                  color: 'white',
-                  border: 'none',
-                  padding: '5px 10px',
-                  cursor: notification.status === 'PENDING' ? 'pointer' : 'not-allowed'
-                }}
-              >
-                {notification.status === 'PENDING' ? "Accept Ride" : "Ride is Accepted"}
-              </button>
-            )}
+      {/* Main Content Card */}
+      <div className="ride-info-card">
+        {/* Travel Information */}
+        {travelInfo.distance && travelInfo.duration && (
+          <div className="travel-info">
+            <p>
+              <strong>Estimated Ride:</strong> {travelInfo.distance} - {travelInfo.duration}
+            </p>
           </div>
-        ))}
+        )}
+
+        {/* Google Maps */}
+        <div className="map-container">
+          <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={{ lat: fromLat, lng: fromLng }}
+            zoom={14}
+          >
+            {directionsResponse && (
+              <DirectionsRenderer directions={directionsResponse} />
+            )}
+          </GoogleMap>
+        </div>
       </div>
+
+      {/* Notifications Section */}
+      <div className="notifications-section">
+        {notifications.length > 0 && (
+          <h3 className="notifications-title">Ride Notifications</h3>
+        )}
+        
+        {notifications.length === 0 ? (
+          <div className="no-notifications">
+            <p>No new ride requests at the moment</p>
+          </div>
+        ) : (
+          notifications.map((notification, index) => (
+            <div key={index} className="notification-card">
+              <p>
+                Passenger <span className="passenger-name">{notification.passengerName}</span> booked a ride.
+              </p>
+              {notification.rideId && (
+                <>
+                  <button
+                    className="accept-ride-btn"
+                    onClick={() => handleAcceptRide(notification.rideId, notification.fromLatitude, notification.fromLongitude, notification.toLatitude, notification.toLongitude)}
+                    disabled={notification.status !== 'PENDING'}
+                  >
+                    {notification.status === 'PENDING' ? "Accept Ride" : "Ride Accepted"}
+                  </button>
+                  {notification.status !== 'PENDING' && (
+                    <div className="ride-status-accepted">
+                      ✓ This ride has been accepted
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+          ))
+        )}
+      </div>
+
       <ToastContainer />
     </div>
   );

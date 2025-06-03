@@ -1,19 +1,296 @@
-.End-Ride-Btn{
-    cursor: pointer;
+/* ViewRideGoogleMaps.css */
+
+.ride-maps-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f2f5;
+    min-height: 100vh;
     padding: 20px;
-    text-align: center;
-    border: 2px solid white;
-    border-radius: 10px;
-    margin: 10px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+}
+
+.test-button-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+}
+
+.test-button {
+    cursor: pointer;
+    padding: 15px 30px;
     background-color: #ff6b00;
-    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
-    font-size: 18px;
-    font-weight: 600;
     color: white;
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.test-button:hover {
+    transform: scale(0.98);
+    box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+}
+
+.test-button a {
+    text-decoration: none;
+    color: white;
+}
+
+.End-Ride-Btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    cursor: pointer;
+    padding: 15px 30px;
+    background-color: #dc3545;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.End-Ride-Btn:hover{
+.End-Ride-Btn:hover {
     transform: scale(0.98);
-    box-shadow: 0 2px 6px rgba(255, 107, 0, 0.3);
+    box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3);
+    background-color: #c82333;
+}
+
+.ride-info-card {
+    width: 100%;
+    max-width: 900px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    margin-top: 80px;
+}
+
+.travel-info {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #fff3e6;
+    border-radius: 10px;
+    border-left: 4px solid #ff6b00;
+}
+
+.travel-info p {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.travel-info strong {
+    color: #ff6b00;
+    font-weight: 600;
+}
+
+.map-container {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+/* Override Google Maps container styling */
+.map-container > div {
+    border-radius: 15px !important;
+}
+
+.notifications-section {
+    width: 100%;
+    max-width: 900px;
+    margin-top: 20px;
+}
+
+.notifications-title {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.notification-card {
+    background-color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 25px;
+    margin: 15px 0;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.notification-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.notification-card p {
+    margin: 0 0 15px 0;
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.notification-card .passenger-name {
+    color: #ff6b00;
+    font-weight: 600;
+}
+
+.accept-ride-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+.accept-ride-btn:hover:not(:disabled) {
+    background-color: #218838;
+    transform: scale(0.98);
+    box-shadow: 0 2px 6px rgba(40, 167, 69, 0.3);
+}
+
+.accept-ride-btn:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.7;
+}
+
+.ride-status-accepted {
+    background-color: #d4edda;
+    border-left: 4px solid #28a745;
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: #155724;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.no-notifications {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-size: 1.1rem;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Toast customization to match theme */
+.Toastify__toast {
+    border-radius: 10px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
+}
+
+.Toastify__toast--info {
+    background-color: white !important;
+    color: #333 !important;
+    border-left: 4px solid #ff6b00 !important;
+}
+
+.custom-toast-content {
+    padding: 10px;
+}
+
+.custom-toast-content p {
+    margin: 0 0 10px 0;
+    font-weight: 500;
+    color: #333;
+}
+
+.toast-accept-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.toast-accept-btn:hover {
+    background-color: #218838;
+    transform: scale(0.98);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .ride-maps-container {
+        padding: 10px;
+    }
+    
+    .ride-info-card {
+        margin: 60px 10px 20px 10px;
+        padding: 20px;
+    }
+    
+    .test-button-container,
+    .End-Ride-Btn {
+        position: static;
+        margin: 10px;
+    }
+    
+    .End-Ride-Btn {
+        width: calc(100% - 20px);
+        margin-bottom: 20px;
+    }
+    
+    .test-button {
+        width: 100%;
+    }
+    
+    .travel-info {
+        padding: 15px;
+    }
+    
+    .travel-info p {
+        font-size: 1rem;
+    }
+    
+    .notification-card {
+        margin: 10px;
+        padding: 20px;
+    }
+    
+    .notifications-section {
+        margin: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ride-info-card {
+        margin: 60px 5px 20px 5px;
+        padding: 15px;
+    }
+    
+    .travel-info {
+        padding: 10px;
+    }
+    
+    .notification-card {
+        margin: 10px 5px;
+        padding: 15px;
+    }
 }
