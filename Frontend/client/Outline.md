@@ -209,11 +209,11 @@ create refund route for stripe to refund payment and to update ride as cancelled
 - [✔] Frontend: After ride popup asking for 1-5 star rating
 - [✔] Backend: Save ratings in DB
 - [✔] Backend: Calculate average driver ratings
-- [ ] Frontend: Show driver rating in driver profile
+- [] Frontend: Show driver rating in driver profile
 
 
 ---
-- [ ]  fix javascript button not staying green based on database state TODO###-------🛑🛑🛑🛑🛑
+- [✔]  fix javascript button not staying green based on database state TODO###-------🛑🛑🛑🛑🛑
 ---
 
 ---

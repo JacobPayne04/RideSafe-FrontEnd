@@ -62,7 +62,6 @@ const Test = () => {
                 <h2 className="section-title">TODO*</h2>
                 <p className="todo-item">Add Passenger Show 1 Page ("/Passenger/:id")</p>
                 <p className="todo-item">implement importing driver address into Google or Apple Maps</p>
-                <p className="todo-item">Fix driver online button not staying green</p>
                 <p className="todo-item">Show driver rating</p>
                 <p className="todo-item">Implement more dark and light modes to pages</p>
                 <p className="todo-item">## STYLE THE FOLLOWING ... ###</p>

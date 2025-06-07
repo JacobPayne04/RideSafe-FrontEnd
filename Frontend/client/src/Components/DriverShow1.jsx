@@ -18,8 +18,19 @@ const DriverShow1 = () => {
       try {
         const response = await axios.get(`http://localhost:8080/driver/${id}`);
         if (isMounted) {
-          setDriver(response.data);
-          console.log("Fresh driver data from API - isOnline:", response.data.isOnline);
+          // Get the saved status from localStorage first
+          const savedStatus = localStorage.getItem(`driver_${id}_online_status`);
+          
+          const driverData = {
+            ...response.data,
+            // Use localStorage value if it exists, otherwise use API value, otherwise default to false
+            isOnline: savedStatus !== null ? savedStatus === 'true' : (response.data.isOnline ?? false)
+          };
+          
+          setDriver(driverData);
+          console.log("Driver loaded - isOnline:", driverData.isOnline);
+          console.log("From localStorage:", savedStatus);
+          console.log("From API:", response.data.isOnline);
         }
       } catch (err) {
         if (isMounted) {
@@ -33,15 +44,20 @@ const DriverShow1 = () => {
     };
   }, [id]);
 
-  // Monitor driver state changes
+  // Save to localStorage whenever isOnline changes
   useEffect(() => {
-    if (driver) {
-      console.log("Driver state updated - isOnline:", driver.isOnline);
+    if (driver?.isOnline !== undefined) {
+      localStorage.setItem(`driver_${id}_online_status`, driver.isOnline.toString());
+      console.log("Saved to localStorage:", driver.isOnline);
     }
-  }, [driver]);
+  }, [driver?.isOnline, id]);
 
   const goOnline = async (coords) => {
     try {
+      // Update state immediately (optimistic update)
+      setDriver(prev => ({ ...prev, isOnline: true }));
+      
+      // Make API call
       await axios.put(
         `http://localhost:8080/${id}/status`,
         {
@@ -55,18 +71,24 @@ const DriverShow1 = () => {
           }
         }
       );
+      
+      console.log("Successfully went online");
       console.log("Longitude:", coords.longitude);
       console.log("Latitude:", coords.latitude);
-      console.log("Driver before update:", driver);
-      setDriver(prev => ({ ...prev, isOnline: true }));
     } catch (err) {
       console.error("Failed to go online:", err);
+      // Revert on error
+      setDriver(prev => ({ ...prev, isOnline: false }));
       alert("Could not go online.");
     }
   };
 
   const goOffline = async () => {
     try {
+      // Update state immediately (optimistic update)
+      setDriver(prev => ({ ...prev, isOnline: false }));
+      
+      // Make API call
       await axios.put(
         `http://localhost:8080/${id}/status`,
         {
@@ -78,9 +100,12 @@ const DriverShow1 = () => {
           }
         }
       );
-      setDriver(prev => ({ ...prev, isOnline: false }));
+      
+      console.log("Successfully went offline");
     } catch (err) {
       console.error("Failed to go offline:", err);
+      // Revert on error
+      setDriver(prev => ({ ...prev, isOnline: true }));
       alert("Could not go offline.");
     }
   };
@@ -89,18 +114,22 @@ const DriverShow1 = () => {
     if (loading || !driver) return;
     setLoading(true);
 
-    if (!driver.isOnline) {
-      getCurrentCoords(async (err, coords) => {
-        if (err) {
-          alert("Location access denied: " + err.message);
+    try {
+      if (!driver.isOnline) {
+        getCurrentCoords(async (err, coords) => {
+          if (err) {
+            alert("Location access denied: " + err.message);
+            setLoading(false);
+            return;
+          }
+          await goOnline(coords);
           setLoading(false);
-          return;
-        }
-        await goOnline(coords);
+        });
+      } else {
+        await goOffline();
         setLoading(false);
-      });
-    } else {
-      await goOffline();
+      }
+    } catch (err) {
       setLoading(false);
     }
   };
@@ -127,7 +156,7 @@ const DriverShow1 = () => {
       }
 
       const url = await res.text();
-      window.location.href = url; // send them to Stripe onboarding
+      window.location.href = url;
     } catch (err) {
       console.log("stripe onboarding error: ", err)
       alert("failed to redirect to Stripe Onboarding")
@@ -154,10 +183,16 @@ const DriverShow1 = () => {
               <p className="status-text">{`You are ${driver.isOnline ? "online" : "offline"}`}</p>
               <div
                 onClick={toggleStatus}
-                className={`toggle-button ${driver.isOnline ? "online" : "offline"}`}
+                className={`toggle-button ${driver.isOnline ? "online" : "offline"} ${loading ? "disabled" : ""}`}
+                style={{ 
+                  opacity: loading ? 0.6 : 1, 
+                  cursor: loading ? "not-allowed" : "pointer",
+                  pointerEvents: loading ? "none" : "auto"
+                }}
               >
                 <div className="toggle-thumb"></div>
               </div>
+              {loading && <p style={{fontSize: '12px', color: '#666'}}>Updating...</p>}
             </div>
 
             <div className='Driver-Profile-Button-Section'>
@@ -174,7 +209,7 @@ const DriverShow1 = () => {
                 </button>
 
                 {showRatingPopup && (
-                  <div className='fix inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50'>
+                  <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50'>
                     <div className='bg-white p-4 rounded shadow-lg'>
                       <DriverRating driverId={id} onClose={() => setShowRatingPopup(false)} />
                     </div>
