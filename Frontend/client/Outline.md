@@ -180,7 +180,40 @@ create refund route for stripe to refund payment and to update ride as cancelled
 
 
 ### NEXT STEPS:
-LEGAL
+🔐 Token Validation
+- [ ] Create AuthValidationService.java
+ - [ ]Create JwtService.java
+ - [ ]Call validateRequest(token, id, role) inside protected endpoints
+
+🔒 Controller Security
+ - [ ] Inject AuthValidationService in each secured controller
+ - [ ] Add @RequestHeader("Authorization") to protected methods
+ - [ ] Ensure userId and role match token before processing
+
+🛡 Rate Limiting
+ Create RateLimiterService.java
+
+ - [ ] Add rateLimiterService.isAllowed(ip) logic in sensitive methods
+ - [ ] Return HTTP 429 when request exceeds rate limit
+
+🌐 CORS Configuration
+ - [ ] Add CorsConfig.java to allow local dev (e.g. localhost:3000)
+ - [ ] Configure production domain in CORS before deploy
+
+🔐 HTTPS Prep
+- [ ]  Use https:// in all frontend API requests (.env)
+- [ ] Remove hardcoded http:// URLs
+- [ ] (Optional) Setup self-signed HTTPS in Spring Boot for dev
+
+🧱 Frontend Route Protection
+ - [ ] Create PrivateRoute.jsx
+ - [ ] Store token, role, userId in sessionStorage
+ - [ ] Wrap protected routes with <PrivateRoute element={...} allowedRole="..." />
+
+📤 Frontend Auth Headers
+ - [ ] Attach Authorization header on all Axios/fetch requests
+ - [ ] (Optional) Create api.js with Axios interceptor for token
+
 
 ### LEGAL ###
 - [ ] talk to lawyer
