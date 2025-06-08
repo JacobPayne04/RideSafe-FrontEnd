@@ -63,6 +63,10 @@ const Test = () => {
                 <p className="todo-item">Add Passenger Home Page ("/Passenger/:id")</p>
                 <p className="todo-item">implement importing driver address into Google or Apple Maps</p>
                 <p className="todo-item">Add Backend Route Logic for Driver Rating</p>
+                <p className="todo-item">Validating token and email service method for security</p>
+                <p className="todo-item">Route Validation</p>
+                <p className="todo-item">Email Verification? No duplicate emails</p>
+                <p className="todo-item">Add Function to Admin Panel (Accept, Decline, info rendering etc)</p>
                 <p className="todo-item">Show driver rating</p>
                 <p className="todo-item">Implement more dark and light modes to pages</p>
                 <p className="todo-item">## STYLE THE FOLLOWING ... ###</p>
