@@ -1,15 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import '../Styling/PassengerHomePage.css';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import '../Styling/PassengerHomePage.css';
 
 const PassengerHomePage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const passengerId = localStorage.getItem('passengerId');
+  const [profileLoading, setProfileLoading] = useState(true);
+  const [passengerData, setPassengerData] = useState(null);
   const [error, setError] = useState(null);
 
-  //fix passenger id grab then DONE 
+  // Get passenger ID from localStorage
+  const passengerId = localStorage.getItem('passengerId') || 'current-user-id';
+
+  // Fetch passenger data from backend
+  useEffect(() => {
+    const fetchPassengerData = async () => {
+      try {
+        setProfileLoading(true);
+        const response = await axios.get(`http://localhost:8080/passenger/${passengerId}`);
+        setPassengerData(response.data);
+        setProfileLoading(false);
+      } catch (err) {
+        console.error("Failed to fetch passenger data:", err);
+        setError("Failed to load profile information.");
+        setProfileLoading(false);
+      }
+    };
+
+    fetchPassengerData();
+  }, [passengerId]);
 
   // Function to get current location using browser's Geolocation API
   const getCurrentLocation = () => {
@@ -43,18 +63,13 @@ const PassengerHomePage = () => {
       setLoading(true);
       setError(null);
 
-      // Get current position
       const position = await getCurrentLocation();
-
-      // Create request body with coordinates
       const requestBody = {
         longitude: position.longitude,
         latitude: position.latitude
       };
 
-      // Make API call to update passenger location
       await axios.put(`http://localhost:8080/${passengerId}/status/passenger`, requestBody);
-
       console.log("Passenger location updated successfully:", position);
       return true;
     } catch (err) {
@@ -68,15 +83,9 @@ const PassengerHomePage = () => {
 
   // Handle Book Ride button click
   const handleBookRide = async () => {
-    // Get passenger ID from local storage or context
-    const passengerId = localStorage.getItem('passengerId') || 'current-user-id';
-
     try {
-      // Update location before navigating
       const locationUpdated = await updatePassengerLocation(passengerId);
-
       if (locationUpdated) {
-        // Navigate to booking page
         navigate('/passenger/show1/Booking');
       }
     } catch (err) {
@@ -84,58 +93,130 @@ const PassengerHomePage = () => {
     }
   };
 
-  // Navigate to profile page
-  const handleProfileClick = () => {
+  // Navigate to profile settings
+  const handleProfileSettings = () => {
     navigate('/Passenger/home/settings');
   };
 
+  // Handle quick action clicks
+  const handleQuickAction = (action) => {
+    switch (action) {
+      case 'history':
+        navigate('/passenger/ride-history');
+        break;
+      case 'payment':
+        navigate('/passenger/payment-methods');
+        break;
+      case 'promotions':
+        navigate('/passenger/promotions');
+        break;
+      default:
+        console.log(`Action: ${action}`);
+    }
+  };
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  const getInitials = (name) => {
+    return name.split(' ').map(n => n[0]).join('').toUpperCase();
+  };
+
+  if (profileLoading) {
+    return (
+      <div className="profile-container">
+        <div className="loading-spinner">Loading your profile...</div>
+      </div>
+    );
+  }
+
   return (
-    <div className="passenger-home-container">
-      <div>
-        <button
-          style={{
-            cursor: 'pointer',
-            padding: '15px 30px',
-            backgroundColor: '#ff6b00',
-            color: 'white',
-            fontWeight: '600',
-            fontSize: '16px',
-            border: 'none',
-            borderRadius: '8px',
-            boxShadow: '0 4px 12px rgba(255, 107, 0, 0.3)',
-            transition: 'transform 0.2s, box-shadow 0.2s',
-          }}
-          onMouseOver={e => {
-            e.currentTarget.style.transform = 'scale(0.98)';
-            e.currentTarget.style.boxShadow = '0 2px 6px rgba(255, 107, 0, 0.3)';
-          }}
-          onMouseOut={e => {
-            e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 107, 0, 0.3)';
-          }}
-        >
-          <Link to="/test" style={{ textDecoration: 'none', color: 'white' }}>TEST</Link>
-        </button>
+    <div className="profile-container">
+      {/* Test Button */}
+      <div className="test-button-container">
+        <Link to="/test" className="test-button">
+          TEST
+        </Link>
       </div>
-      <div className="header-section">
-        <h1>Welcome to Ride Share</h1>
-        <div className="profile-icon" onClick={handleProfileClick}>
-          <span className="profile-emoji">👤</span>
+
+      {/* Profile Card */}
+      <div className="profile-card">
+        {/* Profile Header */}
+        <div className="profile-header">
+          <div className="profile-avatar">
+            {passengerData?.profilePicture ? (
+              <img src={passengerData.profilePicture} alt="Profile" />
+            ) : (
+              <div className="avatar-placeholder">
+                {passengerData?.name ? getInitials(passengerData.name) : '?'}
+              </div>
+            )}
+            {passengerData?.verified && (
+              <div className="verified-badge">✓</div>
+            )}
+          </div>
+
+          <div className="profile-info">
+            <h1 className="profile-name">{passengerData?.name || 'Unknown User'}</h1>
+            <p className="profile-joined">Member since {formatDate(passengerData?.joinDate)}</p>
+          </div>
+
+          <button className="settings-button" onClick={handleProfileSettings}>
+            ⚙️
+          </button>
         </div>
+
+        {/* Stats Section */}
+        <div className="stats-section">
+          <div className="stat-item">
+            <div className="stat-number">{passengerData?.totalRides || 0}</div>
+            <div className="stat-label">Total Rides</div>
+          </div>
+        </div>
+
+        {/* Contact Info */}
+        <div className="contact-section">
+          <h3 className="section-title">Contact Information</h3>
+          <div className="contact-item">
+            <span className="contact-icon">📧</span>
+            <span className="contact-text">{passengerData?.email}</span>
+          </div>
+          <div className="contact-item">
+            <span className="contact-icon">📱</span>
+            <span className="contact-text">{passengerData?.phone}</span>
+          </div>
+        </div>
+
+        {/* Action Button */}
+        <div className="action-section">
+          <button
+            onClick={handleBookRide}
+            disabled={loading}
+            className="book-ride-button"
+          >
+            {loading ? 'Updating location...' : '🚗 Book a Ride'}
+          </button>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="quick-actions">
+          <div className="quick-action-item" onClick={() => handleQuickAction('history')}>
+            <span className="action-icon">🕒</span>
+            <span className="action-text">Ride History</span>
+          </div>
+          <div className="quick-action-item" onClick={() => handleQuickAction('payment')}>
+            <span className="action-icon">💳</span>
+            <span className="action-text">Payment Methods</span>
+          </div>
+        </div>
+
+        {error && <div className="error-message">{error}</div>}
       </div>
-
-      <div className="main-action-section">
-        <button
-          onClick={handleBookRide}
-          disabled={loading}
-          className="book-ride-button"
-        >
-          {loading ? 'Updating location...' : 'Book a Ride'}
-        </button>
-      </div>
-
-      {error && <p className="error-message">{error}</p>}
-
     </div>
   );
 };
