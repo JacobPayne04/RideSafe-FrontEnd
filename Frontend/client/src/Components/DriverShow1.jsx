@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useActionData, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import '../Styling/DriverShow1.css';
 import { getCurrentCoords } from '../utils/geolocation';
 import DriverRating from './DriverRating';
+import { useAuth } from '../Contexts/AuthContext';
 
 const DriverShow1 = () => {
   const { id } = useParams();
+  const { user } = useAuth;
   const [driver, setDriver] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -82,6 +84,10 @@ const DriverShow1 = () => {
       alert("Could not go online.");
     }
   };
+
+  if (user?.id !== id) {
+    return <Navigate to="/" replace />;
+  }
 
   const goOffline = async () => {
     try {
