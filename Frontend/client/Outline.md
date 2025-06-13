@@ -181,7 +181,7 @@ create refund route for stripe to refund payment and to update ride as cancelled
 
 ### NEXT STEPS:
 🔐 Token Validation
-- [ ] Create AuthValidationService.java
+ - [ ] Create AuthValidationService.java
  - [ ]Create JwtService.java
  - [ ]Call validateRequest(token, id, role) inside protected endpoints
 

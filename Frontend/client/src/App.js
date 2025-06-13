@@ -69,7 +69,7 @@ function App() {
         <Route path="/Passenger/show1/Booking" element={<PassengerShow1 />} />
         <Route path="/Passenger/home" element={<PassengerHomePage />} />
         <Route path="/Passenger/home/settings" element={<PassengerSettings />} />
-
+    
         
 
         {/* Ride Routes */}
