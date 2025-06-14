@@ -181,9 +181,9 @@ create refund route for stripe to refund payment and to update ride as cancelled
 
 ### NEXT STEPS:
 🔐 Token Validation
- - [ ] Create AuthValidationService.java
- - [ ]Create JwtService.java
- - [ ]Call validateRequest(token, id, role) inside protected endpoints
+ - [✔] Create AuthValidationService.java
+ - [✔]Create JwtService.java
+ - []Call validateRequest(token, id, role) inside protected endpoints
 
 🔒 Controller Security
  - [ ] Inject AuthValidationService in each secured controller
@@ -197,17 +197,13 @@ create refund route for stripe to refund payment and to update ride as cancelled
  - [ ] Return HTTP 429 when request exceeds rate limit
 
 🌐 CORS Configuration
- - [ ] Add CorsConfig.java to allow local dev (e.g. localhost:3000)
- - [ ] Configure production domain in CORS before deploy
+ - [✔] Add CorsConfig.java to allow local dev (e.g. localhost:3000)
+ - [✔] Configure production domain in CORS before deploy
 
-🔐 HTTPS Prep
-- [ ]  Use https:// in all frontend API requests (.env)
-- [ ] Remove hardcoded http:// URLs
-- [ ] (Optional) Setup self-signed HTTPS in Spring Boot for dev
 
 🧱 Frontend Route Protection
- - [ ] Create PrivateRoute.jsx
- - [ ] Store token, role, userId in sessionStorage
+ - [✔] Create PrivateRoute.jsx
+ - [] Store token, role, userId in sessionStorage
  - [ ] Wrap protected routes with <PrivateRoute element={...} allowedRole="..." />
 
 📤 Frontend Auth Headers
