@@ -1,15 +1,17 @@
 import React from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import axios from 'axios';
+import axiosSecure from '../Security/axiosSecure';
 import { jwtDecode } from 'jwt-decode';
 import '../Styling/GoogleSignIn.css'
+import { useAuth } from '../Contexts/AuthContext';
 
 const clientId = process.env.REACT_APP_CLIENTID;
 
 const GoogleSignIn = () => {
   const navigate = useNavigate();
   const { role } = useParams();
+  const { login } = useAuth();
   
   const onSuccess = async (response) => {
     if (response.credential) {
@@ -24,8 +26,11 @@ const GoogleSignIn = () => {
       };
 
       try {
-        const res = await axios.post(`http://localhost:8080/signup/${role}/googleId`, data, { withCredentials: true });
+        const res = await axiosSecure.post(`/signup/${role}/googleId`, data, { withCredentials: true });
 
+        if(res.data.token) {
+          login(res.data.token)
+        }
         if (res.data.exists) {
           if (role === "driver") {
             localStorage.setItem('driverEmail', res.data.email)
