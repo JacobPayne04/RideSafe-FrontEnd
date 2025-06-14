@@ -84,9 +84,7 @@ function App() {
           <Route path="/passenger/ride/waiting" element={<PassengerRideWaitingScreen />} />
 
           {/* Google API Routes */}
-         <Route path="/google/signin/:role"element={<ProtectedRoute roles={["passenger", "driver", "admin"]}><GoogleSignIn /></ProtectedRoute>
-  }
-/>
+          <Route path="/google/signin/:role" element={<GoogleSignIn />} />
 
           {/* Payment Routes */}
           {/* SECURE PAYMENT ROUTES */}
