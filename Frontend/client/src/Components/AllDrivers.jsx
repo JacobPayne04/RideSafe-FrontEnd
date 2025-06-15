@@ -18,6 +18,15 @@ const AllDrivers = () => {
       });
   }, []);
 
+  const RemoveDriver = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8080/delete/driver/${id}`);
+      console.log("Successfully deleted driver");
+      setDrivers((prevDrivers) => prevDrivers.filter((driver) => driver.id !== id));
+    } catch (error) {
+      console.log("Error deleting driver", error);
+    }
+  };
    return (
     <div className="admin-container">
       <h1 className="admin-main-title">All Drivers</h1>
@@ -55,7 +64,7 @@ const AllDrivers = () => {
                   <button className="admin-button admin-view-button">
                     View Details
                   </button>
-                  <button className="admin-button admin-decline-button">
+                  <button onClick={() => RemoveDriver(driver.id)} className="admin-button admin-decline-button">
                     Remove Driver
                   </button>
                 </div>

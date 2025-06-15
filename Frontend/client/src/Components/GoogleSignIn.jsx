@@ -12,7 +12,7 @@ const GoogleSignIn = () => {
   const navigate = useNavigate();
   const { role } = useParams();
   const { login } = useAuth();
-  
+
   const onSuccess = async (response) => {
     if (response.credential) {
       const idToken = response.credential;
@@ -28,14 +28,24 @@ const GoogleSignIn = () => {
       try {
         const res = await axiosSecure.post(`/signup/${role}/googleId`, data, { withCredentials: true });
 
-        if(res.data.token) {
-          login(res.data.token)
+        if (res.data.token) {
+          login(res.data.token, "driver");
         }
+
+        console.log("Google Login Response:", res.data);
+
         if (res.data.exists) {
           if (role === "driver") {
             localStorage.setItem('driverEmail', res.data.email)
             localStorage.setItem("driverId", res.data.driverId);
-            navigate(`/one/driver/${res.data.driverId}`);
+            localStorage.setItem("token", res.data.token);
+            console.log("Navigating to driver page:", res.data.driverId);
+            
+            setTimeout(() => {
+              navigate(`/one/driver/${res.data.driverId}`);
+            }, 500);
+
+            console.log("Navigation attempted");
           } else {
             localStorage.setItem("passengerId", res.data.passengerId);
             navigate(`/Passenger/home`);
@@ -83,7 +93,7 @@ const GoogleSignIn = () => {
         </h2>
 
         <p className="signin-description">
-          {role === 'driver' 
+          {role === 'driver'
             ? 'Join our driver community and start earning by sharing rides with passengers going your way.'
             : 'Find affordable rides and connect with drivers heading to your destination.'
           }

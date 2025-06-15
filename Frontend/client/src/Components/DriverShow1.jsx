@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, useActionData, Navigate } from 'react-router-dom';
+import { useParams, Link, useActionData, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../Styling/DriverShow1.css';
 import { getCurrentCoords } from '../utils/geolocation';
@@ -8,17 +8,24 @@ import { useAuth } from '../Contexts/AuthContext';
 
 const DriverShow1 = () => {
   const { id } = useParams();
-  const { user } = useAuth;
   const [driver, setDriver] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showRatingPopup, setShowRatingPopup] = useState(false);
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     let isMounted = true;
+    console.log("🎉 DriverShow1 mounted");
     const fetchDriver = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/driver/${id}`);
+        const token = localStorage.getItem("token");
+        const response = await axios.get(`http://localhost:8080/driver/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (isMounted) {
           // Get the saved status from localStorage first
           const savedStatus = localStorage.getItem(`driver_${id}_online_status`);
@@ -85,7 +92,14 @@ const DriverShow1 = () => {
     }
   };
 
-  if (user?.id !== id) {
+  if (user === undefined) {
+    return <div>Loading authentication...</div>;
+  }
+  
+  if (user !== undefined && user?.userId !== id) {
+    console.log("❌ ID'S DO NOT MATCH ");
+    console.log("userId: ", user?.userId);
+    console.log("route id: ", id);
     return <Navigate to="/" replace />;
   }
 
@@ -169,6 +183,12 @@ const DriverShow1 = () => {
     }
   };
 
+  const handleLogout = () => {
+    logout();
+    console.log("🔐 LOGOUT SUCCESSFUL 🔏");
+    navigate("/");
+  };
+
   return (
     <div className="driver-container">
       <div className="driver-info">
@@ -206,6 +226,7 @@ const DriverShow1 = () => {
               <div className='Driver-Button-Profile'><Link to={`/edit/driver/${id}/info`}>Edit Profile</Link></div>
               <button className='Driver-Button-Profile' onClick={onboardStripe}>Finish Stripe Setup</button>
               <div className='Driver-Button-Profile'><Link to={"/test"}>Test</Link></div>
+              <button onClick={handleLogout} className='Driver-Button-Profile'>Logout</button>
               <div className="Driver-Button-Profile">
                 <button
                   className="Rate-Button"

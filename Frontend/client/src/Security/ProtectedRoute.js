@@ -1,18 +1,27 @@
+import React from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../Contexts/AuthContext";
 
-const ProtectedRoute = ({ children, roles = [] }) => {
-    const { user, loading } = useAuth();
+const ProtectedRoute = ({ roles, children }) => {
+  const { token, role, loading } = useAuth();
 
-    if(loading) return <div>Loading...</div>;
-    
-    if(!user) return <Navigate to="/" />
+  const normalizedRole = role?.toLowerCase();
+  const allowedRoles = roles?.map((r) => r.toLowerCase()) || [];
 
-    if(roles.length > 0 && !roles.includes(user.role)){
-        return <Navigate to="/" />
-    }
+  console.log("ProtectedRoute loading:", loading);
+  console.log("token:", token);
+  console.log("role:", normalizedRole);
+  console.log("required roles:", allowedRoles);
 
-    return children;
-}
+  if (loading) return null;
+
+  if (!token || !allowedRoles.includes(normalizedRole)) {
+    console.log("❌ Redirecting to /");
+    return <Navigate to="/" />;
+  }
+
+  console.log("✅ Access granted");
+  return children;
+};
 
 export default ProtectedRoute;
