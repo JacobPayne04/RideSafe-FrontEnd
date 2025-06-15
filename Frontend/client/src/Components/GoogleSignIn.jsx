@@ -1,7 +1,7 @@
 import React from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import axiosSecure from '../Security/axiosSecure';
+import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import '../Styling/GoogleSignIn.css'
 import { useAuth } from '../Contexts/AuthContext';
@@ -26,7 +26,7 @@ const GoogleSignIn = () => {
       };
 
       try {
-        const res = await axiosSecure.post(`/signup/${role}/googleId`, data, { withCredentials: true });
+        const res = await axios.post(`/signup/${role}/googleId`, data, { withCredentials: true });
 
         if (res.data.token) {
           login(res.data.token, "driver");
