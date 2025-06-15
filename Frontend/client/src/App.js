@@ -1,11 +1,12 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AuthProvider } from './Contexts/AuthContext';
 import ProtectedRoute from './Security/ProtectedRoute';
+import { useAuth } from './Contexts/AuthContext';
 
 import AllDrivers from './Components/AllDrivers';
 import DriverShow1 from './Components/DriverShow1';
@@ -42,66 +43,70 @@ const stripePromise = loadStripe(process.env.REACT_APP_PK_TEST_PUBLIC_KEY);
 function App() {
   const clientId = process.env.REACT_APP_CLIENTID || "";
 
+  const { loading } = useAuth();
+
+  if (loading) return <div>Loading...</div>;
+
   return (
     <GoogleOAuthProvider clientId={clientId}>
       <AuthProvider>
-        <Routes>
-          {/* Base Routes */}
-          <Route path="/" element={<RegisterDriverLandingPage />} />
+          <Routes>
+            {/* Base Routes */}
+            <Route path="/" element={<RegisterDriverLandingPage />} />
 
-          {/* Admin Routes */}
-          {/* SECURE ADMIN ROUTES */}
-          <Route path="/admin/home" element={<AdminHome />} />
-          <Route path="/drivers/all" element={<ProtectedRoute roles={["admin"]}> <AllDrivers /> </ProtectedRoute>} />
-          <Route path="/passengers/all" element={<AllPassengers />} />
+            {/* Admin Routes */}
+            {/* SECURE ADMIN ROUTES */}
+            <Route path="/admin/home" element={<AdminHome />} />
+            <Route path="/drivers/all" element={<AllDrivers />} />
+            <Route path="/passengers/all" element={<AllPassengers />} />
 
-          {/* Driver Routes */}
-          <Route path="/login/driver" element={<LoginDriver />} />
-          <Route path="/register/driver" element={<RegisterDriver />} />
-          {/* SECURE DRIVER ROUTES */}
-          <Route path="/register/driver/google" element={<GoogleRegisterDriver />} />
-          <Route path="/driver/home/:id" element={<DriverHomePage />} />
-          <Route path="/edit/driver/:id/info" element={<EditDriver />} />
-          <Route path="/driver/:id/verification/account/setup" element={<DriverStripeAccountSignUpLink />} />
-          <Route path="/driver/:id/rating/page" element={<DriverRating />} />
-          <Route path="/one/driver/:id" element={<ProtectedRoute roles={["driver"]}> <DriverShow1 /> </ProtectedRoute>} />
+            {/* Driver Routes */}
+            <Route path="/login/driver" element={<LoginDriver />} />
+            <Route path="/register/driver" element={<RegisterDriver />} />
+            {/* SECURE DRIVER ROUTES */}
+            <Route path="/register/driver/google" element={<GoogleRegisterDriver />} />
+            <Route path="/driver/home/:id" element={<DriverHomePage />} />
+            <Route path="/edit/driver/:id/info" element={<EditDriver />} />
+            <Route path="/driver/:id/verification/account/setup" element={<DriverStripeAccountSignUpLink />} />
+            <Route path="/driver/:id/rating/page" element={<DriverRating />} />
+            <Route path="/one/driver/:id" element={<ProtectedRoute roles={['driver']}> <DriverShow1 /> </ProtectedRoute>} />
 
-          {/* Passenger Routes */}
-          <Route path="/register/passenger" element={<RegisterPassenger />} />
-          <Route path="/register/passenger/google" element={<GoogleRegisterPassenger />} />
-          <Route path="/login/passenger" element={<LoginPassenger />} />
-          {/* SECURE PASSENGER ROUTES */}
-          <Route path="/Passenger/show1/Booking" element={<PassengerShow1 />} />
-          <Route path="/Passenger/home" element={<PassengerHomePage />} />
-          <Route path="/Passenger/home/settings" element={<PassengerSettings />} />
+            {/* Passenger Routes */}
+            <Route path="/register/passenger" element={<RegisterPassenger />} />
+            <Route path="/register/passenger/google" element={<GoogleRegisterPassenger />} />
+            <Route path="/login/passenger" element={<LoginPassenger />} />
+            {/* SECURE PASSENGER ROUTES */}
+            <Route path="/Passenger/show1/Booking" element={<PassengerShow1 />} />
+            <Route path="/Passenger/home" element={<PassengerHomePage />} />
+            <Route path="/Passenger/home/settings" element={<PassengerSettings />} />
 
 
 
-          {/* Ride Routes */}
-          {/* SECURE RIDE ROUTES */}
-          <Route path="/passenger/:passengerId/book/ride/driver/:driverId" element={<RideForm />} />
-          <Route path="/view/ride/googlemaps" element={<ViewRideGoogleMaps />} />
-          <Route path="/passenger/ride/waiting" element={<PassengerRideWaitingScreen />} />
+            {/* Ride Routes */}
+            {/* SECURE RIDE ROUTES */}
+            <Route path="/passenger/:passengerId/book/ride/driver/:driverId" element={<RideForm />} />
+            <Route path="/view/ride/googlemaps" element={<ViewRideGoogleMaps />} />
+            <Route path="/passenger/ride/waiting" element={<PassengerRideWaitingScreen />} />
 
-          {/* Google API Routes */}
-          <Route path="/google/signin/:role" element={<GoogleSignIn />} />
+            {/* Google API Routes */}
+            <Route path="/google/signin/:role" element={<GoogleSignIn />} />
 
-          {/* Payment Routes */}
-          {/* SECURE PAYMENT ROUTES */}
-          <Route
-            path="/ride/checkout"
-            element={
-              <Elements stripe={stripePromise}>
-                <CheckoutForm />
-              </Elements>
-            }
-          />
+            {/* Payment Routes */}
+            {/* SECURE PAYMENT ROUTES */}
+            <Route
+              path="/ride/checkout"
+              element={
+                <Elements stripe={stripePromise}>
+                  <CheckoutForm />
+                </Elements>
+              }
+            />
 
-          {/* Test Routes */}
-          {/* SECURE TEST ROUTE AND MOVE TO ADMIN PANEL */}
-          <Route path="/test" element={<Test />} />
+            {/* Test Routes */}
+            {/* SECURE TEST ROUTE AND MOVE TO ADMIN PANEL */}
+            <Route path="/test" element={<Test />} />
 
-        </Routes>
+          </Routes>
       </AuthProvider>
     </GoogleOAuthProvider>
   );
