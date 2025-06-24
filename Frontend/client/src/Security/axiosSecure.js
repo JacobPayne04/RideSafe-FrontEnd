@@ -24,3 +24,6 @@ axiosSecure.interceptors.response.use(
 );
 
 export default axiosSecure;
+
+// weren't removing the old token
+// we were sending an decoded jwt token to the back and the back was sending an encododed token back to the front so the tokens were not matching, leading to an "Access denied error"
