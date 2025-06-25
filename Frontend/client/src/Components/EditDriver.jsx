@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import "../Styling/EditDriver.css"; // Import external stylesheet
+import { useAuth } from '../Contexts/AuthContext';
 
 const EditDriver = () => {
   const { id } = useParams();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [driver, setDriver] = useState({
     firstName: "",
@@ -37,6 +39,9 @@ const EditDriver = () => {
     setDriver({ ...driver, [e.target.name]: e.target.value });
   };
 
+  if (user?.userId !== id) {
+    return <Navigate to="/" replace />;
+  }
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
