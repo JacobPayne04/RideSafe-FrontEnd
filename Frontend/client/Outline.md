@@ -67,7 +67,7 @@ create refund route for stripe to refund payment and to update ride as cancelled
 - [✔] Frontend: After ride popup asking for 1-5 star rating
 - [✔] Backend: Save ratings in DB
 - [✔] Backend: Calculate average driver ratings
-- [] Frontend: Show driver rating in driver profile
+- [✔] Frontend: Show driver rating in driver profile
 
 
 ---
@@ -87,8 +87,8 @@ create refund route for stripe to refund payment and to update ride as cancelled
 ### Chunk 3: Security & Authentication (4 hrs)
 
 #### Route Verification & Protection
-- [ ] Protect backend routes using JWT / OAuth2
-- [ ] Validate tokens on each request
+- [✔] Protect backend routes using JWT / OAuth2
+- [✔] Validate tokens on each request
 - [ ] Secure all routes via HTTPS + CORS
 - [ ] Rate limiting for public APIs (express-rate-limit / Spring filters)
 
