@@ -23,7 +23,7 @@ const EditDriver = () => {
   // Fetch driver details
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/driver/${id}`)
+      .get(`http://localhost:8080/driver/${id}`, { withCredentials: true })
       .then((res) => {
         setDriver({
           ...res.data,
@@ -52,7 +52,7 @@ const EditDriver = () => {
     }
 
     axios
-      .put(`http://localhost:8080/edit/driver/${id}`, driver)
+      .put(`http://localhost:8080/edit/driver/${id}`, driver,  { withCredentials: true })
       .then(() => {
         alert("Driver information updated successfully!");
         navigate(`/one/driver/${id}`);
