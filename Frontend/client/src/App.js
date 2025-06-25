@@ -66,7 +66,7 @@ function App() {
             {/* SECURE DRIVER ROUTES */}
             <Route path="/register/driver/google" element={<GoogleRegisterDriver />} />
             <Route path="/driver/home/:id" element={<DriverHomePage />} />
-            <Route path="/edit/driver/:id/info" element={<EditDriver />} />
+            <Route path="/edit/driver/:id/info" element={<ProtectedRoute roles={['driver']}><EditDriver /></ProtectedRoute>} />
             <Route path="/driver/:id/verification/account/setup" element={<DriverStripeAccountSignUpLink />} />
             <Route path="/driver/:id/rating/page" element={<DriverRating />} />
             <Route path="/one/driver/:id" element={<ProtectedRoute roles={['driver']}> <DriverShow1 /> </ProtectedRoute>} />
