@@ -3,10 +3,12 @@ import { useParams, useNavigate, Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import "../Styling/EditDriver.css"; // Import external stylesheet
 import { useAuth } from '../Contexts/AuthContext';
+import axiosSecure from "../Security/axiosSecure";
 
 const EditDriver = () => {
   const { id } = useParams();
-  const { user } = useAuth();
+  const { user, token } = useAuth();
+
   const navigate = useNavigate();
   const [driver, setDriver] = useState({
     firstName: "",
@@ -51,8 +53,11 @@ const EditDriver = () => {
       return;
     }
 
-    axios
-      .put(`http://localhost:8080/edit/driver/${id}`, driver,  { withCredentials: true })
+    axios.put(
+      `http://localhost:8080/edit/driver/${id}`,
+      driver,
+      { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
+    )
       .then(() => {
         alert("Driver information updated successfully!");
         navigate(`/one/driver/${id}`);
