@@ -177,7 +177,8 @@ create refund route for stripe to refund payment and to update ride as cancelled
 
 ---
 
-
+## Two-Factor Authentication
+- [] Implement Automated Email / Text (whichever one is easier)
 
 ### NEXT STEPS:
 🔐 Token Validation
