@@ -7,14 +7,6 @@ const RegisterDriverLandingPage = () => {
     const navigate = useNavigate();
     const [showSignInPopup, setShowSignInPopup] = useState(false);
 
-    const handleDriverRegister = () => {
-        navigate('/register/driver');
-    };
-
-    const handlePassengerRegister = () => {
-        navigate('/register/passenger');
-    };
-
     const handleGoogleSignInPopUp = (role) => {
         setShowSignInPopup(true)
     }
@@ -42,9 +34,9 @@ const RegisterDriverLandingPage = () => {
                     Choose your role and start your journey with us. Whether you're looking to drive or ride, we've got you covered.
                 </p>
 
-                {/* Registration options */}
+                {/* Registration options - now display only */}
                 <div className="register-options">
-                    <div onClick={handleDriverRegister} className="register-option-card driver-card">
+                    <div className="register-option-card driver-card">
                         <div className="option-icon">🚗</div>
                         <div className="option-content">
                             <h3>Register as Driver</h3>
@@ -52,7 +44,7 @@ const RegisterDriverLandingPage = () => {
                         </div>
                     </div>
 
-                    <div onClick={handlePassengerRegister} className="register-option-card passenger-card">
+                    <div className="register-option-card passenger-card">
                         <div className="option-icon">🧳</div>
                         <div className="option-content">
                             <h3>Register as Passenger</h3>
@@ -70,25 +62,6 @@ const RegisterDriverLandingPage = () => {
                         <span className="google-icon">🌐</span>
                         Sign In With Google
                     </button>
-                </div>
-
-                {/* Login prompts */}
-                <div className="login-prompts-section">
-                    <div className="features-title">Already have an account?</div>
-                    <div className="login-options">
-                        <div className="login-option">
-                            <span>Already a Driver?</span>
-                            <button className="login-link-btn">
-                                <Link to="/login/driver">Login as Driver</Link>
-                            </button>
-                        </div>
-                        <div className="login-option">
-                            <span>Already a Passenger?</span>
-                            <button className="login-link-btn">
-                                <Link to="/login/passenger">Login as Passenger</Link>
-                            </button>
-                        </div>
-                    </div>
                 </div>
 
                 {/* Features section */}

@@ -7,14 +7,9 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AuthProvider } from './Contexts/AuthContext';
 import ProtectedRoute from './Security/ProtectedRoute';
 import { useAuth } from './Contexts/AuthContext';
-
 import AllDrivers from './Components/AllDrivers';
 import DriverShow1 from './Components/DriverShow1';
-import LoginDriver from './Components/LoginDriver';
 import RegisterDriverLandingPage from './Components/RegisterDriverLandingPage';
-import RegisterDriver from './Components/RegisterDriver';
-import RegisterPassenger from './Components/RegisterPassenger';
-import LoginPassenger from './Components/LoginPassenger';
 import RideForm from './Components/RideForm';
 import PassengerShow1 from './Components/PassengerShow1';
 import DriverHomePage from './Components/DriverHomePage';
@@ -30,7 +25,6 @@ import PassengerSettings from './Components/PassengerSettings';
 import DriverStripeAccountSignUpLink from './Components/DriverStripeAccountSignUpLink';
 import DriverRating from './Components/DriverRating';
 import AllPassengers from './Components/AllPassengers';
-import PassengerRideWaitingScreen from './Components/PassengerRideWaitingScreen';
 import Test from './Components/Test';
 
 // ✅ Load Stripe key correctly
@@ -61,8 +55,7 @@ function App() {
             <Route path="/passengers/all" element={<AllPassengers />} />
 
             {/* Driver Routes */}
-            <Route path="/login/driver" element={<LoginDriver />} />
-            <Route path="/register/driver" element={<RegisterDriver />} />
+      
             {/* SECURE DRIVER ROUTES */}
             <Route path="/register/driver/google" element={<GoogleRegisterDriver />} />
             <Route path="/driver/home/:id" element={<DriverHomePage />} />
@@ -72,9 +65,9 @@ function App() {
             <Route path="/one/driver/:id" element={<ProtectedRoute roles={['driver']}> <DriverShow1 /> </ProtectedRoute>} />
 
             {/* Passenger Routes */}
-            <Route path="/register/passenger" element={<RegisterPassenger />} />
+
             <Route path="/register/passenger/google" element={<GoogleRegisterPassenger />} />
-            <Route path="/login/passenger" element={<LoginPassenger />} />
+           
             {/* SECURE PASSENGER ROUTES */}
             <Route path="/Passenger/show1/Booking" element={<PassengerShow1 />} />
             <Route path="/Passenger/home" element={<PassengerHomePage />} />
@@ -86,8 +79,7 @@ function App() {
             {/* SECURE RIDE ROUTES */}
             <Route path="/passenger/:passengerId/book/ride/driver/:driverId" element={<RideForm />} />
             <Route path="/view/ride/googlemaps" element={<ViewRideGoogleMaps />} />
-            <Route path="/passenger/ride/waiting" element={<PassengerRideWaitingScreen />} />
-
+          
             {/* Google API Routes */}
             <Route path="/google/signin/:role" element={<GoogleSignIn />} />
 

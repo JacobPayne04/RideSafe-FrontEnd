@@ -84,6 +84,52 @@ create refund route for stripe to refund payment and to update ride as cancelled
 
 ---
 
+
+
+
+#### front end needs
+fix timer on checkout page 
+get rid of other timer page
+fix  the timner for the checkout on the checkout page 
+
+
+
+make created at for passegner and driver atuo
+make it for passegner as well 
+
+back end decline driver method servive method
+backend delcine driver controller method 
+connect fornt end button to methods  
+
+remove passegner method service method
+remove opassegner contrller method 
+
+
+when singing in to googel check if soemone wiht taht googel already registerd 
+if so sing thne in 
+if not continue 
+
+backedn for submitting docuiments
+service method 
+controller methjod 
+
+logic for taking driver to new location (add button for maps export)
+take driver location of pickup 
+make buitton for driver to press
+connect logic to export to maops 
+
+google enail VERIFICAITON UPON SIGN IN 
+GOOGLE EMIAL VERIFICAIOTN ON SIGN UP
+
+METEHOD TO CREATE 7 DAY EXPOERIABLE TOKEN
+METHOD TO SAVE TO ACCOUNT
+METHOD TO CHEFK FOR 87 DAY TOKEN
+LOGOUT AFTER 7 DAYS AUTOMATICALY
+
+
+
+
+
 ### Chunk 3: Security & Authentication (4 hrs)
 
 #### Route Verification & Protection
