@@ -31,10 +31,16 @@ const AdminHome = () => {
     }
   };
 
-  const handleDecline = (driverId) => {
-    // Implement decline logic or alert for now
-    alert(`Decline driver with ID: ${driverId}`);
-  };
+  const handleDecline = async (driverId) => {
+  try {
+    await axios.put(`http://localhost:8080/decline/driver/${driverId}`);
+    fetchPendingDrivers();
+    setExpandedDriverId(null);
+  } catch (err) {
+    console.error('Error declining driver', err);
+  }
+};
+
 
   const toggleExpand = (driverId) => {
     if (expandedDriverId === driverId) {
