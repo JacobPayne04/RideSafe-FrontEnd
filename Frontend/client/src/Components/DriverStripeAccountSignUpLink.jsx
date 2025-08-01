@@ -4,13 +4,15 @@ import '../Styling/DriverStripeAccountSignUpLink.css';
 import { useLocation, useNavigate, useParams, Link } from 'react-router-dom';
 
 const DriverStripeAccountSignUpLink = () => {
-  const { id: driverId } = useParams();
+    const { id: driverId } = useParams();
   const driverEmail = localStorage.getItem('driverEmail');
   const location = useLocation();
   const navigate = useNavigate();
 
   const [selfie, setSelfie] = useState(null);
   const [license, setLicense] = useState(null);
+  const [eSign, setESign] = useState('');
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [docsUploaded, setDocsUploaded] = useState(false);
 
   useEffect(() => {
@@ -22,12 +24,20 @@ const DriverStripeAccountSignUpLink = () => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
+
+    const info = {
+      driverid: driverId,
+      eSign,
+      acceptedTerms
+    };
+
     const formData = new FormData();
-    formData.append('selfie', selfie);
-    formData.append('license', license);
+    formData.append('info', new Blob([JSON.stringify(info)], { type: 'application/json' }));
+    formData.append('dlFile', selfie);
+    formData.append('studentIdFile', license);
 
     try {
-      await axios.post(`http://localhost:8080/driver/${driverId}/upload-docs`, formData, {
+      await axios.post('http://localhost:8080/Driver/complete/signup', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setDocsUploaded(true);
@@ -57,12 +67,12 @@ const DriverStripeAccountSignUpLink = () => {
     }
   };
 
-  return (
+   return (
     <div className="Stripe-Onboarding-Page">
       <h1 className="Stripe-Onboarding-Header">Verify Your Identity</h1>
       <form onSubmit={handleUpload} className="Verification-Form">
         <div className="Upload-Group">
-          <label className="Upload-Label">Upload Selfie:</label>
+          <label className="Upload-Label">Upload Selfie (DL):</label>
           <input
             type="file"
             accept="image/*"
@@ -71,13 +81,32 @@ const DriverStripeAccountSignUpLink = () => {
           />
         </div>
         <div className="Upload-Group">
-          <label className="Upload-Label">Upload Driver’s License:</label>
+          <label className="Upload-Label">Upload Student ID:</label>
           <input
             type="file"
             accept="image/*"
             onChange={(e) => setLicense(e.target.files[0])}
             className="Upload-Input"
           />
+        </div>
+        <div className="Upload-Group">
+          <label className="Upload-Label">eSign Your Full Name:</label>
+          <input
+            type="text"
+            value={eSign}
+            onChange={(e) => setESign(e.target.value)}
+            className="Upload-Input"
+          />
+        </div>
+        <div className="Upload-Group">
+          <label>
+            <input
+              type="checkbox"
+              checked={acceptedTerms}
+              onChange={(e) => setAcceptedTerms(e.target.checked)}
+            />{' '}
+            I accept the terms and conditions.
+          </label>
         </div>
         <button type="submit" className="Stripe-Onboarding-btn">Submit Documents</button>
       </form>
@@ -113,9 +142,7 @@ const DriverStripeAccountSignUpLink = () => {
           <Link to="/test" style={{ textDecoration: 'none', color: 'white' }}>TEST</Link>
         </button>
       </div>
-
     </div>
   );
 };
-
 export default DriverStripeAccountSignUpLink;
