@@ -8,7 +8,7 @@ const API_BASE_URL = "http://localhost:8080"; // Backend URL
 
 export const acceptRide = async (rideId, driverId) => {
     try {
-        const response = await axios.put(`${API_BASE_URL}/${rideId}/accept/${driverId}`);
+        const response = await axios.put(`${API_BASE_URL}/api/v1/rides/${rideId}/accept/${driverId}`);
         toast.success("✅ Ride accepted successfully!");
         return response.data; // Backend returns updated ride object
     } catch {
@@ -20,7 +20,7 @@ export const acceptRide = async (rideId, driverId) => {
 
 export const completeRide = async (rideId,driverId) => {
     try {
-        const reponse = await axios.put(`${API_BASE_URL}/${rideId}/complete`,null , {
+        const reponse = await axios.put(`${API_BASE_URL}/api/v1/rides${rideId}/complete`,null , {
             params: { driverId}
         });
         toast.success("🏁 Ride completed successfully!");

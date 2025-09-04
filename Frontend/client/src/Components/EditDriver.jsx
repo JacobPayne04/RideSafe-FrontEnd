@@ -25,7 +25,7 @@ const EditDriver = () => {
   // Fetch driver details
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/driver/${id}`, { withCredentials: true })
+      .get(`http://localhost:8080/api/v1/driver/${id}`, { withCredentials: true })
       .then((res) => {
         setDriver({
           ...res.data,
@@ -54,7 +54,7 @@ const EditDriver = () => {
     }
 
     axios.put(
-      `http://localhost:8080/edit/driver/${id}`,
+      `http://localhost:8080/api/v1/drivers/edit/${id}`,
       driver,
       { headers: { Authorization: `Bearer ${token}` }, withCredentials: true }
     )

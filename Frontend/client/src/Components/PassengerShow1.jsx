@@ -21,7 +21,7 @@ const PassengerShow1 = () => {
       }
 
       try {
-        const res = await axios.post('http://localhost:8080/nearby/drivers', {
+        const res = await axios.post('http://localhost:8080/api/v1/geo/drivers/nearby', {
           latitude: parseFloat(latitude),
           longitude: parseFloat(longitude)
         });

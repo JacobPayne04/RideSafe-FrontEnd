@@ -14,7 +14,7 @@ const AdminHome = () => {
 
   const fetchPendingDrivers = async () => {
     try {
-      const res = await axios.get(`http://localhost:8080/drivers/unapproved`);
+      const res = await axios.get(`http://localhost:8080/api/v1/admin/drivers/unapproved`);
       setPendingDrivers(res.data);
     } catch (err) {
       console.log('Failed to fetch unapproved drivers', err);
@@ -23,7 +23,7 @@ const AdminHome = () => {
 
   const handleApprove = async (driverId) => {
     try {
-      await axios.put(`http://localhost:8080/approve/driver/${driverId}`);
+      await axios.put(`http://localhost:8080/api/v1/admin/drivers/${driverId}/approve`); 
       fetchPendingDrivers();
       setExpandedDriverId(null); // close dropdown if open
     } catch (err) {
@@ -33,7 +33,7 @@ const AdminHome = () => {
 
   const handleDecline = async (driverId) => {
   try {
-    await axios.put(`http://localhost:8080/decline/driver/${driverId}`);
+    await axios.put(`http://localhost:8080/api/v1/admin/drivers/${driverId}/decline`);
     fetchPendingDrivers();
     setExpandedDriverId(null);
   } catch (err) {

@@ -13,7 +13,7 @@ const CheckoutForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
-  const [darkMode, setDarkMode] = useState(false); // Remove localStorage for Claude.ai compatibility
+  const [darkMode, setDarkMode] = useState(false); 
   const [rate, setRate] = useState(0);
   const [showTimerPopup, setShowTimerPopup] = useState(false);
   const [timeLeft, setTimeLeft] = useState(600); // 10 minutes
@@ -126,7 +126,7 @@ const CheckoutForm = () => {
 
       // Original payment processing (commented for demo)
       /*
-      const response = await fetch("http://localhost:8080/create-Payment-Intent", {
+      const response = await fetch("http://localhost:8080/api/v1/create-Payment-Intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ rideId, rate: parseInt(rate) }),
@@ -147,7 +147,7 @@ const CheckoutForm = () => {
         setSuccess(true);
         setShowTimerPopup(true);
 
-        const updateResponse = await fetch("http://localhost:8080/update-ride-payment", {
+        const updateResponse = await fetch("http://localhost:8080/api/v1/rides/update-ride-payment", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ rideId }),

@@ -26,7 +26,7 @@ const DriverHomePage = () => {
   const fetchOngoingRides = () => {
     if (!driverId) return;
     axios
-      .get(`http://localhost:8080/driver/${driverId}/rides/ongoing`)
+      .get(`http://localhost:8080/api/v1/drivers/${driverId}/rides/ongoing`)
       .then((response) => {
         setOngoingRides(response.data);
       })
@@ -76,7 +76,7 @@ const DriverHomePage = () => {
 
   const acceptRide = (rideId) => {
     axios
-      .put(`http://localhost:8080/${rideId}/accept/${driverId}`)
+      .put(`http://localhost:8080/api/v1/rides/${rideId}/accept/${driverId}`)
       .then(() => {
         setNotifications((prev) => prev.filter((n) => n.rideId !== rideId));
         fetchOngoingRides();

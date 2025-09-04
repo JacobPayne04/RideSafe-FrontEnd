@@ -18,7 +18,7 @@ const PassengerHomePage = () => {
     const fetchPassengerData = async () => {
       try {
         setProfileLoading(true);
-        const response = await axios.get(`http://localhost:8080/passenger/${passengerId}`);
+        const response = await axios.get(`http://localhost:8080/api/v1/passengers/${passengerId}`);
         setPassengerData(response.data);
         setProfileLoading(false);
       } catch (err) {
@@ -69,7 +69,7 @@ const PassengerHomePage = () => {
         latitude: position.latitude
       };
 
-      await axios.put(`http://localhost:8080/${passengerId}/status/passenger`, requestBody);
+      await axios.put(`http://localhost:8080//api/v1/passengers/${passengerId}/status`, requestBody);
       console.log("Passenger location updated successfully:", position);
       return true;
     } catch (err) {

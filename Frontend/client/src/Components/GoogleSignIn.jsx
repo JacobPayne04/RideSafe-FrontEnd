@@ -27,7 +27,7 @@ const GoogleSignIn = () => {
       };
 
       try {
-        const res = await axios.post(`http://localhost:8080/signup/${role}/googleId`, data, { withCredentials: true });
+        const res = await axios.post(`http://localhost:8080/api/v1/auth/signup/${role}/googleId`, data, { withCredentials: true });
 
         if (res.data.token) {
           login(res.data.token, "driver");

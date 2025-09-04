@@ -21,7 +21,7 @@ const DriverShow1 = () => {
     const fetchDriver = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(`http://localhost:8080/driver/${id}`, {
+        const response = await axios.get(`http://localhost:8080/api/v1/driver/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -68,7 +68,7 @@ const DriverShow1 = () => {
       
       // Make API call
       await axios.put(
-        `http://localhost:8080/${id}/status`,
+        `http://localhost:8080/api/v1/drivers/${id}/status`,
         {
           isOnline: true,
           longitude: coords.longitude,
@@ -110,7 +110,7 @@ const DriverShow1 = () => {
       
       // Make API call
       await axios.put(
-        `http://localhost:8080/${id}/status`,
+        `http://localhost:8080/api/v1/drivers/${id}/status`,
         {
           isOnline: false
         },
@@ -167,7 +167,7 @@ const DriverShow1 = () => {
 
   const onboardStripe = async () => {
     try {
-      const res = await fetch(`/api/stripe/onboard?email=${driverEmail}&driverId=${driverId}`, {
+      const res = await fetch(`/api/v1/drivers/stripe/onboard?email=${driverEmail}&driverId=${driverId}`, {
         method: "POST",
       });
 

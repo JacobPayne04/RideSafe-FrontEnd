@@ -9,9 +9,18 @@ const GoogleRegisterDriver = () => {
     const navigate = useNavigate();
 
     // Retrieve stored user data from localStorage
+
     const userData = JSON.parse(localStorage.getItem("user")) || {};
     const GoogleEmail = userData.email || '';
     const GoogleID = userData.googleId || '';
+    // store token here to fix stripe retunring to home page TODO#########🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑 8-2-25
+    localStorage.setItem("token", GoogleID);
+    localStorage.setItem("userRole", "driver");
+
+    console.log("🔑 Setting token:", GoogleID);
+    console.log("📝 Setting role: driver");
+    console.log("✅ Token stored:", localStorage.getItem("token"));
+    console.log("✅ Role stored:", localStorage.getItem("userRole"));
 
     const formik = useFormik({
         initialValues: {
@@ -30,11 +39,10 @@ const GoogleRegisterDriver = () => {
         onSubmit: async (values) => {
             try {
                 console.log("Submitting data:", values);
-                const response = await axios.post("http://localhost:8080/new", values, {
+                const response = await axios.post("http://localhost:8080/api/v1/drivers/create", values, {
                     headers: { 'Content-Type': 'application/json' }
                 });
                 console.log("Driver created:", response.data);
-
 
                 const driverId = response.data.id; // Ensure API returns _id
                 if (!driverId) {
@@ -44,7 +52,13 @@ const GoogleRegisterDriver = () => {
 
                 localStorage.setItem("driverId", driverId);
                 const driverEmail = response.data.email;
-                localStorage.setItem('driverEmail', driverEmail)
+                localStorage.setItem('driverEmail', driverEmail);
+                
+                // Debug localStorage before navigating to verification
+                console.log("📋 BEFORE Navigation - Token:", localStorage.getItem("token"));
+                console.log("📋 BEFORE Navigation - Role:", localStorage.getItem("userRole"));
+                console.log("📋 BEFORE Navigation - All localStorage:", {...localStorage});
+                
                 console.log("Navigating to:", `/driver/${driverId}/verification/account/setup`);
 
                 navigate(`/driver/${driverId}/verification/account/setup`);

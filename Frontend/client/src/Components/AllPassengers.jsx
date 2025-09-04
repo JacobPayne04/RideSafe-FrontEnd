@@ -8,7 +8,7 @@ const AllPassengers = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/admin/passengers/all`)
+      .get(`http://localhost:8080/api/v1/admin/passengers/all`)
       .then((response) => {
         setPassengers(response.data);
         console.log('Passengers:', response.data);

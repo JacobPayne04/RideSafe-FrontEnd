@@ -37,7 +37,7 @@ const DriverStripeAccountSignUpLink = () => {
     formData.append('studentIdFile', license);
 
     try {
-      await axios.post('http://localhost:8080/Driver/complete/signup', formData, {
+      await axios.post('http://localhost:8080/api/v1/drivers/signup/complete', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setDocsUploaded(true);
@@ -50,7 +50,7 @@ const DriverStripeAccountSignUpLink = () => {
 
   const onboardStripe = async () => {
     try {
-      const res = await fetch(`http://localhost:8080/Driver/stripe/signup?email=${driverEmail}&driverId=${driverId}`, {
+      const res = await fetch(`http://localhost:8080/api/v1/driver/stripe/onboard?email=${driverEmail}&driverId=${driverId}`, {
         method: 'POST',
       });
 

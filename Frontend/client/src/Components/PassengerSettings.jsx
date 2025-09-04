@@ -30,7 +30,7 @@ const EditPassenger = () => {
   // Fetch passenger details
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/passenger/${id}`)
+      .get(`http://localhost:8080/api/v1/passengers/${id}`)
       .then((res) => {
         setPassenger({
           ...res.data,

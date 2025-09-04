@@ -45,7 +45,7 @@ const RideForm = () => {
     }),
     onSubmit: async (values) => {
       try {
-        const driverResponse = await axios.get(`http://localhost:8080/driver/${values.driverId}`);
+        const driverResponse = await axios.get(`http://localhost:8080/api/v1/driver/${values.driverId}`);
         const driversRate = driverResponse.data.driverRate;
 
         if (!driversRate) {
@@ -55,7 +55,7 @@ const RideForm = () => {
         const calculatedRate = driversRate * values.passengerAmount;
         const rideData = { ...values, rate: calculatedRate };
 
-        const response = await axios.post("http://localhost:8080/rides/save", rideData);
+        const response = await axios.post("http://localhost:8080/api/v1/rides/save", rideData);
 
         if (response.data && response.data.rideId) {
           localStorage.setItem("rideId", response.data.rideId);

@@ -8,7 +8,7 @@ const AllDrivers = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/admin/drivers/all`)
+      .get(`http://localhost:8080/api/v1/admin/drivers/all`)
       .then((response) => {
         setDrivers(response.data);
         console.log('Response from server:', response.data);
@@ -20,7 +20,7 @@ const AllDrivers = () => {
 
   const RemoveDriver = async (id) => {
     try {
-      await axios.delete(`http://localhost:8080/delete/driver/${id}`);
+      await axios.delete(`http://localhost:8080/api/v1/drivers/${id}/delete`);	
       console.log("Successfully deleted driver");
       setDrivers((prevDrivers) => prevDrivers.filter((driver) => driver.id !== id));
     } catch (error) {

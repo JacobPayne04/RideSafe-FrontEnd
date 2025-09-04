@@ -12,7 +12,7 @@ const DriverRating = ({ driverId, onClose }) => {
 
     try {
       setSubmitting(true);
-      await axios.put(`http://localhost:8080/send/Review`, {
+      await axios.put(`http://localhost:8080/api/v1/driver/send/Review`, {
         driverId: driverId,
         stars: selectedStars,
       });

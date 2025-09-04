@@ -262,3 +262,41 @@ LOGOUT AFTER 7 DAYS AUTOMATICALY
 - [ ] talk to lawyer
 - [ ] draft tos
 - [ ] code impliment tos
+
+
+
+
+### TODO ### 
+we need to standardize a api sctructure (for example api/Driver/singup - api/Driver/signIn - api/Driver/information) 
+for the backend.
+
+then we need to fix the front end apis to match the backend.
+
+--------------------------
+
+add error response model 
+
+standandized error repsonse model for readability
+
+
+-------------------------
+add security schema in config  nad annotate 
+
+-------------------------
+grouping and tagging  ( already did this in number 1)
+
+---------------------------
+
+add dependency 
+
+<dependency>
+  <groupId>org.springdoc</groupId>
+  <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+  <version>latest</version>
+</dependency>
+--------------------------
+add central list of error codes 
+-------------------------------
+add prerequast rrace idea ofr better dub gging view 
+------------------------------------
+add gloab exception handler so it makes servythign lokt ehsame wethere one end point is riddels wiht erorro codes and it makes it neat 
